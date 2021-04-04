@@ -1,0 +1,26 @@
+.tileRow {
+    padding: 10px;
+    height: auto;
+}
+
+.tile {
+    padding: 10px;
+    height: 200px;
+    width: 100%;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.addIcon {
+    float: right;
+}
+
+.header {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.item {
+    font-style: italic;
+    font-size: large;
+}
