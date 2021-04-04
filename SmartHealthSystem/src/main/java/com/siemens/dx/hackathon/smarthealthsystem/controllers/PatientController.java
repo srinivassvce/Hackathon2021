@@ -1,9 +1,7 @@
 package com.siemens.dx.hackathon.smarthealthsystem.controllers;
 
-import com.siemens.dx.hackathon.smarthealthsystem.entity.Allergy;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.LoginParameter;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.Patient;
-import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientAllergy;
 import com.siemens.dx.hackathon.smarthealthsystem.exceptions.EntityNotFoundException;
 import com.siemens.dx.hackathon.smarthealthsystem.exceptions.MethodArgumentNotValidException;
 import com.siemens.dx.hackathon.smarthealthsystem.serviceImpl.PatientServiceImpl;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
