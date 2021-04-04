@@ -71,7 +71,7 @@ class PatientServiceImpl implements IPatientService {
     Patient patient = patientRepository.findByPatientEmail(patientEmail);
 
     if (null != patient && patient.getPassword().equals(password)) {
-      return patient.getPatientId() + " with email: " + patientEmail + " logged in successfully!";
+      return patient.getPatientId().toString();
     } else {
       return "Incorrect Email or Password!";
     }
