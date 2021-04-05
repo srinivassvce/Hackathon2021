@@ -10,4 +10,6 @@ interface IPatientVisitService {
   List<PatientVisitModel> getAllVisitDetailsForPatient(Long patientId);
 
   List<PatientVisit> getAllVisits();
+
+  PatientVisitModel addPatientVisit(PatientVisitModel patientVisitModel);
 }

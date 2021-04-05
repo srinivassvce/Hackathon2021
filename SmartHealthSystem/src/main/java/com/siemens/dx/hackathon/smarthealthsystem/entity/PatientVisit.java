@@ -88,11 +88,6 @@ class PatientVisit implements Serializable {
   }
 
   public
-  void setPatientVisitId(Long patientVisitId) {
-    this.patientVisitId = patientVisitId;
-  }
-
-  public
   Patient getPatient() {
     return patient;
   }

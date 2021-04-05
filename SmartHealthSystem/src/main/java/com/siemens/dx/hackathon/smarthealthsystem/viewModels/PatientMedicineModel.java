@@ -8,6 +8,8 @@ public
 class PatientMedicineModel {
   private Long medicineId;
 
+  private Long patientId;
+
   private String genericName;
 
   private String brandName;
@@ -27,6 +29,8 @@ class PatientMedicineModel {
   private Date toDate;
 
   private String frequency;
+
+  private Long patientVisitId;
 
 
   public
@@ -141,5 +145,25 @@ class PatientMedicineModel {
   public
   void setFrequency(String frequency) {
     this.frequency = frequency;
+  }
+
+  public
+  Long getPatientId() {
+    return patientId;
+  }
+
+  public
+  void setPatientId(Long patientId) {
+    this.patientId = patientId;
+  }
+
+  public
+  Long getPatientVisitId() {
+    return patientVisitId;
+  }
+
+  public
+  void setPatientVisitId(Long patientVisitId) {
+    this.patientVisitId = patientVisitId;
   }
 }
