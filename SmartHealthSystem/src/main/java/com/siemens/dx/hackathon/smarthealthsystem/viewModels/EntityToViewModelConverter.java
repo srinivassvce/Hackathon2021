@@ -3,6 +3,7 @@ package com.siemens.dx.hackathon.smarthealthsystem.viewModels;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.Doctor;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.HealthCareProvider;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientAllergy;
+import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientInsurance;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientMedicine;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientVisit;
 
@@ -98,5 +99,18 @@ class EntityToViewModelConverter {
     patientVisitModel.setSurgeryNotes(patientVisit.getSurgeryNotes());
     patientVisitModel.setMedicines(patientMedicineModels);
     return patientVisitModel;
+  }
+
+  public static
+  PatientInsuranceModel convertPatientInsurance(PatientInsurance patientInsurance) {
+    PatientInsuranceModel patientInsuranceModel = new PatientInsuranceModel();
+
+    patientInsuranceModel.setInsuranceId(patientInsurance.getMedicalInsurance().getInsuranceId());
+    patientInsuranceModel.setInsuranceCompany(
+        patientInsurance.getMedicalInsurance().getInsuranceCompany());
+    patientInsuranceModel.setTpa(patientInsurance.getMedicalInsurance().getTpa());
+    patientInsuranceModel.setSumInsured(patientInsurance.getSumInsured());
+    patientInsuranceModel.setInsuranceDocuments(patientInsurance.getInsuranceDocuments());
+    return patientInsuranceModel;
   }
 }
