@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import IPatient from "./entities/IPatient";
+import { PatientAllergyModel } from "./_gen/entity";
 
 
 export function getUrl(): string {
@@ -41,6 +42,24 @@ export async function getPatientDetails(patientId: String): Promise<IPatient> {
     return response.data;
 }
 
+export async function getAllAllergens() {
+    const response = await axios.get(`${getUrl()}get/allergy/all`);
+    return response.data;
+}
+
+export async function saveAllergenDetails(allergy: any, patientId: string): Promise<boolean> {
+    const patient = await getPatientDetails(patientId);
+    const response = await axios.post(
+        `${getUrl()}create/patient/allergy`,
+        {
+            patient,
+            allergy,
+            symptoms: allergy.symptoms
+        }
+    );
+    return true;
+}
+
 export async function getMedicines(patient: string) {
     return Promise.resolve(
         {
@@ -51,6 +70,11 @@ export async function getMedicines(patient: string) {
             ]
         }
     )
+}
+
+export async function getAllergen(allergenId: string) {
+    const response = await axios.get(`${getUrl()}/get/allergy/${allergenId}`);
+    return response.data;
 }
 
 export function getPatientInfo(patientId: string){

@@ -59,25 +59,15 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
            </Page>
         </React.Fragment>
     );
+
+    function getAddAllergenNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
+        return (
+            <AddAllergen patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+        )
+    }
 }
 
 
 export default Dashboard;
 
-function getAddAllergenNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
-    return (
-        <ReactModal
-            isOpen={showModal}
-        >
-            <div className="row m-auto">
-                <button onClick={() => setModal(false)}>
-                    close
-                </button>
-            </div>
-            <hr />
-            <div className="row">
-                <AddAllergen patientId={""}/>
-            </div>
-        </ReactModal>
-    )
-}
+
