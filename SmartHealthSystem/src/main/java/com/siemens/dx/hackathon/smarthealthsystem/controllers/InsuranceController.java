@@ -32,6 +32,7 @@ class InsuranceController {
     return new ResponseEntity<>(insuranceService.getAllInsuranceCompanies(), HttpStatus.OK);
   }
 
+
   @GetMapping(path = "/get/insuranceCompany/{insuranceId}")
   public
   ResponseEntity<MedicalInsurance> getInsuranceById(@PathVariable long insuranceId)
