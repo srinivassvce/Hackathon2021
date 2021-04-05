@@ -6,6 +6,12 @@ public
 class PatientImmunizationModel {
   private Long vaccineId;
 
+  private Long patientId;
+
+  private String vaccineName;
+
+  private Date vaccineDate;
+
   public
   Long getVaccineId() {
     return vaccineId;
@@ -36,8 +42,13 @@ class PatientImmunizationModel {
     this.vaccineDate = vaccineDate;
   }
 
-  private String vaccineName;
+  public
+  Long getPatientId() {
+    return patientId;
+  }
 
-
-  private Date vaccineDate;
+  public
+  void setPatientId(Long patientId) {
+    this.patientId = patientId;
+  }
 }

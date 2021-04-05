@@ -7,12 +7,13 @@ import java.util.List;
 
 public
 interface IPatientAllergyService {
-
-  PatientAllergy createPatientAllergy(PatientAllergy patientAllergy);
-
-  PatientAllergy updatePatientAllergy(PatientAllergy patientAllergy);
-
-  List<PatientAllergy> getPatientsAllergies();
+  PatientAllergyModel createPatientAllergy(PatientAllergyModel patientAllergyModel);
 
   List<PatientAllergyModel> getAllergiesForAPatient(Long patientId);
+
+  String deleteAllergyForAPatient(Long allergyId);
+
+/*  PatientAllergy updatePatientAllergy(PatientAllergy patientAllergy);
+
+  List<PatientAllergy> getPatientsAllergies();*/
 }

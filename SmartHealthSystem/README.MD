@@ -26,7 +26,7 @@ Default URL is http://localhost:8080/api/
 Prefix all the below url strings with the default URL to get the complete URL for the APIs
 
 
-##### PATIENT
+###### PATIENT
 `create/patient`
 `get/patient/{patientId}`
 `update/patient/{patientId}`
@@ -38,9 +38,10 @@ Prefix all the below url strings with the default URL to get the complete URL fo
 ###### ALLERGIES
 `get/allergy/all`
 `get/patient/allergy/{patientId}`
-`create/patient/allergy`
+`add/patient/allergy`
+`delete/patient/allergy/{allergyId}`
 
-###### GET DOCTORS
+###### DOCTORS
 `get/doctor/all`
 `get/doctor/{doctorId}`
 
@@ -51,18 +52,25 @@ Prefix all the below url strings with the default URL to get the complete URL fo
 ###### VACCINES
 `get/immunization/all`
 `get/patient/immunization/{patientId}`
+`add/patient/immunization`
+`delete/patient/immunization/{immunizationId}`
 
 ###### INSURANCE
 `get/insuranceCompany/all`
 `get/patient/insurance/{patientId}`
+`add/patient/insurance`
+`delete/patient/insurance/{insuranceId}`
 
 ##### MEDICINES
 `get/medicine/all`
 `get/patient/medicine/{patientId}`
+`add/patient/medicine`
+`delete/patient/medicine/{medicineId}`
 
 ##### VISITS
 `get/patient/visits/all`
 `get/patient/visits/{patientId}`
+`add/patient/visit`
 
 
  
