@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import IPatient from "./entities/IPatient";
+import { PatientAllergyModel } from "./_gen/entity";
 
 export function getUrl(): string {
     return `http://localhost:8080/api/`;
@@ -46,12 +47,14 @@ export async function getAllAllergens() {
 
 export async function saveAllergenDetails(allergy: any, patientId: string): Promise<boolean> {
     const patient = await getPatientDetails(patientId);
+    const patientAllergyDetails: PatientAllergyModel = {
+        ...allergy,
+        patientId,
+    }
     await axios.post(
-        `${getUrl()}create/patient/allergy`,
+        `${getUrl()}add/patient/allergy`,
         {
-            patient,
-            allergy,
-            symptoms: allergy.symptoms
+            patientAllergyDetails
         }
     );
     return true;
