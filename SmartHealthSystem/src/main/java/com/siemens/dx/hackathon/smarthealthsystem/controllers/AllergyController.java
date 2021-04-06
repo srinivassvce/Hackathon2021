@@ -4,11 +4,13 @@ import com.siemens.dx.hackathon.smarthealthsystem.entity.Allergy;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.Patient;
 import com.siemens.dx.hackathon.smarthealthsystem.exceptions.EntityNotFoundException;
 import com.siemens.dx.hackathon.smarthealthsystem.exceptions.MethodArgumentNotValidException;
+import com.siemens.dx.hackathon.smarthealthsystem.service.IAllergyService;
 import com.siemens.dx.hackathon.smarthealthsystem.serviceImpl.AllergyServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,12 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+
 @RequestMapping(path = "/api")
 public
 class AllergyController {
 
   @Autowired
-  AllergyServiceImpl allergyService;
+  IAllergyService allergyService;
 
   @GetMapping(path = "/get/allergy/all")
   public

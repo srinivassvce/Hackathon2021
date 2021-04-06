@@ -7,9 +7,12 @@
 
 # testing
 /coverage
-
+/package-lock.json
 # production
 /build
+
+# Generated
+/src/_gen
 
 # misc
 .DS_Store

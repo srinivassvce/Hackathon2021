@@ -4,6 +4,8 @@ public
 class PatientAllergyModel {
   private Long allergyId;
 
+  private Long patientId;
+
   private String allergyType;
 
   private String allergens;
@@ -12,6 +14,16 @@ class PatientAllergyModel {
 
   public
   PatientAllergyModel() {
+  }
+
+  public
+  Long getPatientId() {
+    return patientId;
+  }
+
+  public
+  void setPatientId(Long patientId) {
+    this.patientId = patientId;
   }
 
   public

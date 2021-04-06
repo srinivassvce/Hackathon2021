@@ -1,7 +1,5 @@
 package com.siemens.dx.hackathon.smarthealthsystem.serviceImpl;
 
-import com.siemens.dx.hackathon.smarthealthsystem.entity.Allergy;
-import com.siemens.dx.hackathon.smarthealthsystem.entity.Patient;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientAllergy;
 import com.siemens.dx.hackathon.smarthealthsystem.service.IPatientAllergyService;
 import com.siemens.dx.hackathon.smarthealthsystem.servicerepository.AllergyRepository;
@@ -31,32 +29,26 @@ class PatientAllergyServiceImpl implements IPatientAllergyService {
 
   @Override
   public
-  PatientAllergy createPatientAllergy(PatientAllergy patientAllergy) {
-    if (null != patientAllergy &&
-        null != patientAllergy.getPatient() &&
-        null != patientAllergy.getAllergy()) {
-      long patientId = patientAllergy.getPatient().getPatientId();
-      long allergyId = patientAllergy.getAllergy().getAllergyId();
-
-      Patient patient = patientRepository.findById(patientId).get();
-      Allergy allergy = allergyRepository.findById(allergyId).get();
-      patientAllergy.setPatient(patient);
-      patientAllergy.setAllergy(allergy);
-    }
-    return patientAllergyRepository.save(patientAllergy);
+  PatientAllergyModel createPatientAllergy(PatientAllergyModel patientAllergyModel) {
+    PatientAllergy patientAllergy = new PatientAllergy();
+    patientAllergy.setPatient(patientRepository.findById(patientAllergyModel.getPatientId()).get());
+    patientAllergy.setAllergy(allergyRepository.findById(patientAllergyModel.getAllergyId()).get());
+    patientAllergy.setSymptoms(patientAllergyModel.getSymptoms());
+    return EntityToViewModelConverter.convertPatientAllergy(
+        patientAllergyRepository.save(patientAllergy));
   }
 
-  @Override
+/*  @Override
   public
   PatientAllergy updatePatientAllergy(PatientAllergy patientAllergy) {
     return patientAllergyRepository.save(patientAllergy);
-  }
+  }*/
 
-  @Override
+/*  @Override
   public
   List<PatientAllergy> getPatientsAllergies() {
     return patientAllergyRepository.findAll();
-  }
+  }*/
 
   @Override
   public
@@ -68,5 +60,12 @@ class PatientAllergyServiceImpl implements IPatientAllergyService {
       patientAllergyModels.add(EntityToViewModelConverter.convertPatientAllergy(patientAllergy));
     }
     return patientAllergyModels;
+  }
+
+  @Override
+  public
+  String deleteAllergyForAPatient(Long allergyId) {
+    patientAllergyRepository.delete(patientAllergyRepository.findById(allergyId).get());
+    return "Allergy with id:" + allergyId + " deleted successfully!";
   }
 }

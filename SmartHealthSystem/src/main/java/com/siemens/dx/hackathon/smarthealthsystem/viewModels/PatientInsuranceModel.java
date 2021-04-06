@@ -7,6 +7,8 @@ class PatientInsuranceModel {
 
   private Long insuranceId;
 
+  private Long patientId;
+
   private String insuranceCompany;
 
   private String tpa;
@@ -67,5 +69,15 @@ class PatientInsuranceModel {
   public
   void setInsuranceDocuments(Blob insuranceDocuments) {
     this.insuranceDocuments = insuranceDocuments;
+  }
+
+  public
+  Long getPatientId() {
+    return patientId;
+  }
+
+  public
+  void setPatientId(Long patientId) {
+    this.patientId = patientId;
   }
 }

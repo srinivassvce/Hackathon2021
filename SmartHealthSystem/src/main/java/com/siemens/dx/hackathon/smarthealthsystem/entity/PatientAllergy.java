@@ -86,11 +86,6 @@ class PatientAllergy implements Serializable {
   }
 
   public
-  void setPatientAllergyId(Long patientAllergyId) {
-    this.patientAllergyId = patientAllergyId;
-  }
-
-  public
   Patient getPatient() {
     return patient;
   }
