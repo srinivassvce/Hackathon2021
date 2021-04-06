@@ -2,6 +2,7 @@ package com.siemens.dx.hackathon.smarthealthsystem.controllers;
 
 import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientAllergy;
 import com.siemens.dx.hackathon.smarthealthsystem.exceptions.MethodArgumentNotValidException;
+import com.siemens.dx.hackathon.smarthealthsystem.service.IPatientAllergyService;
 import com.siemens.dx.hackathon.smarthealthsystem.serviceImpl.PatientAllergyServiceImpl;
 import com.siemens.dx.hackathon.smarthealthsystem.viewModels.PatientAllergyModel;
 
@@ -26,7 +27,7 @@ public
 class PatientAllergyController {
 
   @Autowired
-  PatientAllergyServiceImpl patientAllergyService;
+  IPatientAllergyService patientAllergyService;
 
 /*  @GetMapping(path = "/get/patient-allergy")
   public

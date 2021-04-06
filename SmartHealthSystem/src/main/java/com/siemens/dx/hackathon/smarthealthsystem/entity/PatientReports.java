@@ -24,24 +24,24 @@ class PatientReports implements Serializable {
   @Column(name = "patient_report_id")
   private Long patientReportId;
 
-  @ManyToOne(cascade= CascadeType.ALL)
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "patient_id")
   private Patient patient;
 
-  @ManyToOne(cascade= CascadeType.ALL)
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "hcp_id")
   private HealthCareProvider healthCareProvider;
 
-  private
-  Blob reportImages;
+  private Blob reportImages;
 
   public
   PatientReports() {
   }
 
   public
-  PatientReports(Patient patient, Blob reportImages) {
+  PatientReports(Patient patient, HealthCareProvider healthCareProvider, Blob reportImages) {
     this.patient = patient;
+    this.healthCareProvider = healthCareProvider;
     this.reportImages = reportImages;
   }
 
@@ -68,6 +68,16 @@ class PatientReports implements Serializable {
   public
   void setReportImages(Blob reportImages) {
     this.reportImages = reportImages;
+  }
+
+  public
+  HealthCareProvider getHealthCareProvider() {
+    return healthCareProvider;
+  }
+
+  public
+  void setHealthCareProvider(HealthCareProvider healthCareProvider) {
+    this.healthCareProvider = healthCareProvider;
   }
 
   @Override

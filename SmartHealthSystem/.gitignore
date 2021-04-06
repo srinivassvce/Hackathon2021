@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Klocwork ###
+SmartHealthSystem.kwps
+SmartHealthSystem.kwlp
