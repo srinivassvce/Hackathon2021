@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import './index.css';
 import App from './App';
+import 'react-notifications-component/dist/theme.css';
+import 'animate.css';
 
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';

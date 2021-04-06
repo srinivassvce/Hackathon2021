@@ -1,7 +1,13 @@
 import Routes from "./routes";
 
+import ReactNotifications from 'react-notifications-component';
+import React from "react";
+
 const App = () => (
-	<Routes />
+	<React.Fragment>
+		<ReactNotifications />
+		<Routes />
+	</React.Fragment>
 );
 
 export default App;
