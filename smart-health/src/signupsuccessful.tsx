@@ -1,7 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/login.css";
-import FormGroup from "react-bootstrap/esm/FormGroup";
 
 function SignUpSuccessful() {
 	return (

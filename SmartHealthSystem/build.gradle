@@ -37,16 +37,17 @@ dependencies {
 }
 
 generateTypeScript {
-   /* classes = [
-           'com.siemens.dx.hackathon.smarthealthsystem.viewModels.DoctorModel',
-           'com.siemens.dx.hackathon.smarthealthsystem.viewModels.HealthCareProviderModel',
-           'com.siemens.dx.hackathon.smarthealthsystem.viewModels.PatientAllergyModel',
-           'com.siemens.dx.hackathon.smarthealthsystem.viewModels.PatientImmunizationModel',
-           'com.siemens.dx.hackathon.smarthealthsystem.viewModels.PatientMedicineModel',
-           'com.siemens.dx.hackathon.smarthealthsystem.viewModels.PatientVisitModel',
-            
-    ]*/
-    classPatterns = ['com.siemens.dx.hackathon.smarthealthsystem.viewModels.*Model']
+    /* classes = [
+            'com.siemens.dx.hackathon.smarthealthsystem.viewModels.DoctorModel',
+            'com.siemens.dx.hackathon.smarthealthsystem.viewModels.HealthCareProviderModel',
+            'com.siemens.dx.hackathon.smarthealthsystem.viewModels.PatientAllergyModel',
+            'com.siemens.dx.hackathon.smarthealthsystem.viewModels.PatientImmunizationModel',
+            'com.siemens.dx.hackathon.smarthealthsystem.viewModels.PatientMedicineModel',
+            'com.siemens.dx.hackathon.smarthealthsystem.viewModels.PatientVisitModel',
+
+     ]*/
+    classPatterns = ['com.siemens.dx.hackathon.smarthealthsystem.viewModels.*Model',
+                     'com.siemens.dx.hackathon.smarthealthsystem.entity.*']
     jsonLibrary = 'jackson2'
     outputKind = 'module'
     outputFile = '../smart-health/src/_gen/entity.d.ts'

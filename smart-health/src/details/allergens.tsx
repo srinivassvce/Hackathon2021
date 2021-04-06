@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { propTypes } from 'react-bootstrap/esm/Image';
 import Page from '../common/page';
 export interface AllergensProps {
     patientId: string;

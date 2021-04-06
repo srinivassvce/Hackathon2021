@@ -4,7 +4,6 @@ import "../styles/dashboardStyles.css";
 import { getAllergens, getMedicines } from '../api';
 import Page from '../common/page';
 import AddAllergen from '../addPages/addAllergen';
-import ReactModal from 'react-modal';
 
 export interface DashboardProps {
     patientId: string;
@@ -28,6 +27,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             requestFunction={() => getAllergens(props.patientId)}
                             navigateTo={"/allergens"}
                             addEntityContent={getAddAllergenNode}
+                            key="allergens"
                         />
                     </div>
                     <div className={responsiveClasses}>
@@ -36,6 +36,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             onExpand={() => { }}
                             propertyName={"medicines"}
                             requestFunction={() => getMedicines(props.patientId)}
+                            key="medicines"
                         />
                     </div>
                     <div className={responsiveClasses}>
@@ -44,6 +45,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             onExpand={() => { }}
                             propertyName={"allergens"}
                             requestFunction={() => getAllergens(props.patientId)}
+                            key="dummy1"
                         />
                     </div>
                     <div className={responsiveClasses}>
@@ -52,6 +54,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             onExpand={() => { }}
                             propertyName={"medicines"}
                             requestFunction={() => getMedicines(props.patientId)}
+                            key="dummy2"
                         />
                     </div>
                 </div>
