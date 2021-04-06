@@ -1,6 +1,1 @@
-# Getting started
-
-Open command prompt and run tje command "npm start".
-
-Wait till the browser opens the url "localhost:3000" in a new tab.
-
+Just import the project using build.gradle on the root folder on the project, SmartHealthSystem. Run the main class and access localhost:8080/api from any browser.
