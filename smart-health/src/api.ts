@@ -22,13 +22,11 @@ export async function registerUser(user: any): Promise<boolean> {
 
 
 
-export async function getAllergens(patient: string) {
-    const allergens = [
-        "Food Allergy- Egg, Milk, Mustard",
-        "Food Allergy- Egg, Milk, Mustard",
-        "Food Allergy- Egg, Milk, Mustard"
-    ]
-    return Promise.resolve({allergens});
+export async function getAllergens(patientId: string) {
+    const response = await axios.get(
+        `${getUrl()}get/patient/allergy/${patientId}`
+    )
+    return Promise.resolve(response.data);
 }
 export async function getPatientName(patientId: string): Promise<string> {
     const patient = await getPatientDetails(patientId);
@@ -46,7 +44,6 @@ export async function getAllAllergens() {
 }
 
 export async function saveAllergenDetails(allergy: any, patientId: string): Promise<boolean> {
-    const patient = await getPatientDetails(patientId);
     const patientAllergyDetails: PatientAllergyModel = {
         ...allergy,
         patientId,
@@ -54,7 +51,7 @@ export async function saveAllergenDetails(allergy: any, patientId: string): Prom
     await axios.post(
         `${getUrl()}add/patient/allergy`,
         {
-            patientAllergyDetails
+            ...patientAllergyDetails
         }
     );
     return true;
