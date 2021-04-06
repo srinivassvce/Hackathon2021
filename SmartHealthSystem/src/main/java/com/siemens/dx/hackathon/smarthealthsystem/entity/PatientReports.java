@@ -51,11 +51,6 @@ class PatientReports implements Serializable {
   }
 
   public
-  void setPatientReportId(Long patientReportId) {
-    this.patientReportId = patientReportId;
-  }
-
-  public
   Patient getPatient() {
     return patient;
   }

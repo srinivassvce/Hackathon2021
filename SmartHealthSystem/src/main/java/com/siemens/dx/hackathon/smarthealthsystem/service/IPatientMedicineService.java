@@ -6,5 +6,9 @@ import java.util.List;
 
 public
 interface IPatientMedicineService {
+  PatientMedicineModel addPatientMedicine(PatientMedicineModel patientMedicineModel);
+
   List<PatientMedicineModel> getAllMedicinesForPatient(Long patientId);
+
+  String deletePatientMedicine(Long medicineId);
 }

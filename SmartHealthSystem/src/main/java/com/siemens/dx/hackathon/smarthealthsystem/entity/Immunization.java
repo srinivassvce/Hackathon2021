@@ -48,11 +48,6 @@ class Immunization implements Serializable {
   }
 
   public
-  void setVaccineId(Long vaccineId) {
-    this.vaccineId = vaccineId;
-  }
-
-  public
   String getVaccineName() {
     return vaccineName;
   }

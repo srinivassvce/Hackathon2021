@@ -121,11 +121,6 @@ class Medicine implements Serializable {
   }
 
   public
-  void setMedicineId(Long medicineId) {
-    this.medicineId = medicineId;
-  }
-
-  public
   String getGenericName() {
     return genericName;
   }

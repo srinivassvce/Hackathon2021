@@ -1,1 +1,0 @@
-Just import the project using build.gradle on the root folder on the project, SmartHealthSystem. Run the main class and access localhost:8080/api from any browser.
