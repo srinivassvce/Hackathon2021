@@ -1,9 +1,10 @@
 package com.siemens.dx.hackathon.smarthealthsystem.controllers;
 
-import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientReports;
+import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientReport;
 import com.siemens.dx.hackathon.smarthealthsystem.exceptions.EntityNotFoundException;
 import com.siemens.dx.hackathon.smarthealthsystem.exceptions.MethodArgumentNotValidException;
 import com.siemens.dx.hackathon.smarthealthsystem.service.IPatientReportService;
+import com.siemens.dx.hackathon.smarthealthsystem.viewModels.PatientReportModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,16 +26,16 @@ class PatientReportController {
   @Autowired
   IPatientReportService patientReportService;
 
-  @GetMapping(path = "/get/patient/report/all")
-  public
-  ResponseEntity<List<PatientReports>> getAllPatientReports() {
-    List<PatientReports> patientReports = patientReportService.getAllPatientReports();
-    return new ResponseEntity<>(patientReports, HttpStatus.OK);
-  }
+//  @GetMapping(path = "/get/patient/report/all")
+//  public
+//  ResponseEntity<List<PatientReport>> getAllPatientReports() {
+//    List<PatientReport> patientReports = patientReportService.getAllPatientReports();
+//    return new ResponseEntity<>(patientReports, HttpStatus.OK);
+//  }
 
   @GetMapping(path = "/get/patient/report/{patientId}")
   public
-  ResponseEntity<List<PatientReports>> getReportsByPatient(@PathVariable long patientId)
+  ResponseEntity<List<PatientReport>> getReportsByPatient(@PathVariable long patientId)
   throws EntityNotFoundException {
     return new ResponseEntity<>(patientReportService.getAllPatientReportByPatientId(patientId),
         HttpStatus.OK);
@@ -42,9 +43,9 @@ class PatientReportController {
 
   @PostMapping(path = "/add/patient/report")
   public
-  ResponseEntity<PatientReports> createPatientReport(@RequestBody PatientReports patientReports)
+  ResponseEntity<PatientReportModel> createPatientReport(@RequestBody PatientReportModel patientReportModel)
   throws MethodArgumentNotValidException {
-    return new ResponseEntity<>(patientReportService.addPatientReport(patientReports),
+    return new ResponseEntity<>(patientReportService.addPatientReport(patientReportModel),
         HttpStatus.CREATED);
   }
 }

@@ -42,4 +42,16 @@ class DoctorServiceImpl implements IDoctorService {
       throw new EntityNotFoundException("Doctor not found for Id: " + doctorId);
     }
   }
+
+  @Override
+  public
+  String loginDoctor(String doctorEmail, String doctorPassword) {
+    Doctor doctor = doctorRepository.findByDoctorEmail(doctorEmail);
+
+    if (null != doctor && doctor.getDoctorPassword().equals(doctorPassword)) {
+      return doctor.getDoctorId().toString();
+    } else {
+      return "Incorrect Doctor's Email or Password!";
+    }
+  }
 }

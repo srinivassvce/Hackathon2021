@@ -53,7 +53,7 @@ class HealthCareProvider implements Serializable {
   private String hcpContact;
 
   /*@OneToMany(mappedBy = "healthCareProvider")
-  private Set<PatientReports> patientReports = new HashSet<>();*/
+  private Set<PatientReport> patientReports = new HashSet<>();*/
 
   @ManyToMany(mappedBy = "healthCareProviders", cascade = CascadeType.ALL)
   private Set<Doctor> doctors = new HashSet<>();

@@ -79,7 +79,7 @@ class PatientController {
   // login
   @PostMapping(path = "/login")
   public
-  ResponseEntity<String> loginUser(@RequestBody LoginParameter loginParameter) {
+  ResponseEntity<String> loginPatient(@RequestBody LoginParameter loginParameter) {
     String email = loginParameter.getEmail();
     String pw = loginParameter.getPassword();
 
