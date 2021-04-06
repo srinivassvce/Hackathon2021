@@ -1,6 +1,7 @@
 package com.siemens.dx.hackathon.smarthealthsystem.controllers;
 
 import com.siemens.dx.hackathon.smarthealthsystem.entity.HealthCareProvider;
+import com.siemens.dx.hackathon.smarthealthsystem.service.IHealthCareProviderService;
 import com.siemens.dx.hackathon.smarthealthsystem.serviceImpl.HealthCareProviderServiceImpl;
 import com.siemens.dx.hackathon.smarthealthsystem.viewModels.HealthCareProviderModel;
 
@@ -19,7 +20,7 @@ import java.util.List;
 public
 class HealthCareProviderController {
   @Autowired
-  HealthCareProviderServiceImpl healthCareProviderService;
+  IHealthCareProviderService healthCareProviderService;
 
   @GetMapping(path = "/get/hcp/all")
   public

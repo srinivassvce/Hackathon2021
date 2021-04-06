@@ -3,6 +3,7 @@ package com.siemens.dx.hackathon.smarthealthsystem.controllers;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.MedicalInsurance;
 import com.siemens.dx.hackathon.smarthealthsystem.exceptions.EntityNotFoundException;
 import com.siemens.dx.hackathon.smarthealthsystem.exceptions.MethodArgumentNotValidException;
+import com.siemens.dx.hackathon.smarthealthsystem.service.IInsuranceService;
 import com.siemens.dx.hackathon.smarthealthsystem.serviceImpl.InsuranceServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,14 @@ public
 class InsuranceController {
 
   @Autowired
-  InsuranceServiceImpl insuranceService;
+  IInsuranceService insuranceService;
 
   @GetMapping(path = "/get/insuranceCompany/all")
   public
   ResponseEntity<List<MedicalInsurance>> getAllInsuranceCompanies() {
     return new ResponseEntity<>(insuranceService.getAllInsuranceCompanies(), HttpStatus.OK);
   }
+
 
   @GetMapping(path = "/get/insuranceCompany/{insuranceId}")
   public

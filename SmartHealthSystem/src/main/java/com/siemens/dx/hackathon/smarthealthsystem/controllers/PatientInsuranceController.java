@@ -1,6 +1,7 @@
 package com.siemens.dx.hackathon.smarthealthsystem.controllers;
 
 import com.siemens.dx.hackathon.smarthealthsystem.exceptions.MethodArgumentNotValidException;
+import com.siemens.dx.hackathon.smarthealthsystem.service.IPatientInsuranceService;
 import com.siemens.dx.hackathon.smarthealthsystem.serviceImpl.PatientInsuranceServiceImpl;
 import com.siemens.dx.hackathon.smarthealthsystem.viewModels.PatientInsuranceModel;
 
@@ -23,7 +24,7 @@ public
 class PatientInsuranceController {
 
   @Autowired
-  PatientInsuranceServiceImpl patientInsuranceService;
+  IPatientInsuranceService patientInsuranceService;
 
  /* @GetMapping(path = "/get/patient/insurance/all")
   public

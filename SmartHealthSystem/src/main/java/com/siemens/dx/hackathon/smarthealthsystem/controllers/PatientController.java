@@ -4,6 +4,7 @@ import com.siemens.dx.hackathon.smarthealthsystem.entity.LoginParameter;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.Patient;
 import com.siemens.dx.hackathon.smarthealthsystem.exceptions.EntityNotFoundException;
 import com.siemens.dx.hackathon.smarthealthsystem.exceptions.MethodArgumentNotValidException;
+import com.siemens.dx.hackathon.smarthealthsystem.service.IPatientService;
 import com.siemens.dx.hackathon.smarthealthsystem.serviceImpl.PatientServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,20 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
 public
 class PatientController {
 
   @Autowired
-  private PatientServiceImpl patientService;
-
-  public static
-  void compareAndUpdateObject(Object objUI, Object objDb) {
-
-    //Field[] fields = objDb.getClass().getDeclaredFields();
-
-  }
+  private IPatientService patientService;
 
   @GetMapping(path = "")
   public
@@ -71,10 +65,6 @@ class PatientController {
   @PutMapping(path = "/update/patient/{patientId}")
   public
   ResponseEntity<Patient> updateUser(@RequestBody Patient patient, @PathVariable long patientId) {
-
-    Patient patientFromDb = patientService.getPatientById(patientId);
-    compareAndUpdateObject(patient, patientFromDb);
-
     return new ResponseEntity<>(patientService.updateExistingPatient(patient), HttpStatus.CREATED);
   }
 
