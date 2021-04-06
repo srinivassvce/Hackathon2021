@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import "../styles/login.css";
 import { useHistory } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
-import FormGroup from "react-bootstrap/esm/FormGroup";
-import { getUrl } from "../api";
 import { loginUrl } from "../api";
 import axios from "axios";
 
@@ -14,7 +12,6 @@ export interface LoginProps {
 export default function Login(props: LoginProps) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [emailError, setEmailError] = useState("");
 	const history = useHistory();
 
 	const validateForm = () =>
@@ -25,7 +22,7 @@ export default function Login(props: LoginProps) {
 	) => {
 		event.preventDefault();
 
-		const resp = axios
+		axios
 			.post(loginUrl(), { email, password })
 			.then(c => {
 				props.setPatientId(c.data)

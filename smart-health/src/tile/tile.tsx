@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import ReactModal from "react-modal";
-import AddAllergen from '../addPages/addAllergen';
 export interface TileProps {
     label: string;
     onExpand: () => void;
@@ -22,16 +20,17 @@ const Tile: React.FunctionComponent<TileProps> = (props) => {
     const { propertyName, requestFunction } = props;
     const [data, setData] = React.useState([]);
     React.useEffect(
+        
         () => {
+            const getAndSetData = async () => {
+                const result = await requestFunction();
+                result === undefined ? setData([]) : setData(result[propertyName]);
+            };
+        
             getAndSetData()
-        }, []
+        }, [propertyName, requestFunction]
     )
-
-    const getAndSetData = async () => {
-        const result = await requestFunction();
-        result === undefined ? setData([]) : setData(result[propertyName]);
-    };
-
+    
     const [showModal, setShowModal] = React.useState(false);
 
     const { navigateTo, addEntityContent } = props;

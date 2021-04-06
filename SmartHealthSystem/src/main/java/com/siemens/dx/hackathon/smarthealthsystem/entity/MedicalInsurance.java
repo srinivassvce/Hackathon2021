@@ -51,11 +51,6 @@ class MedicalInsurance implements Serializable {
   }
 
   public
-  void setInsuranceId(Long insuranceId) {
-    this.insuranceId = insuranceId;
-  }
-
-  public
   String getInsuranceCompany() {
     return insuranceCompany;
   }

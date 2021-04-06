@@ -48,8 +48,8 @@ export default function Register() {
 			password,
 			bloodGroup,
 			birthDate
-		}
-		const result = await registerUser(patient);
+		};
+		await registerUser(patient);
 		history.push("/signupsuccessful");
 	};
 	function validateForm() {

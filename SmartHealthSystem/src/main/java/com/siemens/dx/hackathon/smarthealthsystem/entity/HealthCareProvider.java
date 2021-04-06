@@ -113,11 +113,6 @@ class HealthCareProvider implements Serializable {
     return hcpId;
   }
 
-  public
-  void setHcpId(Long hcpId) {
-    this.hcpId = hcpId;
-  }
-
   @Override
   public
   boolean equals(Object o) {

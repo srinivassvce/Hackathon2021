@@ -98,11 +98,6 @@ class Doctor implements Serializable {
     return doctorId;
   }
 
-  public
-  void setDoctorId(Long doctorId) {
-    this.doctorId = doctorId;
-  }
-
   @Override
   public
   boolean equals(Object o) {

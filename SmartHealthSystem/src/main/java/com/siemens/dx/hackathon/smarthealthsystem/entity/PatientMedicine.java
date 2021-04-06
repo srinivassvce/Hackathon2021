@@ -62,11 +62,6 @@ class PatientMedicine implements Serializable {
   }
 
   public
-  void setPatientMedicineId(Long patientMedicineId) {
-    this.patientMedicineId = patientMedicineId;
-  }
-
-  public
   Patient getPatient() {
     return patient;
   }
