@@ -31,11 +31,11 @@ class PatientVisitController {
         HttpStatus.OK);
   }
 
-  @GetMapping(path = "/get/patient/visits/all")
+/*  @GetMapping(path = "/get/patient/visits/all")
   public
   ResponseEntity<List<PatientVisit>> getAllVisits() {
     return new ResponseEntity<>(patientVisitService.getAllVisits(), HttpStatus.OK);
-  }
+  }*/
 
   @PostMapping(path = "/add/patient/visit")
   public

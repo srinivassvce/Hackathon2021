@@ -1,6 +1,6 @@
 package com.siemens.dx.hackathon.smarthealthsystem.servicerepository;
 
-import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientReports;
+import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientReport;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public
-interface PatientReportRepository extends JpaRepository<PatientReports, Long> {
+interface PatientReportRepository extends JpaRepository<PatientReport, Long> {
 
-  List<PatientReports> findAllByPatient_PatientId(Long patientId);
+  List<PatientReport> findAllByPatient_PatientId(Long patientId);
 }

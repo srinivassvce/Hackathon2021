@@ -1,11 +1,7 @@
 package com.siemens.dx.hackathon.smarthealthsystem.controllers;
 
-<<<<<<< HEAD
-import com.siemens.dx.hackathon.smarthealthsystem.service.IPatientImmunizationService;
-=======
 import com.siemens.dx.hackathon.smarthealthsystem.exceptions.MethodArgumentNotValidException;
->>>>>>> main
-import com.siemens.dx.hackathon.smarthealthsystem.serviceImpl.PatientImmunizationServiceImpl;
+import com.siemens.dx.hackathon.smarthealthsystem.service.IPatientImmunizationService;
 import com.siemens.dx.hackathon.smarthealthsystem.viewModels.PatientImmunizationModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
