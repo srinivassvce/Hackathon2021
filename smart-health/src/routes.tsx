@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import Dashboard from './dashboard/dashboard';
 import Allergens from './details/allergens';
-import Header from './common/header';
 import Login from './login/login';
 import Register from './login/register';
 import SignUpSuccessful from './signupsuccessful';

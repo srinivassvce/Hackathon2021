@@ -4,7 +4,6 @@ import "../styles/dashboardStyles.css";
 import { getAllergens, getMedicines } from '../api';
 import Page from '../common/page';
 import AddAllergen from '../addPages/addAllergen';
-import ReactModal from 'react-modal';
 
 export interface DashboardProps {
     patientId: string;
@@ -28,6 +27,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             requestFunction={() => getAllergens(props.patientId)}
                             navigateTo={"/allergens"}
                             addEntityContent={getAddAllergenNode}
+                            key="allergens"
                         />
                     </div>
                     <div className={responsiveClasses}>
@@ -36,6 +36,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             onExpand={() => { }}
                             propertyName={"medicines"}
                             requestFunction={() => getMedicines(props.patientId)}
+                            key="medicines"
                         />
                     </div>
                     <div className={responsiveClasses}>
@@ -44,6 +45,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             onExpand={() => { }}
                             propertyName={"allergens"}
                             requestFunction={() => getAllergens(props.patientId)}
+                            key="dummy1"
                         />
                     </div>
                     <div className={responsiveClasses}>
@@ -52,6 +54,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             onExpand={() => { }}
                             propertyName={"medicines"}
                             requestFunction={() => getMedicines(props.patientId)}
+                            key="dummy2"
                         />
                     </div>
                 </div>
@@ -59,25 +62,15 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
            </Page>
         </React.Fragment>
     );
+
+    function getAddAllergenNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
+        return (
+            <AddAllergen patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+        )
+    }
 }
 
 
 export default Dashboard;
 
-function getAddAllergenNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
-    return (
-        <ReactModal
-            isOpen={showModal}
-        >
-            <div className="row m-auto">
-                <button onClick={() => setModal(false)}>
-                    close
-                </button>
-            </div>
-            <hr />
-            <div className="row">
-                <AddAllergen patientId={""}/>
-            </div>
-        </ReactModal>
-    )
-}
+

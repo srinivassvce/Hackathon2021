@@ -31,7 +31,7 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
             <div className="bg-info container-fluid text-white jumbotron">
                 <div className="row">
                     <div className="col-1">
-                        <img src={logo} style={{ height: "100%", width: "100%" }} />
+                        <img src={logo} alt="logo for healthcare" style={{ height: "100%", width: "100%" }} />
                     </div>
                     <div className="col-9 text-center display-4">
                         {currentPageTitle}
