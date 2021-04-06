@@ -4,6 +4,7 @@ import com.siemens.dx.hackathon.smarthealthsystem.entity.Allergy;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.Patient;
 import com.siemens.dx.hackathon.smarthealthsystem.exceptions.EntityNotFoundException;
 import com.siemens.dx.hackathon.smarthealthsystem.exceptions.MethodArgumentNotValidException;
+import com.siemens.dx.hackathon.smarthealthsystem.service.IAllergyService;
 import com.siemens.dx.hackathon.smarthealthsystem.serviceImpl.AllergyServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public
 class AllergyController {
 
   @Autowired
-  AllergyServiceImpl allergyService;
+  IAllergyService allergyService;
 
   @GetMapping(path = "/get/allergy/all")
   public

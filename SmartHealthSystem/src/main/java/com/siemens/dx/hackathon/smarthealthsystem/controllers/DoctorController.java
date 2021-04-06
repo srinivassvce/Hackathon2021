@@ -2,6 +2,7 @@ package com.siemens.dx.hackathon.smarthealthsystem.controllers;
 
 import com.siemens.dx.hackathon.smarthealthsystem.entity.Doctor;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.HealthCareProvider;
+import com.siemens.dx.hackathon.smarthealthsystem.service.IDoctorService;
 import com.siemens.dx.hackathon.smarthealthsystem.serviceImpl.DoctorServiceImpl;
 import com.siemens.dx.hackathon.smarthealthsystem.viewModels.DoctorModel;
 
@@ -21,7 +22,7 @@ import java.util.Set;
 public
 class DoctorController {
   @Autowired
-  DoctorServiceImpl doctorService;
+  IDoctorService doctorService;
 
   @GetMapping(path = "/get/doctor/all")
   public

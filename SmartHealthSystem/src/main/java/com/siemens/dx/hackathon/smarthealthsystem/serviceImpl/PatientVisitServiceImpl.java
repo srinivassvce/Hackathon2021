@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 public
-class PatientVisitImpl implements IPatientVisitService {
+class PatientVisitServiceImpl implements IPatientVisitService {
 
   @Autowired
   PatientVisitRepository patientVisitRepository;
