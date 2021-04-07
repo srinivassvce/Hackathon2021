@@ -51,6 +51,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             onExpand={() => { }}
                             propertyName={"medicines"}
                             requestFunction={() => getMedicines(props.patientId)}
+                            navigateTo={"/medicines"}
                             key="medicines"
                         />
                     </div>
@@ -60,6 +61,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             onExpand={() => { }}
                             propertyName={"doctors"}
                             requestFunction={() => getDoctors()}
+                            navigateTo={"/doctors"}
                             key="doctors"
                         />
                     </div>
@@ -69,6 +71,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             onExpand={() => { }}
                             propertyName={"immunizations"}
                             requestFunction={() => getImmunizations()}
+                            navigateTo={"/immunizations"}
                             key="immunizations"
                         />
                     </div>
@@ -78,6 +81,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             onExpand={() => { }}
                             propertyName={"medicalInsurances"}
                             requestFunction={() => getMedicalInsurances()}
+                            navigateTo={"/insurances"}
                             key="medicalInsurances"
                         />
                     </div>
@@ -87,6 +91,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             onExpand={() => { }}
                             propertyName={"lastVisits"}
                             requestFunction={() => getLastVisits()}
+                            navigateTo={"/visits"}
                             key="lastVisits"
                         />
                     </div>
@@ -96,6 +101,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             onExpand={() => { }}
                             propertyName={"medicalHistory"}
                             requestFunction={() => getMedicalHistory()}
+                            navigateTo={"/history"}
                             key="medicalHistory"
                         />
                     </div>
@@ -105,6 +111,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             onExpand={() => { }}
                             propertyName={"emergencyContacts"}
                             requestFunction={() => getEmergencyContacts()}
+                            navigateTo={"/contacts"}
                             key="emergencyContacts"
                         />
                     </div>
