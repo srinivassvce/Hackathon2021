@@ -9,4 +9,6 @@ interface IDoctorService {
   List<DoctorModel> findAll();
 
   DoctorModel findByDoctorId(Long doctorId);
+
+  String loginDoctor(String patientEmail, String patientPassword);
 }

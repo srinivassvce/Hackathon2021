@@ -8,8 +8,11 @@ The application has embedded TOMCAT server and there is no need for separate Tom
 installation.
 Gradle build tool is used for building and **gradlew build** can be used for building the project
 . This command also generates the typescripts files automatically for the model classes added in 
-com.siemens.dx.hackathon.smarthealthsystem.viewModels. Generated .d.ts file can be found at 
+com.siemens.dx.hackathon.smarthealthsystem.viewModels.
+Generated entity.d.ts file can be found at
+
 **smart-health\src\_gen\entity.d.ts**
+
 **gradlew bootRun** should start the server at http://localhost:8080/api
 
 Hitting the server URL should welcome you with **Welcome to KARMA BYTES home!**
@@ -17,7 +20,7 @@ Hitting the server URL should welcome you with **Welcome to KARMA BYTES home!**
 #### TO VIEW YOUR H2 DATABASE
 
 By default the application uses H2 in-memory database. To view and query the database you can browse
-to http://localhost:8090/h2-console. Default username is 'sa' with a blank password. Give jdbc 
+to http://localhost:8080/h2-console. Default username is 'sa' with a blank password. Give jdbc 
 url as **jdbc:h2:mem:shsdb_2** 
 Make sure you disable this in your production profiles. For more, see https://goo.gl/U8m62X
 
@@ -34,6 +37,7 @@ Prefix all the below url strings with the default URL to get the complete URL fo
 
 ###### LOGIN
 `/login`
+`/doctorLogin`
 
 ###### ALLERGIES
 `get/allergy/all`
@@ -68,10 +72,19 @@ Prefix all the below url strings with the default URL to get the complete URL fo
 `delete/patient/medicine/{medicineId}`
 
 ##### VISITS
-`get/patient/visits/all`
 `get/patient/visits/{patientId}`
 `add/patient/visit`
 
+##### REPORTS
+`get/patient/report/{patientId}`
+`add/patient/report`
 
- 
+##### SHARED RECORDS
+`add/patient/emergencyContact`
+`add/shareRecord`
+`get/confirmation/share`
+`get/sentSharedRecords/all/{patientId}`
+`get/receivedSharedRecords/all/{id}`
+`delete/sharedRecord`
+
  
