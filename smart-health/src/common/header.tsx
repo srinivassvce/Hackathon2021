@@ -17,7 +17,7 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
             if (patientId !== undefined && patientId !== "") {
                 getAndSetName();
             }
-        }
+        }, [patientId]
     )
 
     const getAndSetName = async ()  => {

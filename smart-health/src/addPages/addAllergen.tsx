@@ -21,9 +21,9 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 		setAllergens(allergens);
 
 	};
-	const [allergy, setAllergy] = React.useState(
+	const [allergy, setAllergy] = React.useState<Allergy & { symptoms: string }>(
 		{
-			allergyId: null,
+			allergyId: -1,
 			allergyType: "",
 			allergens: "",
 			symptoms: ""
@@ -33,7 +33,7 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 
 	React.useEffect(
 		() => {
-			const isDis = allergy.allergyId === null || allergy.allergyId === undefined;
+			const isDis = allergy.allergyId < 0;
 			setDisabled(isDis);
 		}, [allergy]
 	);
@@ -46,10 +46,10 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 		// check if allergens exist for this type.
 		const allergens = getAllergens(option.label);
 		console.log(allergens);
-		const allergenId = allergens.length === 1 && allergens[0].label === "" ? option.value : null;
+		const allergenId = allergens.length === 1 && allergens[0].label === "" ? allergens[0].value : -1;
 		setAllergy(
 			{
-				...allergy,
+				symptoms: "",
 				allergyType: option.value,
 				allergyId: allergenId,
 				allergens: ""
@@ -68,7 +68,7 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 		);
 	};
 
-	const handleChange = (e: { target: { name: string; value: string; }; }) => {
+	const handleSymptomsChange = (e: { target: { name: string; value: string; }; }) => {
 		const {name, value} = e.target;
 		const newAllergy = {
 			...allergy,
@@ -81,6 +81,12 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 		e.preventDefault();
 		await saveAllergen();
 		// closes the modal after save
+		setAllergy({
+			           allergens: "",
+			           allergyId: -1,
+			           allergyType: "",
+			           symptoms: ""
+		           });
 		setModal(false);
 	};
 
@@ -116,6 +122,9 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 	};
 
 	const getSelectedValue = (currentAllergen: string) => {
+		if (allergy.allergyId < 0) {
+			return null;
+		}
 		const values = allergens.find(
 			allergen => allergen.allergens === currentAllergen
 		);
@@ -128,6 +137,18 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 			return null;
 		}
 	};
+
+	const safeExit = () => {
+		setModal(false);
+		setAllergy(
+			{
+				allergyId: -1,
+				allergens: "",
+				allergyType: "",
+				symptoms: ""
+			}
+		)
+	}
 
 	return (
 		<React.Fragment>
@@ -142,7 +163,7 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 								<h3 className="text-center text-info">Add Allergy</h3>
 							</div>
 							<div className="col-md-1 col-md-offset-1">
-								<button onClick={() => setModal(false)}>
+								<button onClick={() => safeExit()}>
 									x
 								</button>
 
@@ -161,6 +182,7 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 											<Select
 												options={getAllergenTypes()}
 												onChange={handleTypeChange}
+												placeholder={"Select Allergy type"}
 											/>
 										</div>
 										<div className="form-group">
@@ -168,6 +190,7 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 												options={getAllergens(allergy.allergyType)}
 												onChange={handleAllergenChange}
 												value={getSelectedValue(allergy.allergens)}
+												placeholder={"Select Allergen"}
 											/>
 										</div>
 										<div className="form-group">
@@ -178,18 +201,18 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 												type="text"
 												name="symptoms"
 												id="symptoms"
-												autoFocus
 												className="form-control"
 												value={allergy.symptoms}
-												onChange={handleChange}></input>
+												onChange={handleSymptomsChange}/>
 										</div>
 										<div className="form-group d-grid">
 											<input
 												type="submit"
 												name="submit"
+												placeholder={"Select Symptoms"}
 												disabled={disabled}
 												className="btn btn-info btn-md"
-												value="Add"></input>
+												value="Add"/>
 										</div>
 									</form>
 								</div>
