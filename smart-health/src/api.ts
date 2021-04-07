@@ -69,6 +69,78 @@ export async function getMedicines(patient: string) {
     )
 }
 
+export async function getDoctors() {
+    return Promise.resolve(
+        {
+            doctors: [
+                "Doctor 1",
+                "Doctor 2",
+                "Doctor 3"
+            ]
+        }
+    )
+}
+
+export async function getImmunizations() {
+    return Promise.resolve(
+        {
+            immunizations: [
+                "Vaccine 1",
+                "Vaccine 2",
+                "Vaccine 3"
+            ]
+        }
+    )
+}
+
+export async function getMedicalInsurances() {
+    return Promise.resolve(
+        {
+            medicalInsurances: [
+                "Insurance 1",
+                "Insurance 2",
+                "Insurance 3"
+            ]
+        }
+    )
+}
+
+export async function getLastVisits() {
+    return Promise.resolve(
+        {
+            lastVisits: [
+                "Visit 1",
+                "Visit 2",
+                "Visit 3"
+            ]
+        }
+    )
+}
+
+export async function getMedicalHistory() {
+    return Promise.resolve(
+        {
+            medicalHistory: [
+                "History 1",
+                "History 2",
+                "History 3"
+            ]
+        }
+    )
+}
+
+export async function getEmergencyContacts() {
+    return Promise.resolve(
+        {
+            emergencyContacts: [
+                "Contact 1",
+                "Contact 2",
+                "Contact 3"
+            ]
+        }
+    )
+}
+
 export async function getAllergen(allergenId: string) {
     const response = await axios.get(`${getUrl()}/get/allergy/${allergenId}`);
     return response.data;
