@@ -79,5 +79,12 @@ Prefix all the below url strings with the default URL to get the complete URL fo
 `get/patient/report/{patientId}`
 `add/patient/report`
 
- 
+##### SHARED RECORDS
+`add/patient/emergencyContact`
+`add/shareRecord`
+`get/confirmation/share`
+`get/sentSharedRecords/all/{patientId}`
+`get/receivedSharedRecords/all/{id}`
+`delete/sharedRecord`
+
  
