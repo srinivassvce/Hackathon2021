@@ -38,8 +38,8 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 		}, [allergy]
 	);
 
-	const saveAllergen = () => {
-		saveAllergenDetails(allergy, patientId);
+	const saveAllergen = async () => {
+		await saveAllergenDetails(allergy, patientId);
 	};
 
 	const handleTypeChange = (option: any, action: any) => {
@@ -77,9 +77,11 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 		setAllergy(newAllergy);
 	};
 
-	const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+	const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
-		saveAllergen();
+		await saveAllergen();
+		// closes the modal after save
+		setModal(false);
 	};
 
 	const getAllergenTypes = () => {
