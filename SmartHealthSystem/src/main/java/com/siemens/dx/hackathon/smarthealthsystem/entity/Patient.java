@@ -65,7 +65,7 @@ class Patient implements Serializable {
   private Set<PatientReports> patientReports;
 
   @OneToMany(mappedBy = "patient")
-  private Set<SharedRecords> sharedRecords;
+  private Set<SharedRecord> sharedRecords;
 
   @OneToMany(mappedBy = "patient")
   private Set<PatientVisit> patientVisits;

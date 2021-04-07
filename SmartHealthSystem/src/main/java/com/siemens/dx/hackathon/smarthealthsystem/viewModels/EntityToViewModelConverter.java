@@ -7,6 +7,7 @@ import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientImmunization;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientInsurance;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientMedicine;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientVisit;
+import com.siemens.dx.hackathon.smarthealthsystem.entity.SharedRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,5 +127,27 @@ class EntityToViewModelConverter {
     patientImmunizationModel.setPatientId(patientImmunization.getPatient().getPatientId());
     patientImmunizationModel.setVaccineName(patientImmunization.getImmunization().getVaccineName());
     return patientImmunizationModel;
+  }
+
+  public static
+  EmergencyContactModel convertSharedRecordToEmergencyContactModel(SharedRecord sharedRecord) {
+    EmergencyContactModel emergencyContactModel = new EmergencyContactModel();
+    emergencyContactModel.setPatientId(sharedRecord.getPatient().getPatientId());
+    emergencyContactModel.setEmergencyDoctor(sharedRecord.getSharedDoctor());
+    emergencyContactModel.setEmergencyPatient(sharedRecord.getSharedPatient());
+    return emergencyContactModel;
+  }
+
+  public static
+  SharedRecordModel convertSharedRecordToSharedRecordModel(SharedRecord sharedRecord) {
+    SharedRecordModel sharedRecordModel = new SharedRecordModel();
+    sharedRecordModel.setPatientId(sharedRecord.getPatient().getPatientId());
+    if (null != sharedRecord.getSharedDoctor()) {
+      sharedRecordModel.setSharedEmail(sharedRecord.getSharedDoctor().getDoctorEmail());
+    }
+    if (null != sharedRecord.getSharedPatient()) {
+      sharedRecordModel.setSharedEmail(sharedRecord.getSharedPatient().getPatientEmail());
+    }
+    return sharedRecordModel;
   }
 }
