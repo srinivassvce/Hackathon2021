@@ -1,7 +1,8 @@
 import * as React from 'react';
 import Tile from '../tile/tile';
 import "../styles/dashboardStyles.css";
-import { getAllergen, getAllergens, getMedicines } from '../api';
+import { getAllergen, getAllergens, getDoctors, getMedicines, getImmunizations, 
+    getMedicalInsurances, getLastVisits, getMedicalHistory, getEmergencyContacts } from '../api';
 import Page from '../common/page';
 import AddAllergen from '../addPages/addAllergen';
 
@@ -51,6 +52,60 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             propertyName={"medicines"}
                             requestFunction={() => getMedicines(props.patientId)}
                             key="medicines"
+                        />
+                    </div>
+                    <div className={responsiveClasses}>
+                        <Tile
+                            label={"Doctors"}
+                            onExpand={() => { }}
+                            propertyName={"doctors"}
+                            requestFunction={() => getDoctors()}
+                            key="doctors"
+                        />
+                    </div>
+                    <div className={responsiveClasses}>
+                        <Tile
+                            label={"Immunizations"}
+                            onExpand={() => { }}
+                            propertyName={"immunizations"}
+                            requestFunction={() => getImmunizations()}
+                            key="immunizations"
+                        />
+                    </div>
+                    <div className={responsiveClasses}>
+                        <Tile
+                            label={"Medical Insurances"}
+                            onExpand={() => { }}
+                            propertyName={"medicalInsurances"}
+                            requestFunction={() => getMedicalInsurances()}
+                            key="medicalInsurances"
+                        />
+                    </div>
+                    <div className={responsiveClasses}>
+                        <Tile
+                            label={"Last Visits"}
+                            onExpand={() => { }}
+                            propertyName={"lastVisits"}
+                            requestFunction={() => getLastVisits()}
+                            key="lastVisits"
+                        />
+                    </div>
+                    <div className={responsiveClasses}>
+                        <Tile
+                            label={"Medical History"}
+                            onExpand={() => { }}
+                            propertyName={"medicalHistory"}
+                            requestFunction={() => getMedicalHistory()}
+                            key="medicalHistory"
+                        />
+                    </div>
+                    <div className={responsiveClasses}>
+                        <Tile
+                            label={"Emergency Contacts"}
+                            onExpand={() => { }}
+                            propertyName={"emergencyContacts"}
+                            requestFunction={() => getEmergencyContacts()}
+                            key="emergencyContacts"
                         />
                     </div>
                 </div>
