@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from "axios";
 import IPatient from "./entities/IPatient";
-import { PatientAllergyModel } from "./_gen/entity";
 
 export function getUrl(): string {
     return `http://localhost:8080/api/`;
@@ -22,11 +21,13 @@ export async function registerUser(user: any): Promise<boolean> {
 
 
 
-export async function getAllergens(patientId: string) {
-    const response = await axios.get(
-        `${getUrl()}get/patient/allergy/${patientId}`
-    )
-    return Promise.resolve(response.data);
+export async function getAllergens(patient: string) {
+    const allergens = [
+        "Food Allergy- Egg, Milk, Mustard",
+        "Food Allergy- Egg, Milk, Mustard",
+        "Food Allergy- Egg, Milk, Mustard"
+    ]
+    return Promise.resolve({allergens});
 }
 export async function getPatientName(patientId: string): Promise<string> {
     const patient = await getPatientDetails(patientId);
@@ -44,14 +45,13 @@ export async function getAllAllergens() {
 }
 
 export async function saveAllergenDetails(allergy: any, patientId: string): Promise<boolean> {
-    const patientAllergyDetails: PatientAllergyModel = {
-        ...allergy,
-        patientId,
-    }
+    const patient = await getPatientDetails(patientId);
     await axios.post(
-        `${getUrl()}add/patient/allergy`,
+        `${getUrl()}create/patient/allergy`,
         {
-            ...patientAllergyDetails
+            patient,
+            allergy,
+            symptoms: allergy.symptoms
         }
     );
     return true;

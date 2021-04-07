@@ -1,8 +1,10 @@
-import * as React from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {registerUser} from "../api";
+import { registerUser } from "../api";
 import { useFormFields } from "../libs/useFormFields";
 import { useHistory } from "react-router";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 // export interface ISignup {
 // 	email: string;
@@ -19,6 +21,7 @@ import { useHistory } from "react-router";
 // }
 export default function Register() {
 	const history = useHistory();
+
 	const [fields, handleFieldChange] = useFormFields({
 		email: "",
 		password: "",
@@ -37,7 +40,16 @@ export default function Register() {
 		event,
 	) => {
 		event.preventDefault();
-		const {patientName, email, address, mobile, password, bloodGroup, dateOfBirth} = fields;
+		const {
+			patientName,
+			email,
+			address,
+			mobile,
+			password,
+			bloodGroup,
+			dateOfBirth,
+		} = fields;
+
 		const birthDateUnformatted = new Date(dateOfBirth);
 		const birthDate = birthDateUnformatted.toISOString();
 		const patient = {
@@ -47,11 +59,23 @@ export default function Register() {
 			mobile,
 			password,
 			bloodGroup,
-			birthDate
+			birthDate,
 		};
-		await registerUser(patient);
+		const result = await registerUser(patient);
 		history.push("/signupsuccessful");
 	};
+	const DOB = () => {
+		const [startDate, setStartDate] = useState(null);
+		return (
+			<DatePicker
+				selected={startDate}
+				placeholderText="mm/dd/yyyy"
+				isClearable
+				onChange={(date) => setStartDate(date)}
+			/>
+		);
+	};
+
 	function validateForm() {
 		return (
 			fields.email.length > 0 &&
@@ -80,22 +104,53 @@ export default function Register() {
 									placeholder="Patient Name"
 									onChange={handleFieldChange}
 								/>
-								<input
+
+								{/* <input
 									type="text"
 									name="dateOfBirth"
 									value={fields.dateOfBirth}
 									className="form-control input-lg"
 									placeholder="Date Of Birth (mm/dd/yyyy)"
 									onChange={handleFieldChange}
-								/>
-								<input
+								/> */}
+								<div className="form-control input-lg">
+									<label htmlFor="Date Of Birth" className="text-secondary">
+										Date of Birth:&nbsp;&nbsp;&nbsp;&nbsp; <DOB />
+									</label>
+								</div>
+
+								<div className="form-control input-lg">
+									<div className="form-check form-check-inline">
+										<input
+											className="form-check-input"
+											type="radio"
+											name="inlineRadioOptions"
+											onChange={handleFieldChange}
+											id="inlineRadio1"
+											value="male"></input>
+										<label className="form-check-label">Male</label>
+									</div>
+									<div className="form-check form-check-inline">
+										<input
+											className="form-check-input"
+											type="radio"
+											name="inlineRadioOptions"
+											onChange={handleFieldChange}
+											id="inlineRadio2"
+											value="female"></input>
+										<label className="form-check-label">Female</label>
+									</div>
+								</div>
+
+								{/* <input
 									type="gender"
 									name="gender"
 									value={fields.gender}
 									className="form-control input-lg"
 									placeholder="Gender"
 									onChange={handleFieldChange}
-								/>
+								/> */}
+
 								<input
 									type="text"
 									name="mobileNumber"

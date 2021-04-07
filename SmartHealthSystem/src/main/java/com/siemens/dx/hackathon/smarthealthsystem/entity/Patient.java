@@ -62,10 +62,10 @@ class Patient implements Serializable {
   private Set<PatientInsurance> patientInsurances;
 
   @OneToMany(mappedBy = "patient")
-  private Set<PatientReports> patientReports;
+  private Set<PatientReport> patientReports;
 
   @OneToMany(mappedBy = "patient")
-  private Set<SharedRecords> sharedRecords;
+  private Set<SharedRecord> sharedRecords;
 
   @OneToMany(mappedBy = "patient")
   private Set<PatientVisit> patientVisits;

@@ -1,15 +1,16 @@
 package com.siemens.dx.hackathon.smarthealthsystem.service;
 
-import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientReports;
+import com.siemens.dx.hackathon.smarthealthsystem.entity.PatientReport;
+import com.siemens.dx.hackathon.smarthealthsystem.viewModels.PatientReportModel;
 
 import java.util.List;
 
 public
 interface IPatientReportService {
 
-  PatientReports addPatientReport(PatientReports patientReports);
+  PatientReportModel addPatientReport(PatientReportModel patientReportModel);
 
-  List<PatientReports> getAllPatientReports();
+  List<PatientReport> getAllPatientReports();
 
-  List<PatientReports> getAllPatientReportByPatientId(long patientId);
+  List<PatientReport> getAllPatientReportByPatientId(long patientId);
 }
