@@ -10,6 +10,7 @@ import MedicalHistory from './details/medicalHistory';
 import MedicalInsurances from './details/medicalInsurances';
 import Medicines from './details/medicines';
 import Login from './login/login';
+import Profile from "./login/profile";
 import Register from './login/register';
 import SignUpSuccessful from './signupsuccessful';
 
@@ -32,6 +33,7 @@ const Routes: React.FunctionComponent<RoutesProps> = () => {
                     <Login setPatientId={updatePatientId} />
                 </Route>
                 <Route path="/dashboard"> <Dashboard patientId={patientId} /> </Route>
+                <Route path="/profile"> <Profile patientId={patientId}/> </Route>
                 <Route path="/allergens"> <Allergens patientId={patientId} /></Route>
                 <Route path="/medicines"> <Medicines patientId={patientId} /></Route>
                 <Route path="/doctors"> <Doctors patientId={patientId} /></Route>
