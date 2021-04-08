@@ -36,8 +36,10 @@ class PatientMedicineServiceImpl implements IPatientMedicineService {
     PatientMedicine patientMedicine = new PatientMedicine();
     patientMedicine.setFrequency(patientMedicineModel.getFrequency());
     patientMedicine.setFromDate(patientMedicineModel.getFromDate());
-    patientMedicine.setPatientVisit(
-        patientVisitRepository.findById(patientMedicineModel.getPatientVisitId()).get());
+    if (null != patientMedicineModel.getPatientVisitId()) {
+      patientMedicine.setPatientVisit(
+          patientVisitRepository.findById(patientMedicineModel.getPatientVisitId()).get());
+    }
     patientMedicine.setPatient(
         patientRepository.findById(patientMedicineModel.getPatientId()).get());
     patientMedicine.setMedicine(
