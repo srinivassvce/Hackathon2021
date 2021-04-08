@@ -1,5 +1,4 @@
 import * as React from "react";
-import {useState} from "react";
 import DatePicker from "react-datepicker";
 import ReactModal from "react-modal";
 import Select, {OptionTypeBase} from "react-select";
@@ -14,7 +13,6 @@ export interface AddMedicineProps {
 
 const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, showModal, setModal}) => {
 	const [medicines, setMedicines] = React.useState<Medicine[]>([]);
-	console.log("Medicines " + medicines);
 	React.useEffect(() => {
 		getAndSetMedicines();
 	}, []);
@@ -28,11 +26,27 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 		e.preventDefault();
 		await saveMedicine();
 		// closes the modal after save
+		setMedicine(
+			{
+				medicineId: null,
+				patientId: "",
+				genericName: "",
+				brandName: "",
+				dose: "",
+				classification: "",
+				manufacturer: "",
+				medicineType: "",
+				medicinePrice: "",
+				fromDate: "",
+				toDate: "",
+				frequency: "",
+				patientVisitId: "",
+			}
+		);
 		setModal(false);
 	};
 
 	const saveMedicine = async () => {
-		console.log(patientId);
 		await saveMedicineDetails(medicine, patientId);
 	};
 	const handleChange = (e: { target: { name: string; value: string; }; }) => {
@@ -59,7 +73,6 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 				                           value: genericName
 			                           })
 		);
-		console.log("VALUES " + values);
 		return values;
 	};
 
@@ -80,7 +93,6 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 	const handleGenericNameChange = (option: any, action: any) => {
 		// get all Brand Names for the selected Generic Name.
 		const brandNames = getBrandNames(option.label);
-		console.log(brandNames);
 		const medicineId = brandNames.length === 1 && brandNames[0].label === "" ? option.value : null;
 		setMedicine(
 			{
@@ -91,22 +103,22 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 			}
 		);
 	};
-	const DateP = (props: any) => {
-		const [startDate, setStartDate] = useState(null);
-		const {onChange} = props;
-		const handleChange = (date) => {
-			setStartDate(date);
-			onChange(date);
-		};
-		return (
-			<DatePicker
-				selected={startDate}
-				placeholderText="mm/dd/yyyy"
-				isClearable
-				onChange={handleChange}
-			/>
-		);
-	};
+	/*	const DateP = (props: any) => {
+			const [startDate, setStartDate] = useState(null);
+			const {onChange} = props;
+			const handleChange = (date) => {
+				setStartDate(date);
+				onChange(date);
+			};
+			return (
+				<DatePicker
+					selected={startDate}
+					placeholderText="mm/dd/yyyy"
+					isClearable
+					onChange={handleChange}
+				/>
+			);
+		};*/
 	const [medicine, setMedicine] = React.useState(
 		{
 			medicineId: null,
@@ -141,7 +153,6 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 
 	};
 	const handleBrandNameChange = (option: any, action: any) => {
-		console.log(option);
 		setMedicine(
 			{
 				...medicine,
@@ -153,7 +164,6 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 	};
 
 	const updateFromDate = (date) => {
-		console.log(date);
 		setMedicine(
 			{
 				...medicine,
@@ -163,7 +173,6 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 	};
 
 	const updateToDate = (date) => {
-		console.log(date);
 		setMedicine(
 			{
 				...medicine,
@@ -171,11 +180,6 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 			}
 		);
 	};
-	const options = [
-		{value: "chocolate", label: "Chocolate"},
-		{value: "strawberry", label: "Strawberry"},
-		{value: "vanilla", label: "Vanilla"}
-	];
 	const getSelectedValue = (currentBrandName: string) => {
 		const values = medicines.find(
 			medicine => medicine.brandName === currentBrandName
@@ -188,6 +192,26 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 		} else {
 			return null;
 		}
+	};
+	const safeExit = () => {
+		setModal(false);
+		setMedicine(
+			{
+				medicineId: null,
+				patientId: "",
+				genericName: "",
+				brandName: "",
+				dose: "",
+				classification: "",
+				manufacturer: "",
+				medicineType: "",
+				medicinePrice: "",
+				fromDate: "",
+				toDate: "",
+				frequency: "",
+				patientVisitId: "",
+			}
+		);
 	};
 	return (
 		<React.Fragment>
@@ -202,7 +226,7 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 								<h3 className="text-center text-info">Add Medicine</h3>
 							</div>
 							<div className="col-md-1 col-md-offset-1">
-								<button onClick={() => setModal(false)}>
+								<button onClick={() => safeExit()}>
 									x
 								</button>
 
@@ -236,7 +260,7 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 											/>
 										</div>
 										<div className="form-group">
-											<label htmlFor="From Date" className="text-info">
+											<label htmlFor="Start Date" className="text-info">
 												From Date :
 											</label>
 											<div>
@@ -249,7 +273,7 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 											</div>
 										</div>
 										<div className="form-group">
-											<label htmlFor="To Date" className="text-info">
+											<label htmlFor="End Date" className="text-info">
 												To Date :
 											</label>
 											<div>
