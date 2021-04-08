@@ -9,6 +9,10 @@ export function loginUrl(): string {
 	return `${getUrl()}/login`;
 }
 
+export function doctorLoginUrl(): string {
+	return `${getUrl()}/doctorLogin`;
+}
+
 export async function registerUser(user: any): Promise<boolean> {
 	console.log(user);
 	await axios.post(
