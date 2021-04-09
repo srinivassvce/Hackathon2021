@@ -72,7 +72,9 @@ class EntityToViewModelConverter {
     medicineModel.setFromDate(patientMedicine.getFromDate());
     medicineModel.setToDate(patientMedicine.getToDate());
     medicineModel.setPatientId(patientMedicine.getPatient().getPatientId());
-    medicineModel.setPatientVisitId(patientMedicine.getPatientVisit().getPatientVisitId());
+    if (null != patientMedicine.getPatientVisit()) {
+      medicineModel.setPatientVisitId(patientMedicine.getPatientVisit().getPatientVisitId());
+    }
     return medicineModel;
   }
 
