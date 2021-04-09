@@ -12,7 +12,6 @@ import {
 	getMedicines
 } from "../api";
 import Page from "../common/page";
-import * as React from 'react';
 import AddLastVisits from "../addPages/addLastVisits";
 import "../styles/dashboardStyles.css";
 import Tile from "../tile/tile";
@@ -127,7 +126,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 								propertyName={"lastVisits"}
 								requestFunction={() => getLastVisits()}
 								navigateTo={"/visits"}
-                            addEntityContent={getAddLastVisitsNode}
+								addEntityContent={getAddLastVisitsNode}
 								key="lastVisits"
 							/>
 						</div>
@@ -169,12 +168,12 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		return (
 			<AddMedicine patientId={props.patientId} showModal={showModal} setModal={setModal}/>
 		);
+	}
 
-    function getAddLastVisitsNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
-        return (
-          <AddLastVisits patientId={props.patientId} showModal={showModal} setModal={setModal}/>
-        )
-    }
+	function getAddLastVisitsNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
+		return (
+			<AddLastVisits patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+		);
 	}
 };
 
