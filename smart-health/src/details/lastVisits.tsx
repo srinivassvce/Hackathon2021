@@ -4,12 +4,12 @@ export interface LastVisitsProps {
     patientId: string;
 }
  
-const LastVisits: React.FunctionComponent<LastVisitsProps> = (props) => {
+const LastVisits: React.FunctionComponent<LastVisitsProps> = (props: LastVisitsProps) => {
     return ( 
         <Page title="Last Visits" patientId={props.patientId} >
-            <h1>
-            List of Last Visits here ....
-            </h1>
+            <div className={"container"} >
+
+            </div>
         </Page>
      );
 }

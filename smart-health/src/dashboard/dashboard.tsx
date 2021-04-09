@@ -1,4 +1,5 @@
 import * as React from 'react';
+import AddLastVisits from "../addPages/addLastVisits";
 import Tile from '../tile/tile';
 import "../styles/dashboardStyles.css";
 import { getAllergen, getAllergens, getDoctors, getMedicines, getImmunizations, 
@@ -92,6 +93,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                             propertyName={"lastVisits"}
                             requestFunction={() => getLastVisits()}
                             navigateTo={"/visits"}
+                            addEntityContent={getAddLastVisitsNode}
                             key="lastVisits"
                         />
                     </div>
@@ -124,6 +126,12 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
     function getAddAllergenNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
         return (
             <AddAllergen patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+        )
+    }
+
+    function getAddLastVisitsNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
+        return (
+          <AddLastVisits patientId={props.patientId} showModal={showModal} setModal={setModal}/>
         )
     }
 }
