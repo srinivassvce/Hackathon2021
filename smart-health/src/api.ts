@@ -49,6 +49,17 @@ export async function getAllMedicines() {
 	return response.data;
 }
 
+
+export async function getAllImmunizations() {
+	const response = await axios.get(`${getUrl()}get/immunization/all`);
+	return response.data;
+}
+
+export async function getAllMedicalInsurances() {
+	const response = await axios.get(`${getUrl()}get/insuranceCompany/all`);
+	return response.data;
+}
+
 export async function saveAllergenDetails(allergy: any, patientId: string): Promise<boolean> {
 	const patient = await getPatientDetails(patientId);
 	await axios.post(
@@ -57,6 +68,28 @@ export async function saveAllergenDetails(allergy: any, patientId: string): Prom
 			patientId,
 			...allergy,
 			symptoms: allergy.symptoms
+		}
+	);
+	return true;
+}
+
+export async function saveImmunizationDetails(immunization: any, patientId: string): Promise<boolean> {
+	await axios.post(
+		`${getUrl()}add/patient/immunization`,
+		{
+			...immunization,
+			patientId,
+		}
+	);
+	return true;
+}
+
+export async function saveInsuranceDetails(medicalInsurance: any, patientId: string): Promise<boolean> {
+	await axios.post(
+		`${getUrl()}add/patient/insurance`,
+		{
+			...medicalInsurance,
+			patientId,
 		}
 	);
 	return true;
@@ -83,6 +116,7 @@ export async function getMedicines(patientId: string) {
 	return Promise.resolve(response.data);
 }
 
+
 export async function getDoctors() {
 	return Promise.resolve(
 		{
@@ -95,7 +129,14 @@ export async function getDoctors() {
 	);
 }
 
-export async function getImmunizations() {
+export async function getImmunizations(patientId: string) {
+	const response = await axios.get(
+		`${getUrl()}get/patient/immunization/${patientId}`
+	);
+	return Promise.resolve(response.data);
+}
+
+/*export async function getImmunizations() {
 	return Promise.resolve(
 		{
 			immunizations: [
@@ -105,19 +146,14 @@ export async function getImmunizations() {
 			]
 		}
 	);
+}*/
+export async function getMedicalInsurances(patientId: string) {
+	const response = await axios.get(
+		`${getUrl()}get/patient/insurance/${patientId}`
+	);
+	return Promise.resolve(response.data);
 }
 
-export async function getMedicalInsurances() {
-	return Promise.resolve(
-		{
-			medicalInsurances: [
-				"Insurance 1",
-				"Insurance 2",
-				"Insurance 3"
-			]
-		}
-	);
-}
 
 export async function getLastVisits() {
 	return Promise.resolve(
