@@ -1,9 +1,20 @@
-import {useState} from "react";
 import * as React from "react";
-import {Allergy, PatientVisitModel} from "../_gen/entity";
+import {useEffect, useState} from "react";
+
+import DatePicker from "react-datepicker";
 import ReactModal from "react-modal";
 import Select, {OptionTypeBase} from "react-select";
-import {getPatientDetails, getPatientVisits, saveAllergenDetails, savePatientVisits} from "../api";
+import {
+	DoctorModel,
+	HealthCareProviderModel,
+	Medicine,
+	Patient,
+	PatientMedicineModel,
+	PatientVisitModel
+} from "../_gen/entity";
+import {getHealthcareProviders, getPatientDetails, savePatientVisits} from "../api";
+import MedicineField from "./medicineField";
+
 
 export interface AddLastVisitsProps {
 	patientId: string;
@@ -12,19 +23,47 @@ export interface AddLastVisitsProps {
 }
 
 const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, showModal, setModal}) => {
-	const [visits, setVisits] = React.useState<Allergy[]>([]);
+	// obtain master data:
 
-	const initialPatientVisitState: PatientVisitModel = {} as PatientVisitModel;
+	const [hcps, setHcps] = useState<HealthCareProviderModel[]>([] as HealthCareProviderModel[]);
 
-	React.useEffect(() => {
-		getAndSetLastVisits();
-	}, []);
+	useEffect(
+		() => {
+			const getAndSetHcps = async () => {
+				const result = await getHealthcareProviders();
+				setHcps(result);
+			};
+			getAndSetHcps();
+		}, []
+	);
 
-	const getAndSetLastVisits = async () => {
-		const visits = await getPatientVisits(patientId);
-		setVisits(visits);
+	useEffect(
+		() => {
+			const getPatient = async () => {
+				const patient = await getPatientDetails(patientId);
+				setCurrentVisit(
+					{
+						...currentVisit,
+						patient: patient
+					}
+				);
+			};
+			getPatient();
+		}, [patientId]
+	);
 
+	const initialPatientVisitState: PatientVisitModel = {
+		patient: {} as Patient,
+		doctor: {} as DoctorModel,
+		healthCareProvider: {} as HealthCareProviderModel,
+		diagnoseNotes: "",
+		additionalTests: "",
+		surgeryNotes: "",
+		medicines: [] as PatientMedicineModel[],
+		visitDateTime: undefined,
+		nextVisitDateTime: undefined
 	};
+
 	const [currentVisit, setCurrentVisit] = useState<PatientVisitModel>(initialPatientVisitState);
 
 	const savePatientVisit = async () => {
@@ -42,7 +81,7 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 	const safeExit = () => {
 		setModal(false);
 		setCurrentVisit(initialPatientVisitState);
-	}
+	};
 
 	const handleTextChange = (e: { target: { name: string, value: string }; }) => {
 		const {target} = e;
@@ -52,9 +91,164 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 				...currentVisit,
 				[name]: value
 			}
-		)
+		);
+	};
+
+	function getHealthcareProviderById(id: number) {
+		const hcp = hcps.find(
+			hcpTemp => hcpTemp.hcpId === id
+		);
+		return hcp || {} as HealthCareProviderModel;
 	}
 
+	function getHealthcareProviderOptions() {
+		return hcps.map(
+			(healthCareProvider: HealthCareProviderModel) => (
+				{
+					label: healthCareProvider.hcpName,
+					value: healthCareProvider.hcpId,
+				}
+			)
+		);
+	}
+
+	function handleHealthcareProviderChange(selectedOption: any, action: any) {
+		setCurrentVisit(
+			{
+				...currentVisit,
+				healthCareProvider: getHealthcareProviderById(Number(selectedOption.value))
+			}
+		);
+	}
+
+	const getDoctorById = (doctorId: number) => {
+		return currentVisit.healthCareProvider.doctors.find(
+			doctor => doctor.doctorId === doctorId
+		) || {} as DoctorModel;
+	};
+
+	const getDoctors = () => {
+		const {healthCareProvider} = currentVisit;
+		return healthCareProvider && healthCareProvider.doctors ? healthCareProvider.doctors.map(
+			(doctor: DoctorModel) => ({
+				value: doctor.doctorId,
+				label: doctor.doctorName
+			})
+		) : [];
+	};
+
+	const handleDoctorChange = (selectedOption: any) => {
+		setCurrentVisit(
+			{
+				...currentVisit,
+				doctor: getDoctorById(Number(selectedOption.value))
+			}
+		);
+	};
+
+	const getPropertyFromCurrentVisit = (propertyName: keyof PatientVisitModel, defaultValue: string | Date) => {
+		const value = currentVisit[propertyName];
+		return value ? value : defaultValue;
+	};
+	const getVisitDate = () => {
+		return getPropertyFromCurrentVisit("visitDateTime", "");
+	};
+
+	const getNextVisitDate = () => {
+		return getPropertyFromCurrentVisit("nextVisitDateTime", "");
+	};
+
+	const handleDateChange = (date: Date | [Date, Date] | null, property: keyof PatientVisitModel) => {
+		setCurrentVisit(
+			{
+				...currentVisit,
+				[property]: date
+			}
+		);
+	};
+
+	const renderMedicines = () => {
+
+		const addMedicine = (medicine: PatientMedicineModel) => {
+			console.log("medicines");
+			const {medicines} = currentVisit;
+			medicines.push(medicine);
+			setCurrentVisit(
+				{
+					...currentVisit,
+					medicines
+				}
+			);
+		};
+
+		return (<MedicineField patientId={patientId} medicines={currentVisit.medicines} onSubmit={addMedicine}/>);
+	};
+
+	const renderDateField = (name: keyof PatientVisitModel, label: string, value: Date, placeholderText: string) => {
+		return (
+			<div className={"row"}>
+				<div className={"col-md-3"}>
+					<label htmlFor={name} className="text-info">
+						{label}
+					</label>
+				</div>
+				<div className={"col-md-9"}>
+					<DatePicker
+						selected={value}
+						showTimeSelect
+						dateFormat={"yyyy/MM/dd h:mm aa"}
+						onChange={(date) => handleDateChange(date, name)}
+						placeholderText={placeholderText}
+					/>
+				</div>
+			</div>
+		);
+	};
+
+	const renderTextField = (name: string, label: string, onChange: React.ChangeEventHandler<HTMLInputElement>) => {
+		return (
+			<React.Fragment>
+				<div className={"row"}>
+					<div className={"col-md-3"}>
+						<label htmlFor={name} className="text-info">
+							{label}
+						</label>
+					</div>
+					<div className={"col-md-9"}>
+						<input
+							type="text"
+							name={name}
+							id={name}
+							className="form-control"
+							value={currentVisit[name]}
+							onChange={handleTextChange}/>
+					</div>
+				</div>
+
+			</React.Fragment>
+		);
+	};
+
+	const renderSelectField = (name: keyof PatientVisitModel, options: {label: string, value: string}[], label: string, onChange: any, placeHolder: string) => {
+		return (
+			<React.Fragment>
+				<div className={"row"}>
+					<div className={"col-md-3"}>
+						<label htmlFor={name} className="text-info">
+							{label}
+						</label>
+					</div>
+					<div className={"col-md-9"}>
+						<Select
+							options={options}
+							onChange={onChange}
+							placeholder={placeHolder}
+						/>
+					</div>
+				</div>
+			</React.Fragment>
+		)
+	}
 	return (
 		<React.Fragment>
 			<ReactModal
@@ -79,20 +273,40 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 					<div className="container">
 						<div
 							className="row justify-content-center align-items-center">
-							<div className="col-md-6">
+							<div className="col-md-12">
 								<div className="col-md-12">
 									<form className="form" onSubmit={handleSubmit}>
 										<div className="form-group">
-											<label htmlFor="symptoms" className="text-info">
-												Surgery Notes
+											{/*<Select
+												options={getHealthcareProviderOptions()}
+												onChange={handleHealthcareProviderChange}
+												placeholder={"Select Health Care Provider"}
+											/>*/}
+											{renderSelectField("healthCareProvider", getHealthcareProviderOptions(), "Health Care Provider", handleHealthcareProviderChange, "Select Healthcare Provider")}
+										</div>
+										<div className="form-group">
+											{renderSelectField("doctor", getDoctors(), "Doctor", handleDoctorChange, "Select Doctor")}
+										</div>
+										<div className="form-group">
+											{renderDateField("visitDateTime", "Visited On", getVisitDate(), "Select Visit Date")}
+										</div>
+										<div className="form-group">
+											{renderDateField("nextVisitDateTime", "Next Visit On", getNextVisitDate(), "Select Next Visit")}
+										</div>
+										<div className="form-group">
+											<label htmlFor="medicines" className="text-info">
+												Medicines
 											</label>
-											<input
-												type="text"
-												name="surgeryNotes"
-												id="surgeryNotes"
-												className="form-control"
-												value={currentVisit.surgeryNotes}
-												onChange={handleTextChange}/>
+											{renderMedicines()}
+										</div>
+										<div className="form-group">
+											{renderTextField("diagnosticNotes", "Diagnosis Notes", handleTextChange)}
+										</div>
+										<div className="form-group">
+											{renderTextField("surgeryNotes", "Surgery Notes", handleTextChange)}
+										</div>
+										<div className="form-group">
+											{renderTextField("additionalTests", "Additional Tests", handleTextChange)}
 										</div>
 										<div className="form-group d-grid">
 											<input

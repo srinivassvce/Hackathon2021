@@ -1,5 +1,6 @@
 package com.siemens.dx.hackathon.smarthealthsystem.serviceImpl;
 
+import com.siemens.dx.hackathon.smarthealthsystem.controllers.HealthCareProviderController;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.Doctor;
 import com.siemens.dx.hackathon.smarthealthsystem.entity.HealthCareProvider;
 import com.siemens.dx.hackathon.smarthealthsystem.service.IHealthCareProviderService;
@@ -22,8 +23,12 @@ class HealthCareProviderServiceImpl implements IHealthCareProviderService {
 
   @Override
   public
-  List<HealthCareProvider> getAllHealthCareProviders() {
-    return healthCareProviderRepository.findAll();
+  List<HealthCareProviderModel> getAllHealthCareProviders() {
+    List<HealthCareProviderModel> healthCareProviderModels = new ArrayList<>();
+    for (HealthCareProvider hcp : healthCareProviderRepository.findAll()) {
+      healthCareProviderModels.add(EntityToViewModelConverter.convertHealthCareProvider(hcp));
+    }
+    return healthCareProviderModels;
   }
 
   @Override

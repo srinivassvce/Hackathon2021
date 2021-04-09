@@ -100,7 +100,6 @@ class EntityToViewModelConverter {
         convertHealthCareProvider(patientVisit.getHealthCareProvider()));
     patientVisitModel.setDoctor(convertDoctor(patientVisit.getDoctor()));
     patientVisitModel.setNextVisitDateTime(patientVisit.getNextVisitDateTime());
-    patientVisitModel.setPatientVisitId(patientVisit.getPatientVisitId());
     patientVisitModel.setVisitDateTime(patientVisit.getVisitDateTime());
     patientVisitModel.setPatient(patientVisit.getPatient());
     patientVisitModel.setSurgeryNotes(patientVisit.getSurgeryNotes());

@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {PatientMedicineModel} from "../_gen/entity";
 import {getMedicines} from "../api";
 import Page from "../common/page";
+import MedicineTableContent from "./MedicineTableContent";
 
 export interface MedicinesProps {
 	patientId: string;
@@ -49,18 +50,7 @@ const Medicines: React.FunctionComponent<MedicinesProps> = (props) => {
 				<div className={"row text-info display-4 m-4"}>
 					You have a total of {medicines.length} medications.
 				</div>
-				<table className={"table table-hover table-striped"}>
-					<thead className={"thead-light"}>
-					<tr>
-						<th>Brand Name</th>
-						<th>Generic Name</th>
-						<th>Frequency</th>
-						<th>Start Date</th>
-						<th>End Date</th>
-					</tr>
-					</thead>
-					{renderMedicinesRows()}
-				</table>
+				<MedicineTableContent medicines={medicines} />
 			</div>
 		</Page>
 	);

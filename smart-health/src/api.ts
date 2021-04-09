@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {PatientVisitModel} from "./_gen/entity";
+import {HealthCareProvider, HealthCareProviderModel, Patient, PatientVisitModel} from "./_gen/entity";
 import IPatient from "./entities/IPatient";
 
 export function getUrl(): string {
@@ -35,7 +35,7 @@ export async function getPatientName(patientId: string): Promise<string> {
 	return patient.patientName;
 }
 
-export async function getPatientDetails(patientId: String): Promise<IPatient> {
+export async function getPatientDetails(patientId: String): Promise<Patient> {
 	const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/patient/${patientId}`);
 	return response.data;
 }
@@ -170,14 +170,8 @@ export async function getAllergen(allergenId: string) {
 	return response.data;
 }
 
-export function getPatientInfo(patientId: string) {
-	return Promise.resolve(
-		{
-			patientInfo: {
-				allergens: [],
-				medicines: [],
-				name: "Smart Health Pat - 1"
-			}
-		}
-	);
+export async function getHealthcareProviders(): Promise<HealthCareProviderModel[]> {
+	const response = await axios.get(`${getUrl()}get/hcp/all`);
+	return response.data;
 }
+

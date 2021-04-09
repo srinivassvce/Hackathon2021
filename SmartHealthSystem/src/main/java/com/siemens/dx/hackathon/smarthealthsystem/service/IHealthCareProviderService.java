@@ -8,7 +8,7 @@ import java.util.List;
 
 public
 interface IHealthCareProviderService {
-  List<HealthCareProvider> getAllHealthCareProviders();
+  List<HealthCareProviderModel> getAllHealthCareProviders();
 
   HealthCareProviderModel getHcpById(Long hcpId);
 }
