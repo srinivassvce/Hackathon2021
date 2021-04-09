@@ -146,7 +146,6 @@ class EntityToViewModelConverter {
   EmergencyContactModel convertSharedRecordToEmergencyContactModel(SharedRecord sharedRecord) {
     EmergencyContactModel emergencyContactModel = new EmergencyContactModel();
     emergencyContactModel.setPatientId(sharedRecord.getPatient().getPatientId());
-    emergencyContactModel.setEmergencyDoctor(sharedRecord.getSharedDoctor());
     emergencyContactModel.setEmergencyPatient(sharedRecord.getSharedPatient());
     return emergencyContactModel;
   }

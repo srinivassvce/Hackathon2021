@@ -10,8 +10,6 @@ class EmergencyContactModel {
 
   private Patient emergencyPatient;
 
-  private Doctor emergencyDoctor;
-
   public
   Long getPatientId() {
     return patientId;
@@ -30,15 +28,5 @@ class EmergencyContactModel {
   public
   void setEmergencyPatient(Patient emergencyPatient) {
     this.emergencyPatient = emergencyPatient;
-  }
-
-  public
-  Doctor getEmergencyDoctor() {
-    return emergencyDoctor;
-  }
-
-  public
-  void setEmergencyDoctor(Doctor emergencyDoctor) {
-    this.emergencyDoctor = emergencyDoctor;
   }
 }
