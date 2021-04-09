@@ -54,6 +54,11 @@ export async function savePatientVisits(patientVisitModel: PatientVisitModel) {
 	const response = await axios.post(`${getUrl()}add/patient/visit`, patientVisitModel);
 }
 
+export async function getAllMedicines() {
+	const response = await axios.get(`${getUrl()}get/medicine/all`);
+	return response.data;
+}
+
 export async function saveAllergenDetails(allergy: any, patientId: string): Promise<boolean> {
 	const patient = await getPatientDetails(patientId);
 	await axios.post(
@@ -67,16 +72,25 @@ export async function saveAllergenDetails(allergy: any, patientId: string): Prom
 	return true;
 }
 
-export async function getMedicines(patient: string) {
-	return Promise.resolve(
+export async function saveMedicineDetails(medicine: any, patientId: string): Promise<boolean> {
+
+	await axios.post(
+		`${getUrl()}add/patient/medicine`,
 		{
-			medicines: [
-				"Medicine 1",
-				"Medicine 2",
-				"Medicine 3"
-			]
+			...medicine,
+			patientId,
+			frequency: medicine.frequency
 		}
 	);
+	return true;
+}
+
+export async function getMedicines(patientId: string) {
+
+	const response = await axios.get(
+		`${getUrl()}get/patient/medicine/${patientId}`
+	);
+	return Promise.resolve(response.data);
 }
 
 export async function getDoctors() {
