@@ -1,4 +1,5 @@
 import * as React from "react";
+import {PatientVisitModel} from "../_gen/entity";
 import AddAllergen from "../addPages/addAllergen";
 import AddMedicine from "../addPages/addMedicine";
 import {
@@ -9,7 +10,7 @@ import {
 	getLastVisits,
 	getMedicalHistory,
 	getMedicalInsurances,
-	getMedicines
+	getMedicines, getPatientVisits
 } from "../api";
 import Page from "../common/page";
 import AddLastVisits from "../addPages/addLastVisits";
@@ -54,6 +55,22 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		}
 		return {medicines: formattedMedicines};
 	};
+
+	const getFormattedVisits = async (patientId: string) => {
+		const visits: PatientVisitModel[] = await getPatientVisits(patientId);
+		const lengthToDisplay = visits.length > 3 ? 3 : visits.length;
+		const formattedVisits = [];
+		for (let i = lengthToDisplay - 1; i >= 0; i--) {
+			const visit = visits[i];
+			formattedVisits.push(
+				`${visit.doctor.doctorName} (${new Date(visit.visitDateTime).toLocaleDateString()})}`
+			);
+		}
+		if (lengthToDisplay < visits.length) {
+			formattedVisits.push("(Click for more.)");
+		}
+		return {visits: formattedVisits};
+	}
 	const responsiveClasses = "col-12 col-sm-6 col-md-4";
 	return (
 		<React.Fragment>
@@ -123,8 +140,8 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 								label={"Last Visits"}
 								onExpand={() => {
 								}}
-								propertyName={"lastVisits"}
-								requestFunction={() => getLastVisits()}
+								propertyName={"visits"}
+								requestFunction={() => getFormattedVisits(props.patientId)}
 								navigateTo={"/visits"}
 								addEntityContent={getAddLastVisitsNode}
 								key="lastVisits"

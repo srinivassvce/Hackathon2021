@@ -18,9 +18,21 @@ const MedicineField: React.FunctionComponent<IMedicineFieldProps> = ({medicines,
 	}
 	return (
 		<React.Fragment>
+			<div className={"row"}>
+				<div className={"col-md-3"}>
+					<label htmlFor="medicines" className="text-info">
+						Medicines
+					</label>
+				</div>
+				<div className={"col-md-8"}>
+					<button className={"btn btn-success btn-block"} onClick={handleClick}>Add Medicine</button>
+				</div>
+			</div>
+
 			<AddMedicine patientId={patientId} showModal={showModal} setModal={setShowModal} onSubmit={onSubmit} />
-			<MedicineTableContent medicines={medicines} />
-			<button className={"btn btn-success"} onClick={handleClick}>Add Medicine</button>
+			<div className={"row"} style={{marginTop: "10px"}}>
+				<MedicineTableContent medicines={medicines} />
+			</div>
 		</React.Fragment>
 	);
 };

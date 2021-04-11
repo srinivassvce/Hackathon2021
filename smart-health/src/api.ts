@@ -129,18 +129,6 @@ export async function getMedicalInsurances() {
 	);
 }
 
-export async function getLastVisits() {
-	return Promise.resolve(
-		{
-			lastVisits: [
-				"Visit 1",
-				"Visit 2",
-				"Visit 3"
-			]
-		}
-	);
-}
-
 export async function getMedicalHistory() {
 	return Promise.resolve(
 		{

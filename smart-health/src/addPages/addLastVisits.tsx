@@ -256,7 +256,7 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 				ariaHideApp={false}
 			>
 				<div className="container">
-					<div className="jumbotron">
+					<div className={"bg-light"}>
 						<div className="row">
 							<div className="col-md-11">
 								<h3 className="text-center text-info">Add a Visit</h3>
@@ -294,12 +294,6 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 											{renderDateField("nextVisitDateTime", "Next Visit On", getNextVisitDate(), "Select Next Visit")}
 										</div>
 										<div className="form-group">
-											<label htmlFor="medicines" className="text-info">
-												Medicines
-											</label>
-											{renderMedicines()}
-										</div>
-										<div className="form-group">
 											{renderTextField("diagnosticNotes", "Diagnosis Notes", handleTextChange)}
 										</div>
 										<div className="form-group">
@@ -307,6 +301,10 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 										</div>
 										<div className="form-group">
 											{renderTextField("additionalTests", "Additional Tests", handleTextChange)}
+										</div>
+										<hr />
+										<div className="form-group">
+											{renderMedicines()}
 										</div>
 										<div className="form-group d-grid">
 											<input
