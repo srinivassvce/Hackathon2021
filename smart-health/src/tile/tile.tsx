@@ -8,6 +8,7 @@ export interface TileProps {
 	propertyName: string;
 	navigateTo?: string;
 	addEntityContent?: (showModal: boolean, setModal: (x: boolean) => void) => React.ReactNode;
+	isAddNotAllowed?: boolean;
 }
 
 const onClick = (event: React.MouseEvent<HTMLButtonElement>, label: string, setModal: (x: boolean) => void) => {
@@ -42,7 +43,7 @@ const Tile: React.FunctionComponent<TileProps> = (props) => {
                         <span>
                             {props.label}
                         </span>
-						<button onClick={(e) => onClick(e, props.label, setShowModal)} className="addIcon">+</button>
+						<button disabled={props.isAddNotAllowed} onClick={(e) => onClick(e, props.label, setShowModal)} className="addIcon">+</button>
 					</h4>
 					<hr/>
 					<div>
