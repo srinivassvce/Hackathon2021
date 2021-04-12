@@ -2,7 +2,9 @@ import * as React from "react";
 import {PatientVisitModel} from "../_gen/entity";
 import AddAllergen from "../addPages/addAllergen";
 import AddMedicine from "../addPages/addMedicine";
+import AddEmergencyContact from '../addPages/addEmergencyContact';
 import {
+	getAllergen,
 	getAllergens,
 	getDoctors,
 	getEmergencyContacts,
@@ -55,7 +57,6 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		}
 		return {medicines: formattedMedicines};
 	};
-
 	const getFormattedVisits = async (patientId: string) => {
 		const visits: PatientVisitModel[] = await getPatientVisits(patientId);
 		const lengthToDisplay = visits.length > 3 ? 3 : visits.length;
@@ -70,6 +71,25 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 			formattedVisits.push("(Click for more.)");
 		}
 		return {visits: formattedVisits};
+	}
+
+	const getFormattedEmergencyContacts = async (patientId: string) => {
+		const emergencyContacts = await getEmergencyContacts(patientId)
+		console.log(emergencyContacts);
+		const lengthToDisplay = emergencyContacts.length > 3 ? 3 : emergencyContacts.length
+		const formattedContacts = [];
+		for (let i = lengthToDisplay - 1; i >= 0; i--) {
+			const contact = emergencyContacts[i];
+			formattedContacts.push(
+				`${contact.emergencyPatient.patientName}, Mob- ${contact.emergencyPatient.mobile}`
+			)
+		}
+
+		if (lengthToDisplay < emergencyContacts.length) {
+			formattedContacts.push("(Click for more.)")
+		}
+		console.log(formattedContacts);
+		return { emergencyContacts: formattedContacts };
 	}
 	const responsiveClasses = "col-12 col-sm-6 col-md-4";
 	return (
@@ -161,11 +181,11 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						<div className={responsiveClasses}>
 							<Tile
 								label={"Emergency Contacts"}
-								onExpand={() => {
-								}}
+								onExpand={() => { }}
 								propertyName={"emergencyContacts"}
-								requestFunction={() => getEmergencyContacts()}
+								requestFunction={() => getFormattedEmergencyContacts(props.patientId)}
 								navigateTo={"/contacts"}
+								addEntityContent={getAddEmergencyContactNode}
 								key="emergencyContacts"
 							/>
 						</div>
@@ -186,6 +206,11 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 			<AddMedicine patientId={props.patientId} showModal={showModal} setModal={setModal}/>
 		);
 	}
+	function getAddEmergencyContactNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
+		return (
+			<AddEmergencyContact patientId={props.patientId} showModal={showModal} setModal={setModal} />
+		)
+	}
 
 	function getAddLastVisitsNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
 		return (
@@ -196,5 +221,4 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 
 
 export default Dashboard;
-
 
