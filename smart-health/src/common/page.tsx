@@ -15,7 +15,7 @@ const Page: React.FunctionComponent<PageProps> = (props) => {
 		<React.Fragment>
 			<Header currentPageTitle={props.title} patientId={props.patientId} displayMenu={setShowMenu} />
 			<Row>
-				{showMenu ? <Col className="left" xs={2}><MenuBar/></Col> : undefined}
+				{showMenu ? <Col className="left" xs={2.5}><MenuBar/></Col> : undefined}
 				<Col> {props.children}</Col>
 			</Row>
 		</React.Fragment>

@@ -312,7 +312,7 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 												name="submit"
 												placeholder={"Select Symptoms"}
 												className="btn btn-info btn-md"
-												value="Add"/>
+												value="Add Visit"/>
 										</div>
 									</form>
 								</div>

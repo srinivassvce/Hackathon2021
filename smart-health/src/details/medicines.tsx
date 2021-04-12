@@ -9,10 +9,6 @@ export interface MedicinesProps {
 	patientId: string;
 }
 
-export interface MedicinesProps {
-	patientId: string;
-}
-
 const Medicines: React.FunctionComponent<MedicinesProps> = (props) => {
 	const [medicines, setMedicines] = useState<PatientMedicineModel[]>([]);
 

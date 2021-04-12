@@ -29,7 +29,7 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 		if (onSubmit) {
 			onSubmit(medicine);
 		} else {
-			await savedMedicine();
+			await saveMedicine();
 		}
 		// closes the modal after save
 		setMedicine(
