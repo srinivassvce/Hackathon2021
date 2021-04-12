@@ -11,6 +11,7 @@ import MedicalInsurances from './details/medicalInsurances';
 import Medicines from './details/medicines';
 import UploadPatientReports from './details/uploadPatientReports';
 import Login from './login/login';
+import Profile from "./login/profile";
 import Register from './login/register';
 import SignUpSuccessful from './signupsuccessful';
 
@@ -34,6 +35,7 @@ const Routes: React.FunctionComponent<RoutesProps> = () => {
                 </Route>
                 <Route path="/uploadPatientReports"> <UploadPatientReports patientId={patientId} /> </Route>
                 <Route path="/dashboard"> <Dashboard patientId={patientId} /> </Route>
+                <Route path="/profile"> <Profile patientId={patientId}/> </Route>
                 <Route path="/allergens"> <Allergens patientId={patientId} /></Route>
                 <Route path="/medicines"> <Medicines patientId={patientId} /></Route>
                 <Route path="/doctors"> <Doctors patientId={patientId} /></Route>

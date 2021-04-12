@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import {saveMedicineDetails, saveUploadPatientReport} from "../api";
 import Page from "../common/page";
 import { useFormFields } from "../libs/useFormFields";
 import { useHistory } from "react-router";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 export interface UploadPatientReportsProps {
 	patientId: string;
 }
@@ -13,17 +16,29 @@ const UploadPatientReports: React.FunctionComponent<UploadPatientReportsProps> =
 	const [fields, handleFieldChange] = useFormFields({
 		hospitalName: "",
 		reportName: "",
-		patientName: "",
+
 	});
+	const [date,setDate]=React.useState("");
 	const history = useHistory();
 
 	const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
 		event,
+
 	) => {
+		 await uploadPatientReport();
 		event.preventDefault();
+	};
+
+	const uploadPatientReport = async () => {
+		await saveUploadPatientReport(props.patientId,fields.hospitalName,fields.reportName,date,file);
 	};
 	const handleUpload: React.FormEventHandler<HTMLFormElement> = (event) => {
 		setFile(event.target.files[0]);
+	};
+	const updateFromDate = (date) => {
+		setDate(date
+
+		);
 	};
 	return (
 		<React.Fragment>
@@ -40,7 +55,7 @@ const UploadPatientReports: React.FunctionComponent<UploadPatientReportsProps> =
 										className="form"
 										onSubmit={handleSubmit}>
 										<div className="form-group">
-											<label htmlFor="username" className="text-secondary">
+											<label htmlFor="hospitalName" className="text-secondary">
 												Hospital:
 											</label>
 											<input
@@ -53,7 +68,7 @@ const UploadPatientReports: React.FunctionComponent<UploadPatientReportsProps> =
 											/>
 										</div>
 										<div className="form-group">
-											<label htmlFor="username" className="text-secondary">
+											<label htmlFor="reportName" className="text-secondary">
 												Report Name:
 											</label>
 											<input
@@ -66,17 +81,17 @@ const UploadPatientReports: React.FunctionComponent<UploadPatientReportsProps> =
 											/>
 										</div>
 										<div className="form-group">
-											<label htmlFor="username" className="text-secondary">
-												Patient Name:
+											<label htmlFor="date" className="text-info">
+												Report Date :
 											</label>
-											<input
-												type="text"
-												name="patientName"
-												value={fields.patientName}
-												autoFocus
-												className="form-control input-lg"
-												onChange={handleFieldChange}
-											/>
+											<div>
+												<DatePicker
+													selected={date}
+													placeholderText="mm/dd/yyyy"
+													isClearable
+													onChange={updateFromDate}
+												/>
+											</div>
 										</div>
 										<div className="form-group">
 											<input type="file" onChange={() => handleUpload}></input>
