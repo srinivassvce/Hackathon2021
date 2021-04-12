@@ -8,6 +8,7 @@ import com.siemens.dx.hackathon.smarthealthsystem.viewModels.SharedRecordModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,13 +27,20 @@ class SharedRecordsController {
   @Autowired
   ISharedRecordsService sharedRecordsService;
 
-  @PostMapping(path = "/add/patient/emergencyContact")
+  @PostMapping(path = "/add/patient/emergencyContact/{patientId}")
   public
   ResponseEntity<EmergencyContactModel> addEmergencyContact(
-      @RequestBody EmergencyContactModel emergencyContactModel)
+      @RequestBody EmergencyContactModel emergencyContactModel, @PathVariable long patientId)
   throws MethodArgumentNotValidException {
-    return new ResponseEntity<>(sharedRecordsService.addEmergencyContact(emergencyContactModel),
+    return new ResponseEntity<>(
+        sharedRecordsService.addEmergencyContact(emergencyContactModel, patientId),
         HttpStatus.CREATED);
+  }
+
+  @GetMapping("/get/patient/emergencyContact/{patientId}")
+  public
+  List<EmergencyContactModel> getAllEmergencyContactsByPatientId(@PathVariable long patientId) {
+    return sharedRecordsService.getAllEmergencyContactByPatientId(patientId);
   }
 
   @GetMapping("/get/confirmation/share")

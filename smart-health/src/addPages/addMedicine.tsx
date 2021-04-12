@@ -2,16 +2,17 @@ import * as React from "react";
 import DatePicker from "react-datepicker";
 import ReactModal from "react-modal";
 import Select, {OptionTypeBase} from "react-select";
-import {Medicine} from "../_gen/entity";
+import {Medicine, MedicineType, PatientMedicineModel} from "../_gen/entity";
 import {getAllMedicines, saveMedicineDetails} from "../api";
 
 export interface AddMedicineProps {
 	patientId: string;
 	showModal: boolean;
 	setModal: (showModal: boolean) => void;
+	onSubmit: (medicine: PatientMedicineModel) => void;
 }
 
-const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, showModal, setModal}) => {
+const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, showModal, setModal, onSubmit}) => {
 	const [medicines, setMedicines] = React.useState<Medicine[]>([]);
 	React.useEffect(() => {
 		getAndSetMedicines();
@@ -24,7 +25,12 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 	};
 	const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
-		await saveMedicine();
+		e.stopPropagation();
+		if (onSubmit) {
+			onSubmit(medicine);
+		} else {
+			await saveMedicine();
+		}
 		// closes the modal after save
 		setMedicine(
 			{
@@ -43,6 +49,7 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 				patientVisitId: "",
 			}
 		);
+
 		setModal(false);
 	};
 
@@ -121,14 +128,14 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 		};*/
 	const [medicine, setMedicine] = React.useState(
 		{
-			medicineId: null,
-			patientId: "",
+			medicineId: -1,
+			patientId: -1,
 			genericName: "",
 			brandName: "",
 			dose: "",
 			classification: "",
 			manufacturer: "",
-			medicineType: "",
+			medicineType: "" as MedicineType,
 			medicinePrice: "",
 			fromDate: "",
 			toDate: "",

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "../styles/login.css";
 import { useHistory } from "react-router";
-import "bootstrap/dist/css/bootstrap.min.css";
 import FormGroup from "react-bootstrap/esm/FormGroup";
 import { doctorLoginUrl, getUrl } from "../api";
 import { loginUrl } from "../api";

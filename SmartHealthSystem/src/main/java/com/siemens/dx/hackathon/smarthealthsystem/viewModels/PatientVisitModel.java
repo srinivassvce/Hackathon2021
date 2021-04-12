@@ -7,7 +7,6 @@ import java.util.List;
 
 public
 class PatientVisitModel {
-  private Long patientVisitId;
 
   private Patient patient;
 
@@ -49,16 +48,6 @@ class PatientVisitModel {
   public
   void setSurgeryNotes(String surgeryNotes) {
     this.surgeryNotes = surgeryNotes;
-  }
-
-  public
-  Long getPatientVisitId() {
-    return patientVisitId;
-  }
-
-  public
-  void setPatientVisitId(Long patientVisitId) {
-    this.patientVisitId = patientVisitId;
   }
 
   public

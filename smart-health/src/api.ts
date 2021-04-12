@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import IPatient from "./entities/IPatient";
+import {HealthCareProvider, HealthCareProviderModel, Patient, PatientVisitModel} from "./_gen/entity";
 
 export function getUrl(): string {
 	return `http://localhost:8080/api/`;
@@ -10,7 +10,7 @@ export function loginUrl(): string {
 }
 
 export function doctorLoginUrl(): string {
-	return `${getUrl()}/doctorLogin`;
+    return `${getUrl()}/doctorLogin`;
 }
 
 export async function registerUser(user: any): Promise<boolean> {
@@ -34,7 +34,7 @@ export async function getPatientName(patientId: string): Promise<string> {
 	return patient.patientName;
 }
 
-export async function getPatientDetails(patientId: String): Promise<IPatient> {
+export async function getPatientDetails(patientId: String): Promise<Patient> {
 	const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/patient/${patientId}`);
 	return response.data;
 }
@@ -44,23 +44,76 @@ export async function getAllAllergens() {
 	return response.data;
 }
 
+export async function getAllPatients() {
+    const response = await axios.get(`${getUrl()}get/patient/all`);
+    return response.data;
+}
+
+export async function getPatientByEmail(patientEmail: string): Promise<Patient> {
+    const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/patient/email/${patientEmail}`);;
+    return response.data;
+}
+
+export async function getPatientVisits(patientId: string) {
+	const response = await axios.get(`${getUrl()}get/patient/visits/${patientId}`);
+	return response.data;
+}
+
+export async function savePatientVisits(patientVisitModel: PatientVisitModel) {
+	const response = await axios.post(`${getUrl()}add/patient/visit`, patientVisitModel);
+}
+
 export async function getAllMedicines() {
 	const response = await axios.get(`${getUrl()}get/medicine/all`);
 	return response.data;
 }
 
-export async function saveAllergenDetails(
-	allergy: any,
-	patientId: string,
-): Promise<boolean> {
+
+export async function getAllImmunizations() {
+	const response = await axios.get(`${getUrl()}get/immunization/all`);
+	return response.data;
+}
+
+export async function getAllMedicalInsurances() {
+	const response = await axios.get(`${getUrl()}get/insuranceCompany/all`);
+	return response.data;
+}
+
+export async function saveAllergenDetails(allergy: any, patientId: string): Promise<boolean> {
 	const patient = await getPatientDetails(patientId);
-	await axios.post(`${getUrl()}add/patient/allergy`, {
-		patientId,
-		...allergy,
-		symptoms: allergy.symptoms,
-	});
+	await axios.post(
+		`${getUrl()}add/patient/allergy`,
+		{
+			patientId,
+			...allergy,
+			symptoms: allergy.symptoms
+		}
+	);
 	return true;
 }
+
+export async function saveImmunizationDetails(immunization: any, patientId: string): Promise<boolean> {
+	await axios.post(
+		`${getUrl()}add/patient/immunization`,
+		{
+			...immunization,
+			patientId,
+		}
+	);
+	return true;
+}
+
+export async function saveInsuranceDetails(medicalInsurance: any, patientId: string): Promise<boolean> {
+	await axios.post(
+		`${getUrl()}add/patient/insurance`,
+		{
+			...medicalInsurance,
+			patientId,
+		}
+	);
+	return true;
+}
+
 export async function saveMedicineDetails(medicine: any, patientId: string): Promise<boolean> {
 
 	await axios.post(
@@ -99,6 +152,7 @@ export async function getMedicines(patientId: string) {
 	return Promise.resolve(response.data);
 }
 
+
 export async function getDoctors() {
 	return Promise.resolve(
 		{
@@ -111,7 +165,14 @@ export async function getDoctors() {
 	);
 }
 
-export async function getImmunizations() {
+export async function getImmunizations(patientId: string) {
+	const response = await axios.get(
+		`${getUrl()}get/patient/immunization/${patientId}`
+	);
+	return Promise.resolve(response.data);
+}
+
+/*export async function getImmunizations() {
 	return Promise.resolve(
 		{
 			immunizations: [
@@ -121,31 +182,14 @@ export async function getImmunizations() {
 			]
 		}
 	);
+}*/
+export async function getMedicalInsurances(patientId: string) {
+	const response = await axios.get(
+		`${getUrl()}get/patient/insurance/${patientId}`
+	);
+	return Promise.resolve(response.data);
 }
 
-export async function getMedicalInsurances() {
-	return Promise.resolve(
-		{
-			medicalInsurances: [
-				"Insurance 1",
-				"Insurance 2",
-				"Insurance 3"
-			]
-		}
-	);
-}
-
-export async function getLastVisits() {
-	return Promise.resolve(
-		{
-			lastVisits: [
-				"Visit 1",
-				"Visit 2",
-				"Visit 3"
-			]
-		}
-	);
-}
 
 export async function getMedicalHistory() {
 	return Promise.resolve(
@@ -159,16 +203,24 @@ export async function getMedicalHistory() {
 	);
 }
 
-export async function getEmergencyContacts() {
-	return Promise.resolve(
-		{
-			emergencyContacts: [
-				"Contact 1",
-				"Contact 2",
-				"Contact 3"
-			]
-		}
-	);
+export async function getEmergencyContacts(patientId: string) {
+    console.log("Patient Id: " + patientId);
+    const response = await axios.get(
+        `${getUrl()}get/patient/emergencyContact/${patientId}`
+    )
+    return Promise.resolve(response.data);
+}
+
+export async function saveEmergencyContactDetails(patient: Patient, aPatientId: string): Promise<boolean> {
+    console.log("About to save");
+    await axios.post(
+        `${getUrl()}add/patient/emergencyContact/${aPatientId}`,
+        {
+            aPatientId,
+            ...patient
+        }
+    );
+    return true;
 }
 
 export async function getAllergen(allergenId: string) {
@@ -176,14 +228,8 @@ export async function getAllergen(allergenId: string) {
 	return response.data;
 }
 
-export function getPatientInfo(patientId: string) {
-	return Promise.resolve(
-		{
-			patientInfo: {
-				allergens: [],
-				medicines: [],
-				name: "Smart Health Pat - 1"
-			}
-		}
-	);
+export async function getHealthcareProviders(): Promise<HealthCareProviderModel[]> {
+	const response = await axios.get(`${getUrl()}get/hcp/all`);
+	return response.data;
 }
+

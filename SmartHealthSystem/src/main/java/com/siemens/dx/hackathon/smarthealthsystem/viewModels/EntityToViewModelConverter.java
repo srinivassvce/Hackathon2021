@@ -100,7 +100,6 @@ class EntityToViewModelConverter {
         convertHealthCareProvider(patientVisit.getHealthCareProvider()));
     patientVisitModel.setDoctor(convertDoctor(patientVisit.getDoctor()));
     patientVisitModel.setNextVisitDateTime(patientVisit.getNextVisitDateTime());
-    patientVisitModel.setPatientVisitId(patientVisit.getPatientVisitId());
     patientVisitModel.setVisitDateTime(patientVisit.getVisitDateTime());
     patientVisitModel.setPatient(patientVisit.getPatient());
     patientVisitModel.setSurgeryNotes(patientVisit.getSurgeryNotes());
@@ -148,7 +147,6 @@ class EntityToViewModelConverter {
   EmergencyContactModel convertSharedRecordToEmergencyContactModel(SharedRecord sharedRecord) {
     EmergencyContactModel emergencyContactModel = new EmergencyContactModel();
     emergencyContactModel.setPatientId(sharedRecord.getPatient().getPatientId());
-    emergencyContactModel.setEmergencyDoctor(sharedRecord.getSharedDoctor());
     emergencyContactModel.setEmergencyPatient(sharedRecord.getSharedPatient());
     return emergencyContactModel;
   }

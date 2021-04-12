@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Dropdown} from "react-bootstrap";
+import {Link} from "react-router-dom";
 import {getPatientName} from "../api";
 import {FaUser} from "react-icons/fa";
 import logo from "../assets/healthcare.jpg"
@@ -59,8 +60,10 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
                              </Dropdown.Toggle>
 
                              <Dropdown.Menu>
-                                 <Dropdown.Item href="/profile">Profile</Dropdown.Item>
-                                 <Dropdown.Item href="/logout">Logout</Dropdown.Item>
+                                 <Dropdown.Item >
+                                     <Link className="menuItem" to="/profile">Profile</Link>
+                                     </Dropdown.Item>
+                                 <Dropdown.Item href="/">Logout</Dropdown.Item>
                              </Dropdown.Menu>
                          </Dropdown>
                         }
