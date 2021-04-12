@@ -90,13 +90,15 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 		e.preventDefault();
 		await savePatientVisit();
 		// closes the modal after save
-		setCurrentVisit(initialPatientVisitState);
-		setModal(false);
+		safeExit();
 	};
 
 	const safeExit = () => {
 		setModal(false);
-		setCurrentVisit(initialPatientVisitState);
+		setCurrentVisit({
+			                ...initialPatientVisitState,
+			patient: currentVisit.patient
+		});
 	};
 
 	const handleTextChange = (e: { target: { name: string, value: string }; }) => {
@@ -311,11 +313,6 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 								<div className="col-md-12">
 									<form className="form" onSubmit={handleSubmit}>
 										<div className="form-group">
-											{/*<Select
-												options={getHealthcareProviderOptions()}
-												onChange={handleHealthcareProviderChange}
-												placeholder={"Select Health Care Provider"}
-											/>*/}
 											{renderSelectField(
 												"healthCareProvider", getHealthcareProviderOptions(), "Health Care Provider",
 												handleHealthcareProviderChange, "Select Healthcare Provider")}
@@ -330,7 +327,7 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 											{renderDateField("nextVisitDateTime", "Next Visit On", getNextVisitDate(), "Select Next Visit")}
 										</div>
 										<div className="form-group">
-											{renderTextField("diagnosticNotes", "Diagnosis Notes", handleTextChange)}
+											{renderTextField("diagnoseNotes", "Diagnose Notes", handleTextChange)}
 										</div>
 										<div className="form-group">
 											{renderTextField("surgeryNotes", "Surgery Notes", handleTextChange)}

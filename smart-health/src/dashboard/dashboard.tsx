@@ -1,12 +1,13 @@
 import * as React from "react";
 import {PatientVisitModel} from "../_gen/entity";
 import AddAllergen from "../addPages/addAllergen";
+import AddEmergencyContact from "../addPages/addEmergencyContact";
 import AddInsurance from "../addPages/addInsurance";
+import AddLastVisits from "../addPages/addLastVisits";
 import AddMedicine from "../addPages/addMedicine";
 import AddVaccine from "../addPages/addVaccine";
 import AddEmergencyContact from "../addPages/addEmergencyContact";
 import {
-	getAllergen,
 	getAllergens,
 	getDoctors,
 	getEmergencyContacts,
@@ -14,10 +15,10 @@ import {
 	getLastVisits,
 	getMedicalHistory,
 	getMedicalInsurances,
-	getMedicines, getPatientVisits
+	getMedicines,
+	getPatientVisits
 } from "../api";
 import Page from "../common/page";
-import AddLastVisits from "../addPages/addLastVisits";
 import "../styles/dashboardStyles.css";
 import Tile from "../tile/tile";
 
@@ -94,7 +95,21 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		}
 		return {immunizations: formattedVaccines};
 	};
-
+	const getFormattedDoctors = async (patientId: string) => {
+		const doctors = await getDoctors(patientId);
+		const lengthToDisplay = doctors.length > 3 ? 3 : doctors.length;
+		const formattedDoctors = [];
+		for (let i = lengthToDisplay - 1; i >= 0; i--) {
+			const doctor = doctors[i];
+			formattedDoctors.push(
+				`${doctor.doctorName}`
+			);
+		}
+		if (lengthToDisplay < doctors.length) {
+			formattedDoctors.push("(Click for more.)");
+		}
+		return {doctors: formattedDoctors};
+	};
 
 	const getFormattedMedicalInsurances = async (patientId: string) => {
 		const medicalInsurances = await getMedicalInsurances(patientId);
@@ -112,6 +127,27 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		return {medicalInsurances: formattedMedicalInsurances};
 	};
 
+	const getFormattedMedicalHistory = async (patientId: string) => {
+		const medicalHistories = await getMedicalHistory(patientId);
+		const lengthToDisplay = medicalHistories.length;
+		const formattedMedicalHistories = [];
+		if (lengthToDisplay >= 1) {
+			const medicalHistory = medicalHistories[lengthToDisplay - 1];
+			formattedMedicalHistories.push(
+				<div>
+					<ul style={{listStyleType: "none"}}>
+						<div className={"row"}><strong>{new Date(medicalHistory.visitedDate).toDateString()}</strong></div>
+						<li>Diagnose Notes- {(medicalHistory.diagnoseNotes)}</li>
+						<li>Surgical Notes - {medicalHistory.surgicalNotes}</li>
+					</ul>
+				</div>
+			);
+		}
+		if (medicalHistories.length > 1) {
+			formattedMedicalHistories.push("(Click for more.)");
+		}
+		return {medicalHistory: formattedMedicalHistories};
+	};
 	const getFormattedEmergencyContacts = async (patientId: string) => {
 		const emergencyContacts = await getEmergencyContacts(patientId);
 		console.log(emergencyContacts);
@@ -167,7 +203,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						onExpand={() => {
 						}}
 						propertyName={"doctors"}
-						requestFunction={() => getDoctors()}
+						requestFunction={() => getFormattedDoctors(props.patientId)}
 						navigateTo={"/doctors"}
 						key="doctors"
 						isAddNotAllowed={props.isViewRecord}
@@ -218,7 +254,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						onExpand={() => {
 						}}
 						propertyName={"medicalHistory"}
-						requestFunction={() => getMedicalHistory()}
+						requestFunction={() => getFormattedMedicalHistory(props.patientId)}
 						navigateTo={"/history"}
 						key="medicalHistory"
 						isAddNotAllowed={props.isViewRecord}
