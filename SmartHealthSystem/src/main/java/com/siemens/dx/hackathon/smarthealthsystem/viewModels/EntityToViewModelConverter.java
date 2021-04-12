@@ -163,4 +163,15 @@ class EntityToViewModelConverter {
     }
     return sharedRecordModel;
   }
+
+  public static
+  MedicalHistoryModel convertPatientVisitToMedicalHistoryModel(PatientVisit patientVisit) {
+    MedicalHistoryModel medicalHistoryModel = new MedicalHistoryModel();
+    medicalHistoryModel.setPatientId(patientVisit.getPatient().getPatientId());
+    medicalHistoryModel.setAdditionalTests(patientVisit.getAdditionalTests());
+    medicalHistoryModel.setDiagnoseNotes(patientVisit.getDiagnoseNotes());
+    medicalHistoryModel.setSurgicalNotes(patientVisit.getSurgeryNotes());
+    medicalHistoryModel.setVisitedDate(patientVisit.getVisitDateTime());
+    return medicalHistoryModel;
+  }
 }

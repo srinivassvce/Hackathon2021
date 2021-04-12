@@ -291,7 +291,7 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 											{renderDateField("nextVisitDateTime", "Next Visit On", getNextVisitDate(), "Select Next Visit")}
 										</div>
 										<div className="form-group">
-											{renderTextField("diagnosticNotes", "Diagnosis Notes", handleTextChange)}
+											{renderTextField("diagnoseNotes", "Diagnose Notes", handleTextChange)}
 										</div>
 										<div className="form-group">
 											{renderTextField("surgeryNotes", "Surgery Notes", handleTextChange)}
