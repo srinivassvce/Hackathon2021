@@ -107,9 +107,9 @@ export default function Register() {
 	return (
 		<React.Fragment>
 			<Page patientId={""} title="Register Form">
-				<div id="login">
+				<div id="login" style={{}}>
 					<div className="container" id="wrap">
-						<div className="row">
+						<div className="row justify-content-center">
 							<div className="col-md-6 col-md-offset-3">
 								<form
 									onSubmit={handleSubmit}
