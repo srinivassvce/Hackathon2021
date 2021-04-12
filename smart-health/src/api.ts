@@ -3,9 +3,6 @@ import {
 	Doctor,
 	DoctorModel,
 	HealthCareProvider,
-	HealthCareProviderModel,
-	Patient,
-	PatientVisitModel
 } from "./_gen/entity";
 import {HealthCareProviderModel, Patient, PatientVisitModel} from "./_gen/entity";
 

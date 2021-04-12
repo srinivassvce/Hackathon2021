@@ -6,7 +6,6 @@ import AddInsurance from "../addPages/addInsurance";
 import AddLastVisits from "../addPages/addLastVisits";
 import AddMedicine from "../addPages/addMedicine";
 import AddVaccine from "../addPages/addVaccine";
-import AddEmergencyContact from "../addPages/addEmergencyContact";
 import {
 	getAllergens,
 	getDoctors,
