@@ -12,7 +12,7 @@ import {
 	PatientMedicineModel,
 	PatientVisitModel
 } from "../_gen/entity";
-import {getHealthcareProviders, getPatientDetails, savePatientVisits} from "../api";
+import {getDoctorDetails, getHealthcareProviders, getPatientDetails, savePatientVisits} from "../api";
 import MedicineField from "./medicineField";
 
 
@@ -20,9 +20,10 @@ export interface AddLastVisitsProps {
 	patientId: string;
 	showModal: boolean;
 	setModal: (showModal: boolean) => void;
+	doctorId?: string;
 }
 
-const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, showModal, setModal}) => {
+const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, doctorId, showModal, setModal}) => {
 	// obtain master data:
 
 	const [hcps, setHcps] = useState<HealthCareProviderModel[]>([] as HealthCareProviderModel[]);
@@ -50,6 +51,21 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 			};
 			getPatient();
 		}, [patientId]
+	);
+
+	useEffect(
+		() => {
+			const getDoctor = async () => {
+				if (doctorId !== undefined) {
+					const doctor = await getDoctorDetails(doctorId);
+					setCurrentVisit({
+						                ...currentVisit,
+						                doctor: doctor
+					                });
+				}
+			};
+			getDoctor();
+		}, [doctorId]
 	);
 
 	const initialPatientVisitState: PatientVisitModel = {
@@ -102,14 +118,15 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 	}
 
 	function getHealthcareProviderOptions() {
-		return hcps.map(
+		const docHcps = doctorId === undefined ? hcps : currentVisit.doctor.healthCareProviders;
+		return docHcps ? docHcps.map(
 			(healthCareProvider: HealthCareProviderModel) => (
 				{
 					label: healthCareProvider.hcpName,
-					value: healthCareProvider.hcpId,
+					value: healthCareProvider.hcpId as number,
 				}
 			)
-		);
+		): null;
 	}
 
 	function handleHealthcareProviderChange(selectedOption: any, action: any) {
@@ -229,7 +246,9 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 		);
 	};
 
-	const renderSelectField = (name: keyof PatientVisitModel, options: {label: string, value: string}[], label: string, onChange: any, placeHolder: string) => {
+	const renderSelectField = (
+		name: keyof PatientVisitModel, options: { label: string; value: number }[], label: string, onChange: any,
+		placeHolder: string, value?: number) => {
 		return (
 			<React.Fragment>
 				<div className={"row"}>
@@ -243,12 +262,27 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 							options={options}
 							onChange={onChange}
 							placeholder={placeHolder}
+							value={value}
 						/>
 					</div>
 				</div>
 			</React.Fragment>
+		);
+	};
+
+	function renderReadonlyDoctor() {
+		return (
+			<div className={"row"}>
+				<div className={"col-md-3"}>
+					Doctor
+				</div>
+				<div className={"col-md-9"}>
+					{currentVisit.doctor.doctorName}
+				</div>
+			</div>
 		)
 	}
+
 	return (
 		<React.Fragment>
 			<ReactModal
@@ -282,10 +316,12 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 												onChange={handleHealthcareProviderChange}
 												placeholder={"Select Health Care Provider"}
 											/>*/}
-											{renderSelectField("healthCareProvider", getHealthcareProviderOptions(), "Health Care Provider", handleHealthcareProviderChange, "Select Healthcare Provider")}
+											{renderSelectField(
+												"healthCareProvider", getHealthcareProviderOptions(), "Health Care Provider",
+												handleHealthcareProviderChange, "Select Healthcare Provider")}
 										</div>
 										<div className="form-group">
-											{renderSelectField("doctor", getDoctors(), "Doctor", handleDoctorChange, "Select Doctor")}
+											{doctorId === undefined ? renderSelectField("doctor", getDoctors(), "Doctor", handleDoctorChange, "Select Doctor", currentVisit.doctor.doctorId) : renderReadonlyDoctor()}
 										</div>
 										<div className="form-group">
 											{renderDateField("visitDateTime", "Visited On", getVisitDate(), "Select Visit Date")}
@@ -302,7 +338,7 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 										<div className="form-group">
 											{renderTextField("additionalTests", "Additional Tests", handleTextChange)}
 										</div>
-										<hr />
+										<hr/>
 										<div className="form-group">
 											{renderMedicines()}
 										</div>

@@ -1,9 +1,9 @@
 export interface signupOptionProps {
-	Actor: string;
+	isPatient: boolean;
 }
 
 const SignUpOptional: React.FunctionComponent<signupOptionProps> = (props) => {
-	if (props.Actor === "Patient") {
+	if (props.isPatient) {
 		return (
 			<div id="register-link" className="text-center">
 				New User?

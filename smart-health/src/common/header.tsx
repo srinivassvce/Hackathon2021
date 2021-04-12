@@ -57,7 +57,7 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 
                          <Dropdown>
                              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                 {props.isDoctor ? (<FaUser className="m-2"/>) : (<FaPen className={"m-2"}/>) } {name}
+                                 {!props.isDoctor ? (<FaUser className="m-2"/>) : (<FaPen className={"m-2"}/>) } {name}
                              </Dropdown.Toggle>
 
                              <Dropdown.Menu>

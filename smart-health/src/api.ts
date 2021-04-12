@@ -1,5 +1,12 @@
 import axios, {AxiosResponse} from "axios";
-import {Doctor, HealthCareProvider, HealthCareProviderModel, Patient, PatientVisitModel} from "./_gen/entity";
+import {
+	Doctor,
+	DoctorModel,
+	HealthCareProvider,
+	HealthCareProviderModel,
+	Patient,
+	PatientVisitModel
+} from "./_gen/entity";
 
 export function getUrl(): string {
 	return `http://localhost:8080/api/`;
@@ -39,7 +46,7 @@ export async function getPatientDetails(patientId: String): Promise<Patient> {
 	return response.data;
 }
 
-export async function getDoctorDetails(doctorId: string): Promise<Doctor> {
+export async function getDoctorDetails(doctorId: string): Promise<DoctorModel> {
 	const response = await axios.get(`${getUrl()}get/doctor/${doctorId}`);
 	return response.data;
 }

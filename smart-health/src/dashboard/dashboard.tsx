@@ -4,7 +4,7 @@ import AddAllergen from "../addPages/addAllergen";
 import AddInsurance from "../addPages/addInsurance";
 import AddMedicine from "../addPages/addMedicine";
 import AddVaccine from "../addPages/addVaccine";
-import AddEmergencyContact from '../addPages/addEmergencyContact';
+import AddEmergencyContact from "../addPages/addEmergencyContact";
 import {
 	getAllergen,
 	getAllergens,
@@ -28,6 +28,7 @@ export interface DashboardProps {
 }
 
 const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
+	console.log("is viewrecord addable?", props.doctorId === undefined && props.isViewRecord);
 	const getFormattedAllergens = async (patientId: string) => {
 		const allergens = await getAllergens(patientId);
 		console.log(allergens);
@@ -75,7 +76,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 			formattedVisits.push("(Click for more.)");
 		}
 		return {visits: formattedVisits};
-	}
+	};
 
 	const getFormattedImmunizations = async (patientId: string) => {
 		const immunizations = await getImmunizations(patientId);
@@ -112,23 +113,23 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 	};
 
 	const getFormattedEmergencyContacts = async (patientId: string) => {
-		const emergencyContacts = await getEmergencyContacts(patientId)
+		const emergencyContacts = await getEmergencyContacts(patientId);
 		console.log(emergencyContacts);
-		const lengthToDisplay = emergencyContacts.length > 3 ? 3 : emergencyContacts.length
+		const lengthToDisplay = emergencyContacts.length > 3 ? 3 : emergencyContacts.length;
 		const formattedContacts = [];
 		for (let i = lengthToDisplay - 1; i >= 0; i--) {
 			const contact = emergencyContacts[i];
 			formattedContacts.push(
 				`${contact.emergencyPatient.patientName}, Mob- ${contact.emergencyPatient.mobile}`
-			)
+			);
 		}
 
 		if (lengthToDisplay < emergencyContacts.length) {
-			formattedContacts.push("(Click for more.)")
+			formattedContacts.push("(Click for more.)");
 		}
 		console.log(formattedContacts);
-		return { emergencyContacts: formattedContacts };
-	}
+		return {emergencyContacts: formattedContacts};
+	};
 	const responsiveClasses = "col-12 col-sm-6 col-md-4";
 
 	function renderDashBoardContent() {
@@ -203,12 +204,12 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						label={"Last Visits"}
 						onExpand={() => {
 						}}
-								propertyName={"visits"}
-								requestFunction={() => getFormattedVisits(props.patientId)}
+						propertyName={"visits"}
+						requestFunction={() => getFormattedVisits(props.patientId)}
 						navigateTo={"/visits"}
-								addEntityContent={getAddLastVisitsNode}
+						addEntityContent={getAddLastVisitsNode}
 						key="lastVisits"
-						isAddNotAllowed={props.isViewRecord}
+						isAddNotAllowed={props.doctorId === undefined && props.isViewRecord}
 					/>
 				</div>
 				<div className={responsiveClasses}>
@@ -224,16 +225,17 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 					/>
 				</div>
 				<div className={responsiveClasses}>
-			<Tile
-			label={"Emergency Contacts"}
-			onExpand={() => { }}
-			propertyName={"emergencyContacts"}
-			requestFunction={() => getFormattedEmergencyContacts(props.patientId)}
-			navigateTo={"/contacts"}
-			addEntityContent={getAddEmergencyContactNode}
-			key="emergencyContacts"
-			isAddNotAllowed={props.isViewRecord}
-			/>
+					<Tile
+						label={"Emergency Contacts"}
+						onExpand={() => {
+						}}
+						propertyName={"emergencyContacts"}
+						requestFunction={() => getFormattedEmergencyContacts(props.patientId)}
+						navigateTo={"/contacts"}
+						addEntityContent={getAddEmergencyContactNode}
+						key="emergencyContacts"
+						isAddNotAllowed={props.isViewRecord}
+					/>
 				</div>
 			</div>
 		</div>;
@@ -272,15 +274,16 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 			<AddInsurance patientId={props.patientId} showModal={showModal} setModal={setModal}/>
 		);
 	}
+
 	function getAddEmergencyContactNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
 		return (
-			<AddEmergencyContact patientId={props.patientId} showModal={showModal} setModal={setModal} />
-		)
+			<AddEmergencyContact patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+		);
 	}
 
 	function getAddLastVisitsNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
 		return (
-			<AddLastVisits patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+			<AddLastVisits doctorId={props.doctorId} patientId={props.patientId} showModal={showModal} setModal={setModal}/>
 		);
 	}
 };

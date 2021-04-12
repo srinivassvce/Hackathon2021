@@ -56,7 +56,7 @@ const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 	return (
 		<React.Fragment>
 
-			<Page id={props.patientId} title="ViewRecord">
+			<Page id={props.doctorId ? props.doctorId : props.patientId} isDoctor={props.doctorId !== undefined} title="ViewRecord">
 				<table className={"table table-hover table-striped"}>
 					<thead className={"thead-light"}>
 					<tr>
