@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import IPatient from "./entities/IPatient";
+import { Patient } from "./_gen/entity";
 
 export function getUrl(): string {
 	return `http://localhost:8080/api/`;
@@ -10,7 +11,7 @@ export function loginUrl(): string {
 }
 
 export function doctorLoginUrl(): string {
-	return `${getUrl()}/doctorLogin`;
+    return `${getUrl()}/doctorLogin`;
 }
 
 export async function registerUser(user: any): Promise<boolean> {
@@ -42,6 +43,16 @@ export async function getPatientDetails(patientId: String): Promise<IPatient> {
 export async function getAllAllergens() {
 	const response = await axios.get(`${getUrl()}get/allergy/all`);
 	return response.data;
+}
+
+export async function getAllPatients() {
+    const response = await axios.get(`${getUrl()}get/patient/all`);
+    return response.data;
+}
+
+export async function getPatientByEmail(patientEmail: string): Promise<Patient> {
+    const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/patient/email/${patientEmail}`);;
+    return response.data;
 }
 
 export async function getAllMedicines() {
@@ -143,16 +154,24 @@ export async function getMedicalHistory() {
 	);
 }
 
-export async function getEmergencyContacts() {
-	return Promise.resolve(
-		{
-			emergencyContacts: [
-				"Contact 1",
-				"Contact 2",
-				"Contact 3"
-			]
-		}
-	);
+export async function getEmergencyContacts(patientId: string) {
+    console.log("Patient Id: " + patientId);
+    const response = await axios.get(
+        `${getUrl()}get/patient/emergencyContact/${patientId}`
+    )
+    return Promise.resolve(response.data);
+}
+
+export async function saveEmergencyContactDetails(patient: Patient, aPatientId: string): Promise<boolean> {
+    console.log("About to save");
+    await axios.post(
+        `${getUrl()}add/patient/emergencyContact/${aPatientId}`,
+        {
+            aPatientId,
+            ...patient
+        }
+    );
+    return true;
 }
 
 export async function getAllergen(allergenId: string) {
