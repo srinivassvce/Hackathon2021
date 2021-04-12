@@ -18,4 +18,7 @@ interface IPatientService {
   String deletePatient(long patientId);
 
   String login(String patientEmail, String patientPassword);
+
+  Patient getPatientByEmail(String patientEmail);
+
 }

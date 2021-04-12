@@ -3,7 +3,9 @@ import AddAllergen from "../addPages/addAllergen";
 import AddInsurance from "../addPages/addInsurance";
 import AddMedicine from "../addPages/addMedicine";
 import AddVaccine from "../addPages/addVaccine";
+import AddEmergencyContact from '../addPages/addEmergencyContact';
 import {
+	getAllergen,
 	getAllergens,
 	getDoctors,
 	getEmergencyContacts,
@@ -19,6 +21,7 @@ import Tile from "../tile/tile";
 
 export interface DashboardProps {
 	patientId: string;
+	isViewRecord?: boolean;
 }
 
 const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
@@ -89,108 +92,139 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		}
 		return {medicalInsurances: formattedMedicalInsurances};
 	};
+
+	const getFormattedEmergencyContacts = async (patientId: string) => {
+		const emergencyContacts = await getEmergencyContacts(patientId)
+		console.log(emergencyContacts);
+		const lengthToDisplay = emergencyContacts.length > 3 ? 3 : emergencyContacts.length
+		const formattedContacts = [];
+		for (let i = lengthToDisplay - 1; i >= 0; i--) {
+			const contact = emergencyContacts[i];
+			formattedContacts.push(
+				`${contact.emergencyPatient.patientName}, Mob- ${contact.emergencyPatient.mobile}`
+			)
+		}
+
+		if (lengthToDisplay < emergencyContacts.length) {
+			formattedContacts.push("(Click for more.)")
+		}
+		console.log(formattedContacts);
+		return { emergencyContacts: formattedContacts };
+	}
 	const responsiveClasses = "col-12 col-sm-6 col-md-4";
+
+	function renderDashBoardContent() {
+		return <div className="container-fluid">
+			<div className="row tileRow">
+				<div className={responsiveClasses}>
+					<Tile
+						label={"Allergens"}
+						onExpand={() => {
+						}}
+						propertyName={"allergens"}
+						requestFunction={() => getFormattedAllergens(props.patientId)}
+						navigateTo={"/allergens"}
+						addEntityContent={getAddAllergenNode}
+						key="allergens"
+						isAddNotAllowed={props.isViewRecord}
+					/>
+				</div>
+				<div className={responsiveClasses}>
+					<Tile
+						label={"Medicines"}
+						onExpand={() => {
+						}}
+						propertyName={"medicines"}
+						requestFunction={() => getFormattedMedicines(props.patientId)}
+						navigateTo={"/medicines"}
+						addEntityContent={getAddMedicineNode}
+						key="medicines"
+						isAddNotAllowed={props.isViewRecord}
+					/>
+				</div>
+				<div className={responsiveClasses}>
+					<Tile
+						label={"Doctors"}
+						onExpand={() => {
+						}}
+						propertyName={"doctors"}
+						requestFunction={() => getDoctors()}
+						navigateTo={"/doctors"}
+						key="doctors"
+						isAddNotAllowed={props.isViewRecord}
+					/>
+				</div>
+				<div className={responsiveClasses}>
+					<Tile
+						label={"Immunizations"}
+						onExpand={() => {
+						}}
+						propertyName={"immunizations"}
+						requestFunction={() => getImmunizations()}
+						navigateTo={"/immunizations"}
+						key="immunizations"
+						isAddNotAllowed={props.isViewRecord}
+					/>
+				</div>
+				<div className={responsiveClasses}>
+					<Tile
+						label={"Medical Insurances"}
+						onExpand={() => {
+						}}
+						propertyName={"medicalInsurances"}
+						requestFunction={() => getMedicalInsurances()}
+						navigateTo={"/insurances"}
+						key="medicalInsurances"
+						isAddNotAllowed={props.isViewRecord}
+					/>
+				</div>
+				<div className={responsiveClasses}>
+					<Tile
+						label={"Last Visits"}
+						onExpand={() => {
+						}}
+						propertyName={"lastVisits"}
+						requestFunction={() => getLastVisits()}
+						navigateTo={"/visits"}
+						key="lastVisits"
+						isAddNotAllowed={props.isViewRecord}
+					/>
+				</div>
+				<div className={responsiveClasses}>
+					<Tile
+						label={"Medical History"}
+						onExpand={() => {
+						}}
+						propertyName={"medicalHistory"}
+						requestFunction={() => getMedicalHistory()}
+						navigateTo={"/history"}
+						key="medicalHistory"
+						isAddNotAllowed={props.isViewRecord}
+					/>
+				</div>
+				<div className={responsiveClasses}>
+			<Tile
+			label={"Emergency Contacts"}
+			onExpand={() => { }}
+			propertyName={"emergencyContacts"}
+			requestFunction={() => getFormattedEmergencyContacts(props.patientId)}
+			navigateTo={"/contacts"}
+			addEntityContent={getAddEmergencyContactNode}
+			key="emergencyContacts"
+			isAddNotAllowed={props.isViewRecord}
+			/>
+				</div>
+			</div>
+		</div>;
+	}
+
 	return (
 		<React.Fragment>
-
-			<Page patientId={props.patientId} title="Dashboard">
-				<div className="container-fluid">
-					<div className="row tileRow">
-						<div className={responsiveClasses}>
-							<Tile
-								label={"Allergens"}
-								onExpand={() => {
-								}}
-								propertyName={"allergens"}
-								requestFunction={() => getFormattedAllergens(props.patientId)}
-								navigateTo={"/allergens"}
-								addEntityContent={getAddAllergenNode}
-								key="allergens"
-							/>
-						</div>
-						<div className={responsiveClasses}>
-							<Tile
-								label={"Medicines"}
-								onExpand={() => {
-								}}
-								propertyName={"medicines"}
-								requestFunction={() => getFormattedMedicines(props.patientId)}
-								navigateTo={"/medicines"}
-								addEntityContent={getAddMedicineNode}
-								key="medicines"
-							/>
-						</div>
-						<div className={responsiveClasses}>
-							<Tile
-								label={"Doctors"}
-								onExpand={() => {
-								}}
-								propertyName={"doctors"}
-								requestFunction={() => getDoctors()}
-								navigateTo={"/doctors"}
-								key="doctors"
-							/>
-						</div>
-						<div className={responsiveClasses}>
-							<Tile
-								label={"Immunizations"}
-								onExpand={() => {
-								}}
-								propertyName={"immunizations"}
-								requestFunction={() => getFormattedImmunizations(props.patientId)}
-								navigateTo={"/immunizations"}
-								addEntityContent={getAddVaccineNode}
-								key="immunizations"
-							/>
-						</div>
-						<div className={responsiveClasses}>
-							<Tile
-								label={"Medical Insurances"}
-								onExpand={() => {
-								}}
-								propertyName={"medicalInsurances"}
-								requestFunction={() => getFormattedMedicalInsurances(props.patientId)}
-								navigateTo={"/insurances"}
-								addEntityContent={getMedicalInsuranceNode}
-								key="medicalInsurances"
-							/>
-						</div>
-						<div className={responsiveClasses}>
-							<Tile
-								label={"Last Visits"}
-								onExpand={() => {
-								}}
-								propertyName={"lastVisits"}
-								requestFunction={() => getLastVisits()}
-								navigateTo={"/visits"}
-								key="lastVisits"
-							/>
-						</div>
-						<div className={responsiveClasses}>
-							<Tile
-								label={"Medical History"}
-								onExpand={() => {
-								}}
-								propertyName={"medicalHistory"}
-								requestFunction={() => getMedicalHistory()}
-								navigateTo={"/history"}
-								key="medicalHistory"
-							/>
-						</div>
-						<div className={responsiveClasses}>
-							<Tile
-								label={"Emergency Contacts"}
-								onExpand={() => {
-								}}
-								propertyName={"emergencyContacts"}
-								requestFunction={() => getEmergencyContacts()}
-								navigateTo={"/contacts"}
-								key="emergencyContacts"
-							/>
-						</div>
-					</div>
-				</div>
-			</Page>
+			{props.isViewRecord ? renderDashBoardContent() :
+			 <Page patientId={props.patientId} title="Dashboard">
+				 {renderDashBoardContent()}
+			 </Page>
+			}
 		</React.Fragment>
 	);
 
@@ -217,9 +251,12 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 			<AddInsurance patientId={props.patientId} showModal={showModal} setModal={setModal}/>
 		);
 	}
+	function getAddEmergencyContactNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
+		return (
+			<AddEmergencyContact patientId={props.patientId} showModal={showModal} setModal={setModal} />
+		)
+	}
 };
 
 
 export default Dashboard;
-
-

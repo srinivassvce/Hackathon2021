@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,23 +35,29 @@ class SharedServiceImpl implements ISharedRecordsService {
 
   @Override
   public
-  EmergencyContactModel addEmergencyContact(EmergencyContactModel emergencyContactModel) {
+  EmergencyContactModel addEmergencyContact(EmergencyContactModel emergencyContactModel,
+                                            long patientId) {
     SharedRecord sharedRecord = new SharedRecord();
     sharedRecord.setEmergencyContact(true);
-    sharedRecord.setPatient(patientRepository.findById(emergencyContactModel.getPatientId()).get());
-    if (null != emergencyContactModel.getEmergencyDoctor()) {
-      sharedRecord.setSharedDoctor(doctorRepository
-          .findById(emergencyContactModel.getEmergencyDoctor().getDoctorId())
-          .get());
-    }
-    if (null != emergencyContactModel.getEmergencyPatient()) {
-      sharedRecord.setSharedPatient(patientRepository
-          .findById(emergencyContactModel.getEmergencyPatient().getPatientId())
-          .get());
-    }
-
+    sharedRecord.setPatient(patientRepository.findById(patientId).get());
+    sharedRecord.setSharedPatient(
+        patientRepository.findById(emergencyContactModel.getPatientId()).get());
+    sharedRecord.setSharedDate(new Date());
     return EntityToViewModelConverter.convertSharedRecordToEmergencyContactModel(
         sharedRecordRepository.save(sharedRecord));
+  }
+
+  @Override
+  public
+  List<EmergencyContactModel> getAllEmergencyContactByPatientId(Long patientId) {
+    List<SharedRecord> sharedRecords = sharedRecordRepository.findAllByPatient_PatientId(patientId);
+    List<EmergencyContactModel> emergencyContactModels = new ArrayList<>();
+    for (SharedRecord sharedRecord : sharedRecords) {
+      emergencyContactModels.add(
+          EntityToViewModelConverter.convertSharedRecordToEmergencyContactModel(sharedRecord));
+    }
+
+    return emergencyContactModels;
   }
 
   @Override
