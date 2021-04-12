@@ -1,4 +1,5 @@
 import * as React from "react";
+import {PatientVisitModel} from "../_gen/entity";
 import AddAllergen from "../addPages/addAllergen";
 import AddInsurance from "../addPages/addInsurance";
 import AddMedicine from "../addPages/addMedicine";
@@ -13,9 +14,10 @@ import {
 	getLastVisits,
 	getMedicalHistory,
 	getMedicalInsurances,
-	getMedicines
+	getMedicines, getPatientVisits
 } from "../api";
 import Page from "../common/page";
+import AddLastVisits from "../addPages/addLastVisits";
 import "../styles/dashboardStyles.css";
 import Tile from "../tile/tile";
 
@@ -58,6 +60,21 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		}
 		return {medicines: formattedMedicines};
 	};
+	const getFormattedVisits = async (patientId: string) => {
+		const visits: PatientVisitModel[] = await getPatientVisits(patientId);
+		const lengthToDisplay = visits.length > 3 ? 3 : visits.length;
+		const formattedVisits = [];
+		for (let i = lengthToDisplay - 1; i >= 0; i--) {
+			const visit = visits[i];
+			formattedVisits.push(
+				`${visit.doctor.doctorName} (${new Date(visit.visitDateTime).toLocaleDateString()})}`
+			);
+		}
+		if (lengthToDisplay < visits.length) {
+			formattedVisits.push("(Click for more.)");
+		}
+		return {visits: formattedVisits};
+	}
 
 	const getFormattedImmunizations = async (patientId: string) => {
 		const immunizations = await getImmunizations(patientId);
@@ -160,9 +177,10 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						onExpand={() => {
 						}}
 						propertyName={"immunizations"}
-						requestFunction={() => getImmunizations()}
+						requestFunction={() => getFormattedImmunizations(props.patientId)}
 						navigateTo={"/immunizations"}
 						key="immunizations"
+						addEntityContent={getAddVaccineNode}
 						isAddNotAllowed={props.isViewRecord}
 					/>
 				</div>
@@ -172,9 +190,10 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						onExpand={() => {
 						}}
 						propertyName={"medicalInsurances"}
-						requestFunction={() => getMedicalInsurances()}
+						requestFunction={() => getFormattedMedicalInsurances(props.patientId)}
 						navigateTo={"/insurances"}
 						key="medicalInsurances"
+						addEntityContent={getMedicalInsuranceNode}
 						isAddNotAllowed={props.isViewRecord}
 					/>
 				</div>
@@ -183,9 +202,10 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						label={"Last Visits"}
 						onExpand={() => {
 						}}
-						propertyName={"lastVisits"}
-						requestFunction={() => getLastVisits()}
+								propertyName={"visits"}
+								requestFunction={() => getFormattedVisits(props.patientId)}
 						navigateTo={"/visits"}
+								addEntityContent={getAddLastVisitsNode}
 						key="lastVisits"
 						isAddNotAllowed={props.isViewRecord}
 					/>
@@ -255,6 +275,12 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		return (
 			<AddEmergencyContact patientId={props.patientId} showModal={showModal} setModal={setModal} />
 		)
+	}
+
+	function getAddLastVisitsNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
+		return (
+			<AddLastVisits patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+		);
 	}
 };
 

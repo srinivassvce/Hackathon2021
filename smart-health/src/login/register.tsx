@@ -5,7 +5,6 @@ import { useFormFields } from "../libs/useFormFields";
 import { useHistory } from "react-router";
 import DatePicker from "react-datepicker";
 import Page from "../common/page";
-import "react-datepicker/dist/react-datepicker.css";
 
 // export interface ISignup {
 // 	email: string;

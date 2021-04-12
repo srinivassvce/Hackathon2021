@@ -1,6 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import IPatient from "./entities/IPatient";
-import { Patient } from "./_gen/entity";
+import {HealthCareProvider, HealthCareProviderModel, Patient, PatientVisitModel} from "./_gen/entity";
 
 export function getUrl(): string {
 	return `http://localhost:8080/api/`;
@@ -35,7 +34,7 @@ export async function getPatientName(patientId: string): Promise<string> {
 	return patient.patientName;
 }
 
-export async function getPatientDetails(patientId: String): Promise<IPatient> {
+export async function getPatientDetails(patientId: String): Promise<Patient> {
 	const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/patient/${patientId}`);
 	return response.data;
 }
@@ -53,6 +52,15 @@ export async function getAllPatients() {
 export async function getPatientByEmail(patientEmail: string): Promise<Patient> {
     const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/patient/email/${patientEmail}`);;
     return response.data;
+}
+
+export async function getPatientVisits(patientId: string) {
+	const response = await axios.get(`${getUrl()}get/patient/visits/${patientId}`);
+	return response.data;
+}
+
+export async function savePatientVisits(patientVisitModel: PatientVisitModel) {
+	const response = await axios.post(`${getUrl()}add/patient/visit`, patientVisitModel);
 }
 
 export async function getAllMedicines() {
@@ -166,18 +174,6 @@ export async function getMedicalInsurances(patientId: string) {
 }
 
 
-export async function getLastVisits() {
-	return Promise.resolve(
-		{
-			lastVisits: [
-				"Visit 1",
-				"Visit 2",
-				"Visit 3"
-			]
-		}
-	);
-}
-
 export async function getMedicalHistory() {
 	return Promise.resolve(
 		{
@@ -215,14 +211,8 @@ export async function getAllergen(allergenId: string) {
 	return response.data;
 }
 
-export function getPatientInfo(patientId: string) {
-	return Promise.resolve(
-		{
-			patientInfo: {
-				allergens: [],
-				medicines: [],
-				name: "Smart Health Pat - 1"
-			}
-		}
-	);
+export async function getHealthcareProviders(): Promise<HealthCareProviderModel[]> {
+	const response = await axios.get(`${getUrl()}get/hcp/all`);
+	return response.data;
 }
+

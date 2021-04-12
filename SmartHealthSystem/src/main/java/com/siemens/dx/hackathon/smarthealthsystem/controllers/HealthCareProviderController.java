@@ -24,7 +24,7 @@ class HealthCareProviderController {
 
   @GetMapping(path = "/get/hcp/all")
   public
-  ResponseEntity<List<HealthCareProvider>> getAllHcps() {
+  ResponseEntity<List<HealthCareProviderModel>> getAllHcps() {
     return new ResponseEntity<>(healthCareProviderService.getAllHealthCareProviders(),
         HttpStatus.OK);
   }
