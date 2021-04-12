@@ -1,6 +1,8 @@
 import * as React from "react";
 import AddAllergen from "../addPages/addAllergen";
+import AddInsurance from "../addPages/addInsurance";
 import AddMedicine from "../addPages/addMedicine";
+import AddVaccine from "../addPages/addVaccine";
 import AddEmergencyContact from '../addPages/addEmergencyContact';
 import {
 	getAllergen,
@@ -48,13 +50,47 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		for (let i = lengthToDisplay - 1; i >= 0; i--) {
 			const medicine = medicines[i];
 			formattedMedicines.push(
-				`${medicine.classification} - ${medicine.genericName} - ${medicine.brandName} - ${medicine.dose}`
+				`${medicine.brandName} -  ${medicine.frequency}`
 			);
 		}
 		if (lengthToDisplay < medicines.length) {
 			formattedMedicines.push("(Click for more.)");
 		}
 		return {medicines: formattedMedicines};
+	};
+
+	const getFormattedImmunizations = async (patientId: string) => {
+		const immunizations = await getImmunizations(patientId);
+		const lengthToDisplay = immunizations.length > 3 ? 3 : immunizations.length;
+		const formattedVaccines = [];
+		for (let i = lengthToDisplay - 1; i >= 0; i--) {
+			const vaccine = immunizations[i];
+			const vaccineDate = new Date(vaccine.vaccineDate).toDateString();
+			formattedVaccines.push(
+				`${vaccine.vaccineName} - ${vaccineDate}`
+			);
+		}
+		if (lengthToDisplay < immunizations.length) {
+			formattedVaccines.push("(Click for more.)");
+		}
+		return {immunizations: formattedVaccines};
+	};
+
+
+	const getFormattedMedicalInsurances = async (patientId: string) => {
+		const medicalInsurances = await getMedicalInsurances(patientId);
+		const lengthToDisplay = medicalInsurances.length > 3 ? 3 : medicalInsurances.length;
+		const formattedMedicalInsurances = [];
+		for (let i = lengthToDisplay - 1; i >= 0; i--) {
+			const insurance = medicalInsurances[i];
+			formattedMedicalInsurances.push(
+				`${insurance.insuranceCompany} - Rs${insurance.sumInsured}`
+			);
+		}
+		if (lengthToDisplay < medicalInsurances.length) {
+			formattedMedicalInsurances.push("(Click for more.)");
+		}
+		return {medicalInsurances: formattedMedicalInsurances};
 	};
 
 	const getFormattedEmergencyContacts = async (patientId: string) => {
@@ -201,6 +237,18 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 	function getAddMedicineNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
 		return (
 			<AddMedicine patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+		);
+	}
+
+	function getAddVaccineNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
+		return (
+			<AddVaccine patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+		);
+	}
+
+	function getMedicalInsuranceNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
+		return (
+			<AddInsurance patientId={props.patientId} showModal={showModal} setModal={setModal}/>
 		);
 	}
 	function getAddEmergencyContactNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {

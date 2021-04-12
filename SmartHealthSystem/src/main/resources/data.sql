@@ -28,7 +28,7 @@ INSERT INTO "PUBLIC"."ALLERGY" VALUES
 (27, '', 'Sinus Infection'),
 (28, '', 'Cockroach Allergy');
 INSERT INTO "PUBLIC"."MEDICAL_INSURANCE" VALUES
-(1, 'National Insurance Co. Ltd.', 'United Health Care Parekh Insurance TPA Private Limited/'),
+(1, 'National Insurance Co. Ltd.', 'United Health Care Parekh Insurance TPA Private Limited'),
 (2, 'Bajaj Allianz General Insurance Co. Ltd.', 'Medi Assist Insurance TPA Private'),
 (3, 'Cholamandalam MS General Insurance Co. Ltd', 'MDIndia Health Insurance TPA Private Limited'),
 (4, 'Bharti AXA General Insurance Co. Ltd.', 'Paramount Health Services & Insurance TPA Private Limited'),
@@ -91,8 +91,8 @@ INSERT INTO "PUBLIC"."DOCTOR_HEALTH_CARE_PROVIDERS" VALUES
 (2, 2);
 INSERT INTO "PUBLIC"."MEDICINE" VALUES
 (1, 'DOLO (650mg)', 'Analgesic and AntiPyretic', '650', 'Paracetamol', 'Micro Labs Ltd (B&B)', '1.8', 0),
-(2, 'Abrozin (50ml)', 'Analgesic and AntiPyreti', '50', 'Paracetamol', 'Arbro Pharmaceuticals Pvt Ltd.', '21', 2),
-(3, 'Bactomol (500mg)', STRINGDECODE('Analgesic and AntiPyreti\t'), '500', 'Paracetamol', 'B.L Pharma Ltd', '1.1', 0),
+(2, 'Abrozin (50ml)', 'Analgesic and AntiPyretic', '50', 'Paracetamol', 'Arbro Pharmaceuticals Pvt Ltd.', '21', 2),
+(3, 'Bactomol (500mg)', 'Analgesic and AntiPyretic', '500', 'Paracetamol', 'B.L Pharma Ltd', '1.1', 0),
 (4, 'DOLO (60ml)', 'Analgesic and AntiPyretic', '60', 'Paracetamol', 'Micro Labs Ltd (B&B)', '27', 2),
 (5, 'Aludrox (840mg)', 'Antacids', '840', 'Aluminium Hydroxidd and Magnesium Hydroxide', 'Wyeth Limited', '0.22', 0),
 (6, 'Hegel MPS (170ml)', 'Antacids', '170', 'Aluminium Hydroxidd and Magnesium Hydroxide', 'Health Guard (I) Pvt Ltd.', '42', 2),
