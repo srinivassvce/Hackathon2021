@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {HealthCareProvider, HealthCareProviderModel, Patient, PatientVisitModel} from "./_gen/entity";
+import {Doctor, HealthCareProvider, HealthCareProviderModel, Patient, PatientVisitModel} from "./_gen/entity";
 
 export function getUrl(): string {
 	return `http://localhost:8080/api/`;
@@ -37,6 +37,16 @@ export async function getPatientName(patientId: string): Promise<string> {
 export async function getPatientDetails(patientId: String): Promise<Patient> {
 	const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/patient/${patientId}`);
 	return response.data;
+}
+
+export async function getDoctorDetails(doctorId: string): Promise<Doctor> {
+	const response = await axios.get(`${getUrl()}get/doctor/${doctorId}`);
+	return response.data;
+}
+
+export async function getDoctorName(doctorId: string): Promise<string> {
+	const response = await getDoctorDetails(doctorId);
+	return response.doctorName;
 }
 
 export async function getAllAllergens() {

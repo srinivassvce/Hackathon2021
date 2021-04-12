@@ -4,12 +4,13 @@ import Page from "../common/page";
 import Dashboard from "./dashboard";
 
 export interface ViewRecordProps {
+	doctorId?: string;
 	patientId: string;
 }
 
 const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 
-	const [viewPatientId, setViewPatientId ] = React.useState(undefined);
+	const [viewPatientId, setViewPatientId ] = React.useState();
 
 	// TODO to integrate the UI with backend..
 	const patients: Patient[] = [{patientId: 1,patientName:"Arun",
@@ -55,7 +56,7 @@ const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 	return (
 		<React.Fragment>
 
-			<Page patientId={props.patientId} title="ViewRecord">
+			<Page id={props.patientId} title="ViewRecord">
 				<table className={"table table-hover table-striped"}>
 					<thead className={"thead-light"}>
 					<tr>
@@ -66,7 +67,7 @@ const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 					</tr>
 					</thead>
 				</table>
-				{(viewPatientId) ? <Dashboard patientId={viewPatientId} isViewRecord={true}/> :undefined}
+				{(viewPatientId) ? <Dashboard doctorId={props.doctorId} patientId={viewPatientId} isViewRecord={true}/> :undefined}
 			</Page>
 		</React.Fragment>
 	);

@@ -1,32 +1,33 @@
 import * as React from 'react';
 import {Dropdown} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import {getPatientName} from "../api";
-import {FaUser} from "react-icons/fa";
+import {getDoctorName, getPatientName} from "../api";
+import {FaPen, FaUser} from "react-icons/fa";
 import logo from "../assets/healthcare.jpg"
 export interface HeaderProps {
-    patientId: string;
+    id: string;
     currentPageTitle: string;
     displayMenu: (agr:boolean)=>void;
+    isDoctor?: boolean;
 }
 
 const Header: React.FunctionComponent<HeaderProps> = (props) => {
 
-    const { patientId, currentPageTitle, displayMenu} = props;
+    const { id, currentPageTitle, displayMenu} = props;
     const [name, setName] = React.useState("");
     React.useEffect(
         () => {
-            console.log(patientId);
-            if (patientId !== undefined && patientId !== "") {
+            console.log(id);
+            if (id !== undefined && id !== "") {
                 getAndSetName();
             }
-        }, [patientId]
+        }, [id]
     )
 
     const [showMenu, setShowMenu] = React.useState(false);
 
     const getAndSetName = async ()  => {
-        const name = await getPatientName(patientId);
+        const name = props.isDoctor ? await getDoctorName(id) : await getPatientName(id);
         setName(name);
     }
 
@@ -35,7 +36,7 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
         displayMenu(showMenu);
     };
 
-    const userString = patientId === "" ? "Please login" : name;
+    const userString = id === "" ? "Please login" : name;
     console.log(userString);
     return (
         <React.Fragment>
@@ -52,11 +53,11 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
                     </div>
                     <div className="col-2 text-right mt-3">
 
-                        {patientId === "" ? <a href="\">{"Please Login"}</a> :
+                        {id === "" ? <a href="\">{"Please Login"}</a> :
 
                          <Dropdown>
                              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                 <FaUser className="m-2"/> {name}
+                                 {props.isDoctor ? (<FaUser className="m-2"/>) : (<FaPen className={"m-2"}/>) } {name}
                              </Dropdown.Toggle>
 
                              <Dropdown.Menu>

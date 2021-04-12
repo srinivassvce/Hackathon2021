@@ -6,7 +6,7 @@ export interface DoctorsProps {
  
 const Doctors: React.FunctionComponent<DoctorsProps> = (props) => {
     return ( 
-        <Page title="Doctors" patientId={props.patientId} >
+        <Page title="Doctors" id={props.patientId} >
             <h1>
                 List of Doctors here ....
             </h1>

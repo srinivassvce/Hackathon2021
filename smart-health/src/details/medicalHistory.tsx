@@ -6,7 +6,7 @@ export interface MedicalHistoryProps {
  
 const MedicalHistory: React.FunctionComponent<MedicalHistoryProps> = (props) => {
     return ( 
-        <Page title="Medical History" patientId={props.patientId} >
+        <Page title="Medical History" id={props.patientId} >
             <h1>
                 List of Medical History here ....
             </h1>

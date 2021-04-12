@@ -10,6 +10,7 @@ import SignUpOptional from "./signupOptional";
 
 export interface LoginProps {
 	setPatientId: (patientId: string) => void;
+	setDoctorId: (doctorId: string) => void;
 }
 
 export default function Login(props: LoginProps) {
@@ -35,6 +36,7 @@ export default function Login(props: LoginProps) {
 				.then((c) => {
 					props.setPatientId(c.data);
 					if (c.data !== failure) {
+						props.setDoctorId(c.data);
 						history.push("/dashboard");
 					} else {
 						alert("Invalid User name or Password");
@@ -45,8 +47,9 @@ export default function Login(props: LoginProps) {
 			const resp = axios
 				.post(doctorLoginUrl(), { email, password })
 				.then((c) => {
+					console.log(c);
 					if (c.data !== failureDoctor) {
-						history.push("/dashboard");
+						history.push("/viewRecords");
 					} else {
 						alert("Invalid Doctor's name or Password");
 					}
@@ -57,7 +60,7 @@ export default function Login(props: LoginProps) {
 
 	return (
 		<React.Fragment>
-			<Page patientId={""} title="Welcome to Smart Health">
+			<Page id={""} title="Welcome to Smart Health">
 				<div id="login">
 					<div className="container">
 						<div

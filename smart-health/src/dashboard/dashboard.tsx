@@ -24,6 +24,7 @@ import Tile from "../tile/tile";
 export interface DashboardProps {
 	patientId: string;
 	isViewRecord?: boolean;
+	doctorId?: string;
 }
 
 const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
@@ -241,7 +242,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 	return (
 		<React.Fragment>
 			{props.isViewRecord ? renderDashBoardContent() :
-			 <Page patientId={props.patientId} title="Dashboard">
+			 <Page id={props.patientId} title="Dashboard">
 				 {renderDashBoardContent()}
 			 </Page>
 			}
