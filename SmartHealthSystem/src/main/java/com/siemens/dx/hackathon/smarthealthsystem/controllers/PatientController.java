@@ -86,4 +86,12 @@ class PatientController {
     String message = patientService.login(email, pw);
     return new ResponseEntity<>(message, HttpStatus.OK);
   }
+
+  // Get Patient by Id from Patient table
+  @GetMapping(path = "/get/patient/email/{patientEmail}")
+  public
+  ResponseEntity<Patient> fetchUserByEmail(@PathVariable String patientEmail)
+  throws EntityNotFoundException {
+    return new ResponseEntity<>(patientService.getPatientByEmail(patientEmail), HttpStatus.OK);
+  }
 }

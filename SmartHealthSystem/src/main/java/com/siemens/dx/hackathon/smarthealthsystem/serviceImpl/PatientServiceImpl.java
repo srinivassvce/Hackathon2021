@@ -76,4 +76,10 @@ class PatientServiceImpl implements IPatientService {
       return "Incorrect Email or Password!";
     }
   }
+
+  @Override
+  public
+  Patient getPatientByEmail(String patientEmail) {
+    return patientRepository.findByPatientEmail(patientEmail);
+  }
 }

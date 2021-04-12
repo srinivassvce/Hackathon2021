@@ -7,7 +7,10 @@ import java.util.List;
 
 public
 interface ISharedRecordsService {
-  EmergencyContactModel addEmergencyContact(EmergencyContactModel emergencyContactModel);
+  EmergencyContactModel addEmergencyContact(EmergencyContactModel emergencyContactModel,
+                                            long patientId);
+
+  List<EmergencyContactModel> getAllEmergencyContactByPatientId(Long patientId);
 
   SharedRecordModel getDoctorOrPatientDetails(String email);
 
