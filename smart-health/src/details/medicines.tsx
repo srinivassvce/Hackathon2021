@@ -41,7 +41,7 @@ const Medicines: React.FunctionComponent<MedicinesProps> = (props) => {
 		);
 	};
 	return (
-		<Page title="Medicines" patientId={props.patientId}>
+		<Page title="Medicines" id={props.patientId}>
 			<div className="container">
 				<div className={"row text-info display-4 m-4"}>
 					You have a total of {medicines.length} medications.

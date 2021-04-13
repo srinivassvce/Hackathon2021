@@ -10,7 +10,9 @@ import com.siemens.dx.hackathon.smarthealthsystem.servicerepository.MedicineRepo
 import com.siemens.dx.hackathon.smarthealthsystem.servicerepository.PatientMedicinesRepository;
 import com.siemens.dx.hackathon.smarthealthsystem.servicerepository.PatientRepository;
 import com.siemens.dx.hackathon.smarthealthsystem.servicerepository.PatientVisitRepository;
+import com.siemens.dx.hackathon.smarthealthsystem.viewModels.DoctorModel;
 import com.siemens.dx.hackathon.smarthealthsystem.viewModels.EntityToViewModelConverter;
+import com.siemens.dx.hackathon.smarthealthsystem.viewModels.MedicalHistoryModel;
 import com.siemens.dx.hackathon.smarthealthsystem.viewModels.PatientMedicineModel;
 import com.siemens.dx.hackathon.smarthealthsystem.viewModels.PatientVisitModel;
 
@@ -74,7 +76,7 @@ class PatientVisitServiceImpl implements IPatientVisitService {
   PatientVisitModel addPatientVisit(PatientVisitModel patientVisitModel) {
     PatientVisit patientVisit = new PatientVisit();
     patientVisit.setAdditionalTests(patientVisitModel.getAdditionalTests());
-    patientVisit.setDiagnoseNotes(patientVisitModel.getAdditionalTests());
+    patientVisit.setDiagnoseNotes(patientVisitModel.getDiagnoseNotes());
     patientVisit.setNextVisitDateTime(patientVisitModel.getNextVisitDateTime());
     patientVisit.setVisitDateTime(patientVisitModel.getVisitDateTime());
     patientVisit.setSurgeryNotes(patientVisitModel.getSurgeryNotes());
@@ -103,5 +105,28 @@ class PatientVisitServiceImpl implements IPatientVisitService {
     }
     return EntityToViewModelConverter.convertPatientVisit(patientVisitSaved,
         savedPatientMedicineModels);
+  }
+
+  @Override
+  public
+  List<DoctorModel> getAllDoctorsForAPatient(Long patientId) {
+    List<PatientVisit> patientVisits = patientVisitRepository.findAllByPatient_PatientId(patientId);
+    List<DoctorModel> doctorModels = new ArrayList<>();
+    for (PatientVisit patientVisit : patientVisits) {
+      doctorModels.add(EntityToViewModelConverter.convertDoctor(patientVisit.getDoctor()));
+    }
+    return doctorModels;
+  }
+
+  @Override
+  public
+  List<MedicalHistoryModel> getMedicalHistory(Long patientId) {
+    List<PatientVisit> patientVisits = patientVisitRepository.findAllByPatient_PatientId(patientId);
+    List<MedicalHistoryModel> medicalHistoryModels = new ArrayList<>();
+    for (PatientVisit patientVisit : patientVisits) {
+      medicalHistoryModels.add(
+          EntityToViewModelConverter.convertPatientVisitToMedicalHistoryModel(patientVisit));
+    }
+    return medicalHistoryModels;
   }
 }

@@ -37,7 +37,7 @@ const Immunizations: React.FunctionComponent<ImmunizationsProps> = (props) => {
 		);
 	};
 	return (
-		<Page title="Immunizations" patientId={props.patientId}>
+		<Page title="Immunizations" id={props.patientId}>
 			<div className="container">
 				<div className={"row text-info display-4 m-4"}>
 					You have a total of {immunizations.length} Immunizations.

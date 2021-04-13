@@ -9,7 +9,7 @@ export interface AddMedicineProps {
 	patientId: string;
 	showModal: boolean;
 	setModal: (showModal: boolean) => void;
-	onSubmit: (medicine: PatientMedicineModel) => void;
+	onSubmit?: (medicine: PatientMedicineModel) => void;
 }
 
 const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, showModal, setModal, onSubmit}) => {
