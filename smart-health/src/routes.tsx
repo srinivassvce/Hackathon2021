@@ -45,9 +45,10 @@ const Routes: React.FunctionComponent<RoutesProps> = () => {
                 <Route path="/" exact>
                     <Login setPatientId={updatePatientId} setDoctorId={updateDoctorId}/>
                 </Route>
-                <Route path="/dashboard"> <Dashboard patientId={patientId} /> </Route>
+                <Route path="/dashboard"> <Dashboard isViewRecord={false} patientId={patientId} /> </Route>
                 <Route path="/profile"> <Profile patientId={patientId}/> </Route>
                 <Route path="/view"> <ViewRecord patientId={patientId}/> </Route>
+                <Route path="/share"> <ShareHealthRecord patientId={patientId}/> </Route>
                 {/*<Route path="/allergens"> <Allergens patientId={patientId} /></Route>*/}
                 {/*<Route path="/medicines"> <Medicines patientId={patientId} /></Route>*/}
                 {/*<Route path="/doctors"> <Doctors patientId={patientId} /></Route>*/}

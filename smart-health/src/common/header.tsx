@@ -2,10 +2,7 @@ import * as React from 'react';
 import {Dropdown} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {getDoctorName, getPatientName} from "../api";
-import {FaPen, FaUser} from "react-icons/fa";
-import {getPatientName} from "../api";
-import {FaAlignJustify, FaBars, FaHome, FaHospitalAlt, FaUser} from "react-icons/fa";
-import logo from "../assets/healthcare.jpg"
+import {FaPen, FaBars, FaHome, FaHospitalAlt, FaUser} from "react-icons/fa";
 export interface HeaderProps {
     id: string;
     currentPageTitle: string;

@@ -25,10 +25,6 @@ const Tile: React.FunctionComponent<TileProps> = (props) => {
 	const [data, setData] = React.useState([]);
 	const [showModal, setShowModal] = React.useState(false);
 
-	const {path, url} = useRouteMatch();
-
-	console.log(path, url);
-
 	React.useEffect(
 		() => {
 			const getAndSetData = async () => {
@@ -41,8 +37,6 @@ const Tile: React.FunctionComponent<TileProps> = (props) => {
 	);
 
 	const {navigateTo, addEntityContent} = props;
-	const isFromViewRecord = path === "/viewRecords";
-	const newNavigateUrl = isFromViewRecord ? path + navigateTo : navigateTo;
 	return (
 		<React.Fragment>
 			{addEntityContent ? addEntityContent(showModal, setShowModal) : null}

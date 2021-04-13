@@ -19,8 +19,8 @@ const MenuBar: React.FunctionComponent<MenubarProps> = (props) => {
 					{/*<hr></hr>*/}
 				<Link className="menuItem" to="/share">Share Health Records</Link><br/>
 				<Link className="menuItem" to="/view">View Health Records</Link><br/>
-				<Link className="menuItem" to="/uploadReports">Upload Reports</Link><br/>
-				<Link className="menuItem" to="/searchMedicine">Search Alternate Medicine</Link><br/>
+				<Link className="menuItem" to="/dashboard" >Upload Reports</Link><br/>
+				<Link className="menuItem" to="/dashboard">Search Alternate Medicine</Link><br/>
 					<hr></hr>
 				<Nav.Link className="menuItem"  eventKey="disabled" disabled>
 					About Us
