@@ -19,6 +19,7 @@ import {
 import Page from "../common/page";
 import "../styles/dashboardStyles.css";
 import Tile from "../tile/tile";
+import AddEmergencyContact from "../addPages/addEmergencyContact";
 
 export interface DashboardProps {
 	patientId: string;
