@@ -15,10 +15,16 @@ const Page: React.FunctionComponent<PageProps> = (props) => {
 	return (
 		<React.Fragment>
 			<Header currentPageTitle={props.title} id={props.id} displayMenu={setShowMenu} isDoctor={props.isDoctor} />
-			<Row>
-				{showMenu ? <Col className="left" xs={2.5}><MenuBar/></Col> : undefined}
-				<Col> {props.children}</Col>
-			</Row>
+			{/*Stop dancing*/}
+			<div className={"container-fluid"}>
+				<div className={"row"} >
+					{showMenu ? <Col className="left" xs={2.5}><MenuBar/></Col> : undefined}
+					<div className={"col"}>
+						{props.children}
+					</div>
+				</div>
+			</div>
+
 		</React.Fragment>
 	);
 };
