@@ -28,7 +28,12 @@ export async function getAllergens(patientId: string) {
 	);
 	return Promise.resolve(response.data);
 }
-
+export async function getNotifications(patientId: string) {
+	const response = await axios.get(
+		`${getUrl()}get/notifications/${patientId}`
+	);
+	return Promise.resolve(response.data);
+}
 export async function getPatientName(patientId: string): Promise<string> {
 	const patient = await getPatientDetails(patientId);
 	return patient.patientName;
