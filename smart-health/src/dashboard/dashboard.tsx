@@ -1,3 +1,4 @@
+import {useState} from "react";
 import * as React from "react";
 import {PatientVisitModel} from "../_gen/entity";
 import AddAllergen from "../addPages/addAllergen";
@@ -11,7 +12,6 @@ import {
 	getDoctors,
 	getEmergencyContacts,
 	getImmunizations,
-	getLastVisits,
 	getMedicalHistory,
 	getMedicalInsurances,
 	getMedicines,
@@ -166,7 +166,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		return {emergencyContacts: formattedContacts};
 	};
 	const responsiveClasses = "col-12 col-sm-6 col-md-4";
-
+	const viewRecordUrl = props.isViewRecord ? "/viewRecord": "";
 	function renderDashBoardContent() {
 		return <div className="container-fluid">
 			<div className="row tileRow">
@@ -177,7 +177,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"allergens"}
 						requestFunction={() => getFormattedAllergens(props.patientId)}
-						navigateTo={"/allergens"}
+						navigateTo={`${viewRecordUrl}/allergens`}
 						addEntityContent={getAddAllergenNode}
 						key="allergens"
 						isAddNotAllowed={props.isViewRecord}
@@ -190,7 +190,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"medicines"}
 						requestFunction={() => getFormattedMedicines(props.patientId)}
-						navigateTo={"/medicines"}
+						navigateTo={`${viewRecordUrl}/medicines`}
 						addEntityContent={getAddMedicineNode}
 						key="medicines"
 						isAddNotAllowed={props.isViewRecord}
@@ -204,7 +204,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"doctors"}
 						requestFunction={() => getFormattedDoctors(props.patientId)}
-						navigateTo={"/doctors"}
+						navigateTo={`${viewRecordUrl}/doctors`}
 						key="doctors"
 						isAddNotAllowed={props.isViewRecord}
 						isUpdateRequired={isUpdateRequired}
@@ -217,7 +217,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"immunizations"}
 						requestFunction={() => getFormattedImmunizations(props.patientId)}
-						navigateTo={"/immunizations"}
+						navigateTo={`${viewRecordUrl}/immunizations`}
 						key="immunizations"
 						addEntityContent={getAddVaccineNode}
 						isAddNotAllowed={props.isViewRecord}
@@ -230,7 +230,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"medicalInsurances"}
 						requestFunction={() => getFormattedMedicalInsurances(props.patientId)}
-						navigateTo={"/insurances"}
+						navigateTo={`${viewRecordUrl}/insurances`}
 						key="medicalInsurances"
 						addEntityContent={getMedicalInsuranceNode}
 						isAddNotAllowed={props.isViewRecord}
@@ -243,10 +243,11 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"visits"}
 						requestFunction={() => getFormattedVisits(props.patientId)}
-						navigateTo={"/visits"}
+						navigateTo={`${viewRecordUrl}/visits`}
 						addEntityContent={getAddLastVisitsNode}
 						key="lastVisits"
 						isAddNotAllowed={props.doctorId === undefined && props.isViewRecord}
+						setIsUpdateRequired={setIsUpdateRequired}
 					/>
 				</div>
 				<div className={responsiveClasses}>
@@ -256,7 +257,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"medicalHistory"}
 						requestFunction={() => getFormattedMedicalHistory(props.patientId)}
-						navigateTo={"/history"}
+						navigateTo={`${viewRecordUrl}/history`}
 						key="medicalHistory"
 						isAddNotAllowed={props.isViewRecord}
 						isUpdateRequired={isUpdateRequired}
@@ -269,7 +270,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"emergencyContacts"}
 						requestFunction={() => getFormattedEmergencyContacts(props.patientId)}
-						navigateTo={"/contacts"}
+						navigateTo={`${viewRecordUrl}/contacts`}
 						addEntityContent={getAddEmergencyContactNode}
 						key="emergencyContacts"
 						isAddNotAllowed={props.isViewRecord}

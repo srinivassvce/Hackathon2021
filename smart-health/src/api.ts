@@ -154,7 +154,7 @@ export async function getMedicines(patientId: string) {
 export async function getDoctors(patientId: string) {
 
 	const response = await axios.get(
-		`${getUrl()}get/patient/visits/doctors/${patientId}`
+		`${getUrl()}get/patient/visits/doctors/${patientId}` ///get/patient/visits/doctors/${patientId}
 	);
 	return Promise.resolve(response.data);
 }

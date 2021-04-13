@@ -21,8 +21,8 @@ export interface RoutesProps {
 }
 
 const Routes: React.FunctionComponent<RoutesProps> = () => {
-    const [patientId, setPatientId] = React.useState("");
-    const updatePatientId = (patientId: string) => {
+    const [patientId, setPatientId] = React.useState<number>();
+    const updatePatientId = (patientId: number) => {
         console.log("Upating patient id");
         console.log(patientId);
         setPatientId(patientId);
@@ -45,7 +45,10 @@ const Routes: React.FunctionComponent<RoutesProps> = () => {
                 </Route>
                 <Route path="/dashboard"> <Dashboard patientId={patientId} /> </Route>
                 <Route path="/profile"> <Profile patientId={patientId}/> </Route>
-                <Route path="/viewRecords"> <ViewRecord patientId={patientId} doctorId={doctorId}/> </Route>
+                <Route path="/viewRecords"> <ViewRecord patientId={patientId} doctorId={doctorId} setPatientId={setPatientId}/> </Route>
+                <Route path="/viewRecords/allergy"> <Allergens patientId={patientId} doctorId={doctorId}/> </Route>
+                <Route path="/viewRecords/medicines"> <Medicines patientId={patientId} doctorId={doctorId}/> </Route>
+                <Route path="/viewRecords/immunization"> <Immunizations patientId={patientId} doctorId={doctorId}/> </Route>
                 <Route path="/allergens"> <Allergens patientId={patientId} /></Route>
                 <Route path="/medicines"> <Medicines patientId={patientId} /></Route>
                 <Route path="/doctors"> <Doctors patientId={patientId} /></Route>

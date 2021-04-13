@@ -9,7 +9,7 @@ import Page from "../common/page";
 import SignUpOptional from "./signupOptional";
 
 export interface LoginProps {
-	setPatientId: (patientId: string) => void;
+	setPatientId: (patientId: number) => void;
 	setDoctorId: (doctorId: string) => void;
 }
 

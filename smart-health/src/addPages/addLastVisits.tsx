@@ -97,7 +97,8 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 		setModal(false);
 		setCurrentVisit({
 			                ...initialPatientVisitState,
-			patient: currentVisit.patient
+			patient: currentVisit.patient,
+			doctor: doctorId !== undefined ? currentVisit.doctor: {} as DoctorModel
 		});
 	};
 
@@ -250,7 +251,7 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 
 	const renderSelectField = (
 		name: keyof PatientVisitModel, options: { label: string; value: number }[], label: string, onChange: any,
-		placeHolder: string, value?: number) => {
+		placeHolder: string) => {
 		return (
 			<React.Fragment>
 				<div className={"row"}>
@@ -264,7 +265,6 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 							options={options}
 							onChange={onChange}
 							placeholder={placeHolder}
-							value={value}
 						/>
 					</div>
 				</div>
@@ -318,7 +318,7 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 												handleHealthcareProviderChange, "Select Healthcare Provider")}
 										</div>
 										<div className="form-group">
-											{doctorId === undefined ? renderSelectField("doctor", getDoctors(), "Doctor", handleDoctorChange, "Select Doctor", currentVisit.doctor.doctorId) : renderReadonlyDoctor()}
+											{doctorId === undefined ? renderSelectField("doctor", getDoctors(), "Doctor", handleDoctorChange, "Select Doctor") : renderReadonlyDoctor()}
 										</div>
 										<div className="form-group">
 											{renderDateField("visitDateTime", "Visited On", getVisitDate(), "Select Visit Date")}

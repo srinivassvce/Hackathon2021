@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Link} from "react-router-dom";
+import {Link, useRouteMatch} from "react-router-dom";
 
 export interface TileProps {
 	label: string;
@@ -23,6 +23,10 @@ const Tile: React.FunctionComponent<TileProps> = (props) => {
 	const {propertyName, requestFunction} = props;
 	const [data, setData] = React.useState([]);
 	const [showModal, setShowModal] = React.useState(false);
+
+	const {path, url} = useRouteMatch();
+
+	console.log(path, url);
 
 	React.useEffect(
 		() => {
