@@ -1,4 +1,9 @@
 import axios, {AxiosResponse} from "axios";
+import {
+	Doctor,
+	DoctorModel,
+	HealthCareProvider,
+} from "./_gen/entity";
 import {HealthCareProviderModel, Patient, PatientVisitModel} from "./_gen/entity";
 
 export function getUrl(): string {
@@ -39,6 +44,16 @@ export async function getPatientDetails(patientId: String): Promise<Patient> {
 	return response.data;
 }
 
+export async function getDoctorDetails(doctorId: string): Promise<DoctorModel> {
+	const response = await axios.get(`${getUrl()}get/doctor/${doctorId}`);
+	return response.data;
+}
+
+export async function getDoctorName(doctorId: string): Promise<string> {
+	const response = await getDoctorDetails(doctorId);
+	return response.doctorName;
+}
+
 export async function getAllAllergens() {
 	const response = await axios.get(`${getUrl()}get/allergy/all`);
 	return response.data;
@@ -50,9 +65,8 @@ export async function getAllPatients() {
 }
 
 export async function getPatientByEmail(patientEmail: string): Promise<Patient> {
-	const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/patient/email/${patientEmail}`);
-	;
-	return response.data;
+    const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/patient/email/${patientEmail}`);;
+    return response.data;
 }
 
 export async function getPatientVisits(patientId: string) {
@@ -157,7 +171,7 @@ export async function getMedicines(patientId: string) {
 export async function getDoctors(patientId: string) {
 
 	const response = await axios.get(
-		`${getUrl()}get/patient/visits/doctors/${patientId}`
+		`${getUrl()}get/patient/visits/doctors/${patientId}` ///get/patient/visits/doctors/${patientId}
 	);
 	return Promise.resolve(response.data);
 }

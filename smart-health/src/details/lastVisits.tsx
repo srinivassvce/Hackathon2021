@@ -38,7 +38,7 @@ const LastVisits: React.FunctionComponent<LastVisitsProps> = (props: LastVisitsP
     );
   };
   return (
-    <Page title="Visits" patientId={props.patientId}>
+    <Page title="Visits" id={props.patientId}>
       <div className="container">
         <div className={"row text-info display-4 m-4"}>
           You have a total of {patientVisits.length} Patient visits.

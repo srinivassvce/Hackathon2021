@@ -38,7 +38,7 @@ const Allergens: React.FunctionComponent<AllergensProps> = (props) => {
 		);
 	};
 	return (
-		<Page title="Allergens" patientId={props.patientId}>
+		<Page title="Allergens" id={props.patientId}>
 			<div className="container">
 				<div className={"row text-info display-4 m-4"}>
 					You have a total of {allergens.length} allergens.
