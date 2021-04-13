@@ -14,9 +14,9 @@ export interface LoginProps {
 }
 
 export default function Login(props: LoginProps) {
-	const [email, setEmail] = useState("darshan@gmail.com");
-	const [password, setPassword] = useState("123");
-	const [isPatient, setIsPatient] = useState(false);
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [isPatient, setIsPatient] = useState(true);
 	const history = useHistory();
 
 	const validateForm = () =>
