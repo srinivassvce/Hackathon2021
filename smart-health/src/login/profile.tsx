@@ -109,7 +109,7 @@ const Profile: React.FunctionComponent<profileProps> = (props) => {
 
 
 	return (
-		<Page patientId={props.patientId} title="Profile">
+		<Page id={props.patientId} title="Profile">
 				<div className="container" id="wrap">
 					<div className="row justify-content-center">
 						<div className="col-md-6 col-md-offset-3">

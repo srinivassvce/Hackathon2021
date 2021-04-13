@@ -1,3 +1,4 @@
+import {useState} from "react";
 import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import Dashboard from './dashboard/dashboard';
@@ -21,23 +22,35 @@ export interface RoutesProps {
 }
 
 const Routes: React.FunctionComponent<RoutesProps> = () => {
-    const [patientId, setPatientId] = React.useState("");
-    const updatePatientId = (patientId: string) => {
+    const [patientId, setPatientId] = React.useState<number>();
+    const updatePatientId = (patientId: number) => {
         console.log("Upating patient id");
         console.log(patientId);
         setPatientId(patientId);
     }
+    const [isDoctor, setIsDoctor] = useState(false);
+    const updateDoctorId = (docId: string) => {
+        console.log("routes");
+        console.log(docId);
+        setDoctorId(docId);
+        setIsDoctor(true);
+    }
+    const [doctorId, setDoctorId] = React.useState("");
+
     return (
         <React.Fragment>
             <Switch>
                 <Redirect from="/old-path" to="/" />
                 <Route path="/" exact>
-                    <Login setPatientId={updatePatientId} />
+                    <Login setPatientId={updatePatientId} setDoctorId={updateDoctorId}/>
                 </Route>
                 <Route path="/uploadPatientReports"> <UploadPatientReports patientId={patientId} /> </Route>
                 <Route path="/dashboard"> <Dashboard patientId={patientId} /> </Route>
                 <Route path="/profile"> <Profile patientId={patientId}/> </Route>
-                <Route path="/viewRecords"> <ViewRecord patientId={patientId}/> </Route>
+                <Route path="/viewRecords"> <ViewRecord patientId={patientId} doctorId={doctorId} setPatientId={setPatientId}/> </Route>
+                <Route path="/viewRecords/allergy"> <Allergens patientId={patientId} doctorId={doctorId}/> </Route>
+                <Route path="/viewRecords/medicines"> <Medicines patientId={patientId} doctorId={doctorId}/> </Route>
+                <Route path="/viewRecords/immunization"> <Immunizations patientId={patientId} doctorId={doctorId}/> </Route>
                 <Route path="/allergens"> <Allergens patientId={patientId} /></Route>
                 <Route path="/medicines"> <Medicines patientId={patientId} /></Route>
                 <Route path="/doctors"> <Doctors patientId={patientId} /></Route>

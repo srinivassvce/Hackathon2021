@@ -39,7 +39,7 @@ const MedicalHistory: React.FunctionComponent<MedicalHistoryProps> = (props) => 
 		);
 	};
 	return (
-		<Page title="Medical History" patientId={props.patientId}>
+		<Page title="Medical History" id={props.patientId}>
 			<div className="container">
 				<div className={"row text-info display-4 m-4"}>
 
