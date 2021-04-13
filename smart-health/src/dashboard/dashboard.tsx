@@ -194,6 +194,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						addEntityContent={getAddMedicineNode}
 						key="medicines"
 						isAddNotAllowed={props.isViewRecord}
+						isUpdateRequired={isUpdateRequired}
 					/>
 				</div>
 				<div className={responsiveClasses}>
@@ -206,6 +207,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						navigateTo={"/doctors"}
 						key="doctors"
 						isAddNotAllowed={props.isViewRecord}
+						isUpdateRequired={isUpdateRequired}
 					/>
 				</div>
 				<div className={responsiveClasses}>
@@ -257,6 +259,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						navigateTo={"/history"}
 						key="medicalHistory"
 						isAddNotAllowed={props.isViewRecord}
+						isUpdateRequired={isUpdateRequired}
 					/>
 				</div>
 				<div className={responsiveClasses}>
@@ -276,6 +279,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		</div>;
 	}
 
+	const [isUpdateRequired, setIsUpdateRequired] = useState(false);
 	return (
 		<React.Fragment>
 			{props.isViewRecord ? renderDashBoardContent() :
@@ -304,6 +308,11 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		);
 	}
 
+	const setModalForLastVisit = (b: boolean, cb: (b: boolean)=>void) => {
+		cb(b);
+		setIsUpdateRequired(!isUpdateRequired);
+	}
+
 	function getMedicalInsuranceNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
 		return (
 			<AddInsurance patientId={props.patientId} showModal={showModal} setModal={setModal}/>
@@ -318,7 +327,10 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 
 	function getAddLastVisitsNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
 		return (
-			<AddLastVisits doctorId={props.doctorId} patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+			<AddLastVisits doctorId={props.doctorId} patientId={props.patientId} showModal={showModal} setModal={(b) => {
+				setModal(b);
+				setIsUpdateRequired(!isUpdateRequired);
+			}}/>
 		);
 	}
 };

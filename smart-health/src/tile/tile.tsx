@@ -9,6 +9,8 @@ export interface TileProps {
 	navigateTo?: string;
 	addEntityContent?: (showModal: boolean, setModal: (x: boolean) => void) => React.ReactNode;
 	isAddNotAllowed?: boolean;
+	isUpdateRequired?: boolean;
+	setIsUpdateRequired?: (isUpdateRequired: boolean) => void;
 }
 
 const onClick = (event: React.MouseEvent<HTMLButtonElement>, label: string, setModal: (x: boolean) => void) => {
@@ -34,6 +36,8 @@ const Tile: React.FunctionComponent<TileProps> = (props) => {
 	);
 
 	const {navigateTo, addEntityContent} = props;
+	const isFromViewRecord = path === "/viewRecords";
+	const newNavigateUrl = isFromViewRecord ? path + navigateTo : navigateTo;
 	return (
 		<React.Fragment>
 			{addEntityContent ? addEntityContent(showModal, setShowModal) : null}
