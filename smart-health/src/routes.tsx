@@ -11,6 +11,7 @@ import LastVisits from './details/lastVisits';
 import MedicalHistory from './details/medicalHistory';
 import MedicalInsurances from './details/medicalInsurances';
 import Medicines from './details/medicines';
+import UploadPatientReports from './details/uploadPatientReports';
 import Login from './login/login';
 import Profile from "./login/profile";
 import Register from './login/register';
@@ -43,6 +44,7 @@ const Routes: React.FunctionComponent<RoutesProps> = () => {
                 <Route path="/" exact>
                     <Login setPatientId={updatePatientId} setDoctorId={updateDoctorId}/>
                 </Route>
+                <Route path="/uploadPatientReports"> <UploadPatientReports patientId={patientId} /> </Route>
                 <Route path="/dashboard"> <Dashboard patientId={patientId} /> </Route>
                 <Route path="/profile"> <Profile patientId={patientId}/> </Route>
                 <Route path="/viewRecords"> <ViewRecord patientId={patientId} doctorId={doctorId} setPatientId={setPatientId}/> </Route>

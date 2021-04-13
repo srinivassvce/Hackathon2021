@@ -11,8 +11,6 @@
 # production
 /build
 
-# idea
-/.idea
 # Generated
 /src/_gen
 

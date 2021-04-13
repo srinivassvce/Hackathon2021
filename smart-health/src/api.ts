@@ -142,6 +142,23 @@ export async function saveMedicineDetails(medicine: any, patientId: string): Pro
 	return true;
 }
 
+export async function saveUploadPatientReport(
+	patientId: string,
+	hospital: string,
+	reportname: string,
+	reportDate: string,
+	fileupload: any,
+): Promise<boolean> {
+	await axios.post(`${getUrl()}/add/patient/report`, {
+		patientId,
+		hospital,
+		reportname,
+		patientname,
+		fileupload,
+	});
+	return true;
+}
+
 export async function getMedicines(patientId: string) {
 
 	const response = await axios.get(
