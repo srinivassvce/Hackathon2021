@@ -154,13 +154,28 @@ class EntityToViewModelConverter {
   public static
   SharedRecordModel convertSharedRecordToSharedRecordModel(SharedRecord sharedRecord) {
     SharedRecordModel sharedRecordModel = new SharedRecordModel();
-    sharedRecordModel.setPatientId(sharedRecord.getPatient().getPatientId());
     if (null != sharedRecord.getSharedDoctor()) {
       sharedRecordModel.setSharedEmail(sharedRecord.getSharedDoctor().getDoctorEmail());
+      sharedRecordModel.setSharedName(sharedRecord.getSharedDoctor().getDoctorName());
+      sharedRecordModel.setPatientId(sharedRecord.getSharedDoctor().getDoctorId());
     }
     if (null != sharedRecord.getSharedPatient()) {
       sharedRecordModel.setSharedEmail(sharedRecord.getSharedPatient().getPatientEmail());
+      sharedRecordModel.setSharedName(sharedRecord.getSharedPatient().getPatientName());
+      sharedRecordModel.setPatientId(sharedRecord.getSharedPatient().getPatientId());
     }
+    sharedRecordModel.setSharedDate(sharedRecord.getSharedDate());
+    sharedRecordModel.setSharedRecordId(sharedRecord.getSharedRecordId());
+    return sharedRecordModel;
+  }
+
+  public static
+  SharedRecordModel convertSharedRecordToViewRecordModel(SharedRecord sharedRecord) {
+    SharedRecordModel sharedRecordModel = new SharedRecordModel();
+    sharedRecordModel.setSharedEmail(sharedRecord.getPatient().getPatientEmail());
+    sharedRecordModel.setSharedName(sharedRecord.getPatient().getPatientName());
+    sharedRecordModel.setPatientId(sharedRecord.getPatient().getPatientId());
+    sharedRecordModel.setSharedDate(sharedRecord.getSharedDate());
     return sharedRecordModel;
   }
 

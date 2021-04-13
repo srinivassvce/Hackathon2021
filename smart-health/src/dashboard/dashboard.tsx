@@ -2,7 +2,6 @@ import {useState} from "react";
 import * as React from "react";
 import {PatientVisitModel} from "../_gen/entity";
 import AddAllergen from "../addPages/addAllergen";
-import AddEmergencyContact from "../addPages/addEmergencyContact";
 import AddInsurance from "../addPages/addInsurance";
 import AddLastVisits from "../addPages/addLastVisits";
 import AddMedicine from "../addPages/addMedicine";
@@ -20,6 +19,7 @@ import {
 import Page from "../common/page";
 import "../styles/dashboardStyles.css";
 import Tile from "../tile/tile";
+import AddEmergencyContact from "../addPages/addEmergencyContact";
 
 export interface DashboardProps {
 	patientId: string;
@@ -28,7 +28,6 @@ export interface DashboardProps {
 }
 
 const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
-	console.log("is viewrecord addable?", props.doctorId === undefined && props.isViewRecord);
 	const getFormattedAllergens = async (patientId: string) => {
 		const allergens = await getAllergens(patientId);
 		console.log(allergens);
@@ -154,9 +153,11 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		const formattedContacts = [];
 		for (let i = lengthToDisplay - 1; i >= 0; i--) {
 			const contact = emergencyContacts[i];
-			formattedContacts.push(
-				`${contact.emergencyPatient.patientName}, Mob- ${contact.emergencyPatient.mobile}`
-			);
+			if(contact.emergencyPatient != null) {
+				formattedContacts.push(
+					`${contact.emergencyPatient.patientName}, Mob- ${contact.emergencyPatient.mobile}`
+				)
+			}
 		}
 
 		if (lengthToDisplay < emergencyContacts.length) {

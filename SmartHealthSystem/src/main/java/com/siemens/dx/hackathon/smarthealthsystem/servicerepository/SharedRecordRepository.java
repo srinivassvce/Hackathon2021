@@ -10,7 +10,7 @@ import java.util.List;
 
 public
 interface SharedRecordRepository extends JpaRepository<SharedRecord, Long> {
-  List<SharedRecord> findAllByPatient_PatientId(Long patientid);
+  List<SharedRecord> findAllByPatient_PatientId(Long patientId);
 
   List<SharedRecord> findAllBySharedDoctor_DoctorId(Long doctorId);
 

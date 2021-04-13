@@ -43,7 +43,11 @@ const AddEmergencyContact: React.FunctionComponent<AddEmergencyContactProps> = (
     };
 
     const saveEmergencyContact = async () => {
-		await saveEmergencyContactDetails(patient, patientId);
+        if(patient.patientId.toString().localeCompare(patientId) === 0){
+            console.log("same user!");
+        } else{
+            await saveEmergencyContactDetails(patient, patientId);
+        }
 	};
 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -67,7 +71,7 @@ const AddEmergencyContact: React.FunctionComponent<AddEmergencyContactProps> = (
 
     const safeExit = () => {
         setModal(false);
-
+        
     }
 
     return (
@@ -116,13 +120,12 @@ const AddEmergencyContact: React.FunctionComponent<AddEmergencyContactProps> = (
                                                 </button>
                                             </div>
                                         </div>
-                                        <div className="form-group">
-                                            <input
-                                                className="form-control"
-                                                value={patient.patientName}
-                                                placeholder={"Name"}
-                                            />
+                                        <div>
+                                            <span style={{ fontSize: 25, fontWeight: "normal" }}>
+                                                Name: {patient.patientName}
+                                            </span>
                                         </div>
+                                        <br/>
                                         <div className="form-group d-grid">
                                             <input
                                                 type="submit"

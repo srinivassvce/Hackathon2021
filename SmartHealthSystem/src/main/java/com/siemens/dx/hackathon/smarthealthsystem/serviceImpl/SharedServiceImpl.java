@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -42,7 +41,7 @@ class SharedServiceImpl implements ISharedRecordsService {
     sharedRecord.setPatient(patientRepository.findById(patientId).get());
     sharedRecord.setSharedPatient(
         patientRepository.findById(emergencyContactModel.getPatientId()).get());
-    sharedRecord.setSharedDate(new Date());
+    sharedRecord.setSharedDate(Calendar.getInstance().getTime());
     return EntityToViewModelConverter.convertSharedRecordToEmergencyContactModel(
         sharedRecordRepository.save(sharedRecord));
   }
@@ -53,8 +52,12 @@ class SharedServiceImpl implements ISharedRecordsService {
     List<SharedRecord> sharedRecords = sharedRecordRepository.findAllByPatient_PatientId(patientId);
     List<EmergencyContactModel> emergencyContactModels = new ArrayList<>();
     for (SharedRecord sharedRecord : sharedRecords) {
-      emergencyContactModels.add(
-          EntityToViewModelConverter.convertSharedRecordToEmergencyContactModel(sharedRecord));
+      if (null != sharedRecord.getPatient()) {
+        emergencyContactModels.add(
+            EntityToViewModelConverter.convertSharedRecordToEmergencyContactModel(sharedRecord));
+      } else {
+        //Doctor is not an Emergency contact
+      }
     }
 
     return emergencyContactModels;
@@ -82,9 +85,9 @@ class SharedServiceImpl implements ISharedRecordsService {
 
   @Override
   public
-  SharedRecordModel addSharedRecord(SharedRecordModel sharedRecordModel) {
+  SharedRecordModel addSharedRecord(SharedRecordModel sharedRecordModel, long patientId) {
     SharedRecord sharedRecord = new SharedRecord();
-    sharedRecord.setPatient(patientRepository.findById(sharedRecordModel.getPatientId()).get());
+    sharedRecord.setPatient(patientRepository.findById(patientId).get());
     sharedRecord.setSharedPatient(
         patientRepository.findByPatientEmail(sharedRecordModel.getSharedEmail()));
     sharedRecord.setSharedDoctor(
@@ -104,7 +107,6 @@ class SharedServiceImpl implements ISharedRecordsService {
       sharedRecordModels.add(
           EntityToViewModelConverter.convertSharedRecordToSharedRecordModel(sharedRecord));
     }
-
     return sharedRecordModels;
   }
 
@@ -118,26 +120,19 @@ class SharedServiceImpl implements ISharedRecordsService {
     List<SharedRecordModel> sharedRecordModels = new ArrayList<>();
     for (SharedRecord sharedRecord : sharedRecords) {
       sharedRecordModels.add(
-          EntityToViewModelConverter.convertSharedRecordToSharedRecordModel(sharedRecord));
+          EntityToViewModelConverter.convertSharedRecordToViewRecordModel(sharedRecord));
     }
     return sharedRecordModels;
   }
 
   @Override
   public
-  String deleteSharedRecord(SharedRecordModel sharedRecordModel) {
-    Patient sharedPatient =
-        patientRepository.findByPatientEmail(sharedRecordModel.getSharedEmail());
-    Doctor sharedDoctor = doctorRepository.findByDoctorEmail(sharedRecordModel.getSharedEmail());
-    if (null == sharedDoctor) {
-      sharedRecordRepository.delete(sharedRecordRepository.findByPatientAndSharedPatient(
-          patientRepository.findById(sharedRecordModel.getPatientId()).get(), sharedPatient));
+  String deleteSharedRecord(long sharedRecordId) {
+    SharedRecord sharedRecord = new SharedRecord();
+    if (sharedRecordId != -1) {
+      sharedRecord = sharedRecordRepository.findById(sharedRecordId).get();
+      sharedRecordRepository.delete(sharedRecord);
     }
-
-    if (null == sharedPatient) {
-      sharedRecordRepository.delete(sharedRecordRepository.findByPatientAndSharedDoctor(
-          patientRepository.findById(sharedRecordModel.getPatientId()).get(), sharedDoctor));
-    }
-    return "Stopped sharing with " + sharedRecordModel.getSharedEmail();
+    return "Deleted share";
   }
 }
