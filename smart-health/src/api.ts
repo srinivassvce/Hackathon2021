@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {HealthCareProvider, HealthCareProviderModel, Patient, PatientVisitModel} from "./_gen/entity";
+import {HealthCareProvider, HealthCareProviderModel, Patient, PatientVisitModel, SharedRecordModel} from "./_gen/entity";
 
 export function getUrl(): string {
 	return `http://localhost:8080/api/`;
@@ -187,7 +187,6 @@ export async function getMedicalHistory() {
 }
 
 export async function getEmergencyContacts(patientId: string) {
-    console.log("Patient Id: " + patientId);
     const response = await axios.get(
         `${getUrl()}get/patient/emergencyContact/${patientId}`
     )
@@ -214,5 +213,31 @@ export async function getAllergen(allergenId: string) {
 export async function getHealthcareProviders(): Promise<HealthCareProviderModel[]> {
 	const response = await axios.get(`${getUrl()}get/hcp/all`);
 	return response.data;
+}
+
+export async function getDoctorOrPatientDetails(patientEmail: string): Promise<SharedRecordModel> {
+    const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/confirmation/share/${patientEmail}`);;
+    return response.data;
+}
+
+export async function getAllSentSharedRecords(patientId: string): Promise<SharedRecordModel[]> {
+    const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/sentSharedRecords/all/${patientId}`);;
+    return response.data;
+}
+
+export async function saveSharedRecords(sharedRecord: any, aPatientId: string): Promise<any> {
+    const response =await axios.post(
+        `${getUrl()}add/shareRecord/${aPatientId}`,
+        {
+            ...sharedRecord,
+			aPatientId
+        }
+    );
+    return response.data;
+}
+
+export async function deleteSharedRecord(sharedRecordId: number): Promise<SharedRecordModel[]> {
+    const response: AxiosResponse<any> = await axios.delete(`${getUrl()}delete/sharedRecord/${sharedRecordId}`);;
+    return response.data;
 }
 

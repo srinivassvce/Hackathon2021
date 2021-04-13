@@ -14,11 +14,11 @@ interface ISharedRecordsService {
 
   SharedRecordModel getDoctorOrPatientDetails(String email);
 
-  SharedRecordModel addSharedRecord(SharedRecordModel sharedRecordModel);
+  SharedRecordModel addSharedRecord(SharedRecordModel sharedRecordModel, long patientId);
 
   List<SharedRecordModel> getAllSentSharedRecords(Long patientId);
 
   List<SharedRecordModel> getAllReceivedSharedRecords(Long id);
 
-  String deleteSharedRecord(SharedRecordModel sharedRecordModel);
+  String deleteSharedRecord(long sharedRecordId);
 }

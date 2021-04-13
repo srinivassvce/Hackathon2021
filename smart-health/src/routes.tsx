@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import Dashboard from './dashboard/dashboard';
+import ShareHealthRecord from './dashboard/shareHealthRecord';
 import ViewRecord from "./dashboard/viewRecord";
 import Allergens from './details/allergens';
 import Doctors from './details/doctors';
@@ -44,6 +45,7 @@ const Routes: React.FunctionComponent<RoutesProps> = () => {
                 <Route path="/visits"> <LastVisits patientId={patientId} /></Route>
                 <Route path="/history"> <MedicalHistory patientId={patientId} /></Route>
                 <Route path="/contacts"> <EmergencyContacts patientId={patientId} /></Route>
+                <Route path="/share"> <ShareHealthRecord patientId={patientId} /></Route>
                 <Route path="/notFound"> <Login setPatientId={() => patientId} /></Route>
                 <Route exact path="/"><Login setPatientId={updatePatientId} /> </Route>
                 

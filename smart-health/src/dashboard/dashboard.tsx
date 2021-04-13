@@ -117,9 +117,11 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		const formattedContacts = [];
 		for (let i = lengthToDisplay - 1; i >= 0; i--) {
 			const contact = emergencyContacts[i];
-			formattedContacts.push(
-				`${contact.emergencyPatient.patientName}, Mob- ${contact.emergencyPatient.mobile}`
-			)
+			if(contact.emergencyPatient != null) {
+				formattedContacts.push(
+					`${contact.emergencyPatient.patientName}, Mob- ${contact.emergencyPatient.mobile}`
+				)
+			}
 		}
 
 		if (lengthToDisplay < emergencyContacts.length) {
