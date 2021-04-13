@@ -46,7 +46,7 @@ const Doctors: React.FunctionComponent<DoctorsProps> = (props) => {
 	function renderDoctorsContentArea() {
 		return <div className="container">
 			<div className={"row text-info display-4 m-4"}>
-				Doctors {(doctors.length)}
+				Doctor(s) {(doctors.length)}
 			</div>
 			<table className={"table table-hover table-striped"}>
 				<thead className={"thead-light"}>
@@ -64,12 +64,12 @@ const Doctors: React.FunctionComponent<DoctorsProps> = (props) => {
 
 	return (
 		<React.Fragment>
-		{props.othersView ? renderDoctorsContentArea() :
-		       <Page patientId={props.patientId} title="Doctors">
-			       {renderDoctorsContentArea()}
-		       </Page>
-		}
-</React.Fragment>
+			{props.othersView ? renderDoctorsContentArea() :
+			 <Page id={props.patientId} title="Doctors">
+				 {renderDoctorsContentArea()}
+			 </Page>
+			}
+		</React.Fragment>
 	);
 };
 

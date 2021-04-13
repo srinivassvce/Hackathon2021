@@ -99,10 +99,10 @@ INSERT INTO "PUBLIC"."MEDICINE" VALUES
 (7, 'Dizicum gel (170ml)', 'Antacids', '170', 'Aluminium Hydroxidd and Magnesium Hydroxide', 'Taj Pharmaceauticals Pvt Ltd', '75', 2),
 (8, 'Albenzole (10ml) (10ml)', 'AntiHelmintics', '10', 'Albendazole', 'Khandelwal Labs Pvt Ltd', '11.09', 2),
 (9, 'Omnitel (400mg)', 'AntiHelmintics', '400', 'Albendazole', 'Pharmed Ltd', '10.50', 0);
-/*INSERT INTO "PUBLIC"."PATIENT" VALUES
-(1, NULL, NULL,'172', 9, '123', 'm', 'abc@gmail.com', 'Arun','75'),
-(2, NULL, NULL,'180',9, '123', 'm', 'abcd@gmail.com', 'Malu','95');
-INSERT INTO "PUBLIC"."PATIENT_ALLERGY" VALUES
+INSERT INTO "PUBLIC"."PATIENT" VALUES
+(1000, NULL, NULL,'172', 9, '123', 'm', 'abc@gmail.com', 'Arun','75'),
+(1001, NULL, NULL,'180',9, '123', 'm', 'abcd@gmail.com', 'Malu','95');
+/*INSERT INTO "PUBLIC"."PATIENT_ALLERGY" VALUES
 (1, 'Wheezing', 1, 1),
 (2, 'Vomiting', 2, 1),
 (3, 'blah blah', 3, 2);
@@ -113,6 +113,6 @@ INSERT INTO "PUBLIC"."PATIENT_VISIT" VALUES
 (4, '', '', '2021-01-10 20:45:16', 'Bypass', '2021-01-02 20:45:16', 1, 10, 1),
 (5, 'TSH', 'Obese', '2021-01-10 20:45:16', '', '2021-01-02 20:45:16', 2, 10, 1);
 INSERT INTO "PUBLIC"."PATIENT_MEDICINE" VALUES
-(1, '3', '2021-03-02 20:45:16', '2021-03-10 20:45:16', 1, 1, 1),
-(2, '2', '2021-03-10 20:45:16', '2021-03-20 20:45:16', 2, 1, 1),
+(1, '3', '2021-03-02 20:45:16', '2021-03-10 20:45:16', 2, 1, 1);
+(2, '2', '2021-03-10 20:45:16', '2021-03-20 20:45:16', 1, 1, 1),
 (3, '1', '2021-01-10 20:45:16', '2021-01-02 20:45:16', 4, 2, 3);*/

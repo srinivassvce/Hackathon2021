@@ -41,7 +41,7 @@ const Immunizations: React.FunctionComponent<ImmunizationsProps> = (props) => {
 	function renderImmunizationsContentArea() {
 		return <div className="container">
 			<div className={"row text-info display-4 m-4"}>
-				You have a total of {immunizations.length} Immunizations.
+				You have a total of {immunizations.length} Immunization(s).
 			</div>
 			<table className={"table table-hover table-striped"}>
 				<thead className={"thead-light"}>

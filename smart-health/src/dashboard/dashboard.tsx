@@ -249,7 +249,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 				</div>
 				<div className={responsiveClasses}>
 					<Tile
-						label={"Last Visits"}
+						label={"Visits"}
 						onExpand={() => {
 						}}
 						propertyName={"visits"}
@@ -295,7 +295,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 	return (
 		<Switch>
 			<Route exact path="/dashboard" render={ () =>
-				 <Page patientId={props.patientId} title="Dashboard">
+				 <Page id={props.patientId} title="Dashboard">
 					 {renderDashBoardContent()}
 				 </Page>
 				}/>

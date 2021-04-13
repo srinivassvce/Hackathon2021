@@ -42,7 +42,7 @@ const Allergens: React.FunctionComponent<AllergensProps> = (props) => {
 	function renderAllergensCotentArea() {
 		return <div className="container">
 			<div className={"row text-info display-4 m-4"}>
-				You have a total of {allergens.length} allergens.
+				You have a total of {allergens.length} Allergen(s).
 			</div>
 			<table className={"table table-hover table-striped"}>
 				<thead className={"thead-light"}>

@@ -45,7 +45,7 @@ const Medicines: React.FunctionComponent<MedicinesProps> = (props) => {
 	function renderMedicinesContentArea() {
 		return <div className="container">
 			<div className={"row text-info display-4 m-4"}>
-				You have a total of {medicines.length} medications.
+				You have a total of {medicines.length} medication(s).
 			</div>
 			<MedicineTableContent medicines={medicines}/>
 		</div>;
