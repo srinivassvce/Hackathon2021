@@ -43,10 +43,10 @@ class SharedRecordsController {
     return sharedRecordsService.getAllEmergencyContactByPatientId(patientId);
   }
 
-  @GetMapping("/get/confirmation/share")
+  @GetMapping("/get/confirmation/share/{sharedEmail}")
   public
-  SharedRecordModel getDoctorOrPatientDetails(SharedRecordModel sharedRecordModel) {
-    return sharedRecordsService.getDoctorOrPatientDetails(sharedRecordModel.getSharedEmail());
+  SharedRecordModel getDoctorOrPatientDetails(@PathVariable String sharedEmail) {
+    return sharedRecordsService.getDoctorOrPatientDetails(sharedEmail);
   }
 
   @GetMapping("/get/sentSharedRecords/all/{patientId}")
@@ -61,16 +61,19 @@ class SharedRecordsController {
     return sharedRecordsService.getAllReceivedSharedRecords(id);
   }
 
-  @PostMapping("/add/shareRecord")
+  @PostMapping("/add/shareRecord/{patientId}")
   public
-  SharedRecordModel shareRecord(SharedRecordModel sharedRecordModel) {
-    return sharedRecordsService.addSharedRecord(sharedRecordModel);
+  ResponseEntity<SharedRecordModel> shareRecord(@RequestBody SharedRecordModel sharedRecordModel,
+                                                @PathVariable long patientId) {
+    return new ResponseEntity<>(sharedRecordsService.addSharedRecord(sharedRecordModel, patientId),
+        HttpStatus.CREATED);
   }
 
-  @DeleteMapping(path = "/delete/sharedRecord")
+  @CrossOrigin(origins = "http://localhost:3000")
+  @DeleteMapping(path = "/delete/sharedRecord/{sharedRecordId}")
   public
-  ResponseEntity<String> deleteSharedRecord(SharedRecordModel sharedRecordModel) {
-    String message = sharedRecordsService.deleteSharedRecord(sharedRecordModel);
+  ResponseEntity<String> deleteSharedRecord(@PathVariable long sharedRecordId) {
+    String message = sharedRecordsService.deleteSharedRecord(sharedRecordId);
     return new ResponseEntity<>(message, HttpStatus.OK);
   }
 }

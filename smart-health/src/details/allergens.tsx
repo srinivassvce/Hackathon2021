@@ -6,6 +6,7 @@ import Page from "../common/page";
 
 export interface AllergensProps {
 	patientId: string;
+	othersView: boolean;
 }
 
 const Allergens: React.FunctionComponent<AllergensProps> = (props) => {
@@ -37,24 +38,35 @@ const Allergens: React.FunctionComponent<AllergensProps> = (props) => {
 			</tbody>
 		);
 	};
-	return (
-		<Page title="Allergens" patientId={props.patientId}>
-			<div className="container">
-				<div className={"row text-info display-4 m-4"}>
-					You have a total of {allergens.length} allergens.
-				</div>
-				<table className={"table table-hover table-striped"}>
-					<thead className={"thead-light"}>
-					<tr>
-						<th>Type</th>
-						<th>Name</th>
-						<th>Symptoms</th>
-					</tr>
-					</thead>
-					{renderAllergensRows()}
-				</table>
+
+	function renderAllergensCotentArea() {
+		return <div className="container">
+			<div className={"row text-info display-4 m-4"}>
+				You have a total of {allergens.length} Allergen(s).
 			</div>
-		</Page>
+			<table className={"table table-hover table-striped"}>
+				<thead className={"thead-light"}>
+				<tr>
+					<th>Type</th>
+					<th>Name</th>
+					<th>Symptoms</th>
+				</tr>
+				</thead>
+				{renderAllergensRows()}
+			</table>
+		</div>;
+	}
+
+	return (
+
+		<React.Fragment>
+			{console.log(" props others view is enabled" + props.othersView)}
+		{props.othersView ? renderAllergensCotentArea() :
+		 <Page title="Allergens" id={props.patientId}>
+			       {renderAllergensCotentArea()}
+		       </Page>
+		}
+</React.Fragment>
 	);
 };
 

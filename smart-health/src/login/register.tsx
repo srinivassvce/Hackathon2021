@@ -105,7 +105,7 @@ export default function Register() {
 
 	return (
 		<React.Fragment>
-			<Page patientId={""} title="Register Form">
+			<Page id={""} title="Register Form">
 				<div id="login" style={{}}>
 					<div className="container" id="wrap">
 						<div className="row justify-content-center">

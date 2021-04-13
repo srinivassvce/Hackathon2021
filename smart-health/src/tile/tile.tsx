@@ -1,4 +1,5 @@
 import * as React from "react";
+import {FcPlus} from "react-icons/fc";
 import {Link} from "react-router-dom";
 
 export interface TileProps {
@@ -9,6 +10,8 @@ export interface TileProps {
 	navigateTo?: string;
 	addEntityContent?: (showModal: boolean, setModal: (x: boolean) => void) => React.ReactNode;
 	isAddNotAllowed?: boolean;
+	isUpdateRequired?: boolean;
+	setIsUpdateRequired?: (isUpdateRequired: boolean) => void;
 }
 
 const onClick = (event: React.MouseEvent<HTMLButtonElement>, label: string, setModal: (x: boolean) => void) => {
@@ -38,12 +41,14 @@ const Tile: React.FunctionComponent<TileProps> = (props) => {
 		<React.Fragment>
 			{addEntityContent ? addEntityContent(showModal, setShowModal) : null}
 			<Link to={navigateTo ? navigateTo : "/notFound"}>
-				<button className="tile border border-info">
+				{/*<button className="tile border border-info">*/}
+				<button style={{backgroundColor:"lightgrey"}} className="btn btn-light tile border border-dark">
 					<h4>
                         <span>
                             {props.label}
                         </span>
-						<button disabled={props.isAddNotAllowed} onClick={(e) => onClick(e, props.label, setShowModal)} className="addIcon">+</button>
+						{/*<button disabled={props.isAddNotAllowed} onClick={(e) => onClick(e, props.label, setShowModal)} className="btn addIcon"><i className="fa fa-plus"></i> </button>*/}
+						<button disabled={props.isAddNotAllowed} onClick={(e) => onClick(e, props.label, setShowModal)} className="btn addIcon"><FcPlus size={28}></FcPlus> </button>
 					</h4>
 					<hr/>
 					<div>

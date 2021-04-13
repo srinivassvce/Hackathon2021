@@ -1,45 +1,45 @@
 import * as React from "react";
 import {Dropdown} from "react-bootstrap";
-import {FaUser} from "react-icons/fa";
+import {FaBars, FaHome, FaHospitalAlt, FaPen, FaUser} from "react-icons/fa";
 import NotifyMe from "react-notification-timeline";
 import {Link} from "react-router-dom";
-import {getNotifications, getPatientName} from "../api";
-import logo from "../assets/healthcare.jpg";
+import {getDoctorName, getNotifications, getPatientName} from "../api";
 
 export interface HeaderProps {
-	patientId: string;
+	id: string;
 	currentPageTitle: string;
 	displayMenu: (agr: boolean) => void;
+	isDoctor?: boolean;
 }
 
 const Header: React.FunctionComponent<HeaderProps> = (props) => {
 
-	const {patientId, currentPageTitle, displayMenu} = props;
+	const {id, currentPageTitle, displayMenu} = props;
 	const [name, setName] = React.useState("");
 	React.useEffect(
 		() => {
-			if (patientId !== undefined && patientId !== "") {
+			console.log(id);
+			if (id !== undefined && id !== "") {
 				getAndSetName();
 			}
-		}, [patientId]
+		}, [id]
 	);
 	const [notifications, setNotifications] = React.useState([]);
 	React.useEffect(
 		() => {
-			if (patientId !== undefined && patientId !== "") {
+			if (id !== undefined && id !== "") {
 				getAndSetNotifications();
 			}
-		}, [patientId]
+		}, [id]
 	);
 	const [showMenu, setShowMenu] = React.useState(false);
 
 	const getAndSetName = async () => {
-		const name = await getPatientName(patientId);
+		const name = props.isDoctor ? await getDoctorName(id) : await getPatientName(id);
 		setName(name);
 	};
-
 	const getAndSetNotifications = async () => {
-		const notifications = await getNotifications(patientId);
+		const notifications = await getNotifications(id);
 		setNotifications(notifications);
 	};
 
@@ -47,22 +47,8 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 		setShowMenu(!showMenu);
 		displayMenu(showMenu);
 	};
-
-	const userString = patientId === "" ? "Please login" : name;
-	console.log(userString);
-/*	const data = [
-		{
-			"update": "70 new employees are shifted",
-			"timestamp": 1596119688264
-		},
-		{
-			"update": "Time to Take a Break, TADA!!!",
-			"timestamp": 1596119686811
-		}
-	];*/
-
 	const renderNotifyMe = () => {
-		if (patientId === null || patientId === undefined || patientId === "") {
+		if (id === null || id === undefined || id === "") {
 			return null;
 		} else {
 			return <NotifyMe
@@ -73,32 +59,39 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 				heading='Notification Alerts'
 				sortedByKey={false}
 				showDate={true}
-				size={90}
+				size={34}
 				color="yellow"
 			/>;
 		}
 	};
+	const userString = id === "" ? "Please login" : name;
+	console.log(userString);
 	return (
 		<React.Fragment>
 			<div className="bg-info container-fluid text-white">
 				<div className="row">
 					<div className="col-1 text-center mt-4">
-						<button onClick={toggleMenu}> =</button>
+						<Link className="menuItem" to="/dashboard"><FaHome size={28} className="ml-3"></FaHome></Link>
+						<a onClick={toggleMenu}> <FaBars size={28} className="m-2"></FaBars></a>
+
 					</div>
 					<div className="col-1">
-						<img src={logo} alt="logo for healthcare" style={{height: "100%", width: "100%"}}/>
+						{/*<img src={logo} alt="logo for healthcare" style={{ height: "100%", width: "100%" }} />*/}
+						<FaHospitalAlt size={70}></FaHospitalAlt>
 					</div>
-					{renderNotifyMe()}
-					<div className="col-8 text-center display-4">
+					<div className="col-3" style={{paddingTop: "10px", marginTop: "2px"}}>
+						{renderNotifyMe()}
+					</div>
+					<div className="col-5 display-4">
 						{currentPageTitle}
 					</div>
 					<div className="col-2 text-right mt-3">
 
-						{patientId === "" ? <a href="\">{"Please Login"}</a> :
+						{id === "" ? <a href="\">{"Please Login"}</a> :
 
 						 <Dropdown>
 							 <Dropdown.Toggle variant="success" id="dropdown-basic">
-								 <FaUser className="m-2"/> {name}
+								 {!props.isDoctor ? (<FaUser className="m-2"/>) : (<FaPen className={"m-2"}/>)} {name}
 							 </Dropdown.Toggle>
 
 							 <Dropdown.Menu>

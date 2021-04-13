@@ -99,10 +99,10 @@ INSERT INTO "PUBLIC"."MEDICINE" VALUES
 (7, 'Dizicum gel (170ml)', 'Antacids', '170', 'Aluminium Hydroxidd and Magnesium Hydroxide', 'Taj Pharmaceauticals Pvt Ltd', '75', 2),
 (8, 'Albenzole (10ml) (10ml)', 'AntiHelmintics', '10', 'Albendazole', 'Khandelwal Labs Pvt Ltd', '11.09', 2),
 (9, 'Omnitel (400mg)', 'AntiHelmintics', '400', 'Albendazole', 'Pharmed Ltd', '10.50', 0);
-/*INSERT INTO "PUBLIC"."PATIENT" VALUES
-(1, NULL, NULL,'172', 9, '123', 'm', 'abc@gmail.com', 'Arun','75'),
-(2, NULL, NULL,'180',9, '123', 'm', 'abcd@gmail.com', 'Malu','95');
-INSERT INTO "PUBLIC"."PATIENT_ALLERGY" VALUES
+INSERT INTO "PUBLIC"."PATIENT" VALUES
+(1000, NULL, NULL,'172', 9, '123', 'm', 'abc@gmail.com', 'Arun','75'),
+(1001, NULL, NULL,'180',9, '123', 'm', 'abcd@gmail.com', 'Malu','95');
+/*INSERT INTO "PUBLIC"."PATIENT_ALLERGY" VALUES
 (1, 'Wheezing', 1, 1),
 (2, 'Vomiting', 2, 1),
 (3, 'blah blah', 3, 2);

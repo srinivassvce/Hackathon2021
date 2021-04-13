@@ -212,7 +212,7 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 												placeholder={"Select Symptoms"}
 												disabled={disabled}
 												className="btn btn-info btn-md"
-												value="Add"/>
+												value="Add Allergy"/>
 										</div>
 									</form>
 								</div>

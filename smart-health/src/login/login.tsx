@@ -9,14 +9,14 @@ import Page from "../common/page";
 import SignUpOptional from "./signupOptional";
 
 export interface LoginProps {
-	setPatientId: (patientId: string) => void;
+	setPatientId: (patientId: number) => void;
+	setDoctorId: (doctorId: string) => void;
 }
 
 export default function Login(props: LoginProps) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [emailError, setEmailError] = useState("");
-	const [isPatient, setIsPatient] = useState("Patient");
+	const [isPatient, setIsPatient] = useState(true);
 	const history = useHistory();
 
 	const validateForm = () =>
@@ -29,7 +29,7 @@ export default function Login(props: LoginProps) {
 		const failure = "Incorrect Email or Password!";
 		const failureDoctor = "Incorrect Doctor's Email or Password!";
 
-		if (isPatient === "Patient") {
+		if (isPatient) {
 			const resp = axios
 				.post(loginUrl(), { email, password })
 				.then((c) => {
@@ -45,8 +45,10 @@ export default function Login(props: LoginProps) {
 			const resp = axios
 				.post(doctorLoginUrl(), { email, password })
 				.then((c) => {
+					console.log(c);
 					if (c.data !== failureDoctor) {
-						history.push("/dashboard");
+						props.setDoctorId(c.data);
+						history.push("/view");
 					} else {
 						alert("Invalid Doctor's name or Password");
 					}
@@ -57,7 +59,7 @@ export default function Login(props: LoginProps) {
 
 	return (
 		<React.Fragment>
-			<Page patientId={""} title="Welcome to Smart Health">
+			<Page id={""} title="Welcome to Smart Health">
 				<div id="login">
 					<div className="container">
 						<div
@@ -75,9 +77,9 @@ export default function Login(props: LoginProps) {
 											<input
 												className="form-check-input"
 												type="radio"
-												checked={isPatient === "Patient"}
+												checked={isPatient}
 												name="inlineRadioOptions"
-												onChange={(e) => setIsPatient(e.target.value)}
+												onChange={(e) => setIsPatient(true)}
 												id="inlineRadio1"
 												value="Patient"></input>
 											<label
@@ -89,9 +91,10 @@ export default function Login(props: LoginProps) {
 										<div className="form-check form-check-inline">
 											<input
 												className="form-check-input"
+												checked={!isPatient}
 												type="radio"
 												name="inlineRadioOptions"
-												onChange={(e) => setIsPatient(e.target.value)}
+												onChange={(e) => setIsPatient(false)}
 												id="inlineRadio2"
 												value="Doctor"></input>
 											<label
@@ -137,7 +140,7 @@ export default function Login(props: LoginProps) {
 										<br></br>
 										<br></br>
 										<br></br>
-										<SignUpOptional Actor={isPatient} />
+										<SignUpOptional isPatient={isPatient} />
 										{/* <div id="register-link" className="text-center">
 											New User?
 											<a href="/Register" className="text-info">

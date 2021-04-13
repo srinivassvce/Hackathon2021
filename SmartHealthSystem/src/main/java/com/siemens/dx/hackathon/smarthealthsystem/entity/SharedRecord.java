@@ -3,7 +3,6 @@ package com.siemens.dx.hackathon.smarthealthsystem.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,15 +20,15 @@ class SharedRecord implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long sharedRecordId;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "patient_id")
   private Patient patient;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "shared_patient_id")
   private Patient sharedPatient;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "shared_doctor_id")
   private Doctor sharedDoctor;
 

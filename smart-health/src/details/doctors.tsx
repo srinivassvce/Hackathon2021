@@ -6,6 +6,7 @@ import Page from "../common/page";
 
 export interface DoctorsProps {
 	patientId: string;
+	othersView: boolean;
 }
 
 const Doctors: React.FunctionComponent<DoctorsProps> = (props) => {
@@ -41,25 +42,34 @@ const Doctors: React.FunctionComponent<DoctorsProps> = (props) => {
 			</tbody>
 		);
 	};
-	return (
-		<Page title="Doctors" patientId={props.patientId}>
-			<div className="container">
-				<div className={"row text-info display-4 m-4"}>
-					Doctors {(doctors.length)}
-				</div>
-				<table className={"table table-hover table-striped"}>
-					<thead className={"thead-light"}>
-					<tr>
-						<th>Name</th>
-						<th>Specialization</th>
-						<th>HealthCareProviders</th>
-						<th>Email</th>
-					</tr>
-					</thead>
-					{renderDoctorsRows()}
-				</table>
+
+	function renderDoctorsContentArea() {
+		return <div className="container">
+			<div className={"row text-info display-4 m-4"}>
+				Doctor(s) {(doctors.length)}
 			</div>
-		</Page>
+			<table className={"table table-hover table-striped"}>
+				<thead className={"thead-light"}>
+				<tr>
+					<th>Name</th>
+					<th>Specialization</th>
+					<th>HealthCareProviders</th>
+					<th>Email</th>
+				</tr>
+				</thead>
+				{renderDoctorsRows()}
+			</table>
+		</div>;
+	}
+
+	return (
+		<React.Fragment>
+			{props.othersView ? renderDoctorsContentArea() :
+			 <Page id={props.patientId} title="Doctors">
+				 {renderDoctorsContentArea()}
+			 </Page>
+			}
+		</React.Fragment>
 	);
 };
 

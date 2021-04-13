@@ -1,9 +1,10 @@
 package com.siemens.dx.hackathon.smarthealthsystem.viewModels;
 
+import java.io.Serializable;
 import java.util.List;
 
 public
-class DoctorModel {
+class DoctorModel implements Serializable {
   private Long doctorId;
 
   private String doctorName;
