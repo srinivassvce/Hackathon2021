@@ -1,5 +1,6 @@
 import {useState} from "react";
 import * as React from "react";
+import {Route, Switch} from "react-router";
 import {PatientVisitModel} from "../_gen/entity";
 import AddAllergen from "../addPages/addAllergen";
 import AddInsurance from "../addPages/addInsurance";
@@ -18,12 +19,20 @@ import {
 } from "../api";
 import Page from "../common/page";
 import "../styles/dashboardStyles.css";
+import Allergens from "../details/allergens";
+import Doctors from "../details/doctors";
+import EmergencyContacts from "../details/emergencyContacts";
+import Immunizations from "../details/Immunizations";
+import LastVisits from "../details/lastVisits";
+import MedicalHistory from "../details/medicalHistory";
+import MedicalInsurances from "../details/medicalInsurances";
+import Medicines from "../details/medicines";
 import Tile from "../tile/tile";
 import AddEmergencyContact from "../addPages/addEmergencyContact";
 
 export interface DashboardProps {
 	patientId: string;
-	isViewRecord?: boolean;
+	isViewRecord: boolean;
 	doctorId?: string;
 }
 
@@ -93,6 +102,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		}
 		return {immunizations: formattedVaccines};
 	};
+
 	const getFormattedDoctors = async (patientId: string) => {
 		const doctors = await getDoctors(patientId);
 		const lengthToDisplay = doctors.length > 3 ? 3 : doctors.length;
@@ -178,7 +188,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"allergens"}
 						requestFunction={() => getFormattedAllergens(props.patientId)}
-						navigateTo={`${viewRecordUrl}/allergens`}
+						navigateTo={props.isViewRecord? "/view/allergens":"/dashboard/allergens"}
 						addEntityContent={getAddAllergenNode}
 						key="allergens"
 						isAddNotAllowed={props.isViewRecord}
@@ -191,7 +201,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"medicines"}
 						requestFunction={() => getFormattedMedicines(props.patientId)}
-						navigateTo={`${viewRecordUrl}/medicines`}
+						navigateTo={props.isViewRecord? "/view/medicines":"/dashboard/medicines"}
 						addEntityContent={getAddMedicineNode}
 						key="medicines"
 						isAddNotAllowed={props.isViewRecord}
@@ -205,7 +215,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"doctors"}
 						requestFunction={() => getFormattedDoctors(props.patientId)}
-						navigateTo={`${viewRecordUrl}/doctors`}
+						navigateTo={props.isViewRecord? "/view/doctors":"/dashboard/doctors"}
 						key="doctors"
 						isAddNotAllowed={props.isViewRecord}
 						isUpdateRequired={isUpdateRequired}
@@ -218,7 +228,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"immunizations"}
 						requestFunction={() => getFormattedImmunizations(props.patientId)}
-						navigateTo={`${viewRecordUrl}/immunizations`}
+						navigateTo={props.isViewRecord? "/view/immunizations":"/dashboard/immunizations"}
 						key="immunizations"
 						addEntityContent={getAddVaccineNode}
 						isAddNotAllowed={props.isViewRecord}
@@ -231,7 +241,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"medicalInsurances"}
 						requestFunction={() => getFormattedMedicalInsurances(props.patientId)}
-						navigateTo={`${viewRecordUrl}/insurances`}
+						navigateTo={props.isViewRecord? "/view/insurances":"/dashboard/insurances"}
 						key="medicalInsurances"
 						addEntityContent={getMedicalInsuranceNode}
 						isAddNotAllowed={props.isViewRecord}
@@ -244,7 +254,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"visits"}
 						requestFunction={() => getFormattedVisits(props.patientId)}
-						navigateTo={`${viewRecordUrl}/visits`}
+						navigateTo={props.isViewRecord? "/view/visits":"/dashboard/visits"}
 						addEntityContent={getAddLastVisitsNode}
 						key="lastVisits"
 						isAddNotAllowed={props.doctorId === undefined && props.isViewRecord}
@@ -258,7 +268,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"medicalHistory"}
 						requestFunction={() => getFormattedMedicalHistory(props.patientId)}
-						navigateTo={`${viewRecordUrl}/history`}
+						navigateTo={props.isViewRecord? "/view/history":"/dashboard/history"}
 						key="medicalHistory"
 						isAddNotAllowed={props.isViewRecord}
 						isUpdateRequired={isUpdateRequired}
@@ -271,7 +281,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"emergencyContacts"}
 						requestFunction={() => getFormattedEmergencyContacts(props.patientId)}
-						navigateTo={`${viewRecordUrl}/contacts`}
+						navigateTo={props.isViewRecord? "/view/contacts":"/dashboard/contacts"}
 						addEntityContent={getAddEmergencyContactNode}
 						key="emergencyContacts"
 						isAddNotAllowed={props.isViewRecord}
@@ -283,13 +293,46 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 
 	const [isUpdateRequired, setIsUpdateRequired] = useState(false);
 	return (
-		<React.Fragment>
-			{props.isViewRecord ? renderDashBoardContent() :
-			 <Page id={props.patientId} title="Dashboard">
-				 {renderDashBoardContent()}
-			 </Page>
-			}
-		</React.Fragment>
+		<Switch>
+			<Route exact path="/dashboard" render={ () =>
+				 <Page patientId={props.patientId} title="Dashboard">
+					 {renderDashBoardContent()}
+				 </Page>
+				}/>
+			<Route exact path="/view" render={()=>
+				<React.Fragment>
+					{renderDashBoardContent()}
+				</React.Fragment>
+				}/>
+
+
+			<Route path="/dashboard/allergens"> <Allergens othersView={false} patientId={props.patientId} /></Route>
+			<Route path="/dashboard/medicines"> <Medicines othersView={false} patientId={props.patientId} /></Route>
+			<Route path="/dashboard/doctors"> <Doctors othersView={false} patientId={props.patientId} /></Route>
+			<Route path="/dashboard/immunizations"> <Immunizations othersView={false} patientId={props.patientId} /></Route>
+			<Route path="/dashboard/insurances"> <MedicalInsurances othersView={false} patientId={props.patientId} /></Route>
+			<Route path="/dashboard/visits"> <LastVisits othersView={false} patientId={props.patientId} /></Route>
+			<Route path="/dashboard/history"> <MedicalHistory othersView={false} patientId={props.patientId}/></Route>
+			<Route path="/dashboard/contacts"> <EmergencyContacts othersView={false} patientId={props.patientId} /></Route>
+
+
+			<Route path="/view/allergens"> <Allergens othersView={true} patientId={props.patientId} /></Route>
+			<Route path="/view/medicines"> <Medicines othersView={true} patientId={props.patientId} /></Route>
+			<Route path="/view/doctors"> <Doctors othersView={true} patientId={props.patientId} /></Route>
+			<Route path="/view/immunizations"> <Immunizations othersView={true} patientId={props.patientId} /></Route>
+			<Route path="/view/insurances"> <MedicalInsurances othersView={true} patientId={props.patientId} /></Route>
+			<Route path="/view/visits"> <LastVisits othersView={true} patientId={props.patientId} /></Route>
+			<Route path="/view/history"> <MedicalHistory othersView={true} patientId={props.patientId}/></Route>
+			<Route path="/view/contacts"> <EmergencyContacts othersView={true} patientId={props.patientId} /></Route>
+		</Switch>
+
+		// <React.Fragment>
+		// 	{props.isViewRecord ? renderDashBoardContent() :
+		// 	 <Page patientId={props.patientId} title="Dashboard">
+		// 		 {renderDashBoardContent()}
+		// 	 </Page>
+		// 	}
+		// </React.Fragment>
 	);
 
 	function getAddAllergenNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {

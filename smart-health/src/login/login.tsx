@@ -48,7 +48,7 @@ export default function Login(props: LoginProps) {
 					console.log(c);
 					if (c.data !== failureDoctor) {
 						props.setDoctorId(c.data);
-						history.push("/viewRecords");
+						history.push("/view");
 					} else {
 						alert("Invalid Doctor's name or Password");
 					}

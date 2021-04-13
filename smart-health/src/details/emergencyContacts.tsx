@@ -5,6 +5,7 @@ import Page from '../common/page';
 import { getEmergencyContacts } from '../api';
 export interface EmergencyContactsProps {
     patientId: string;
+	othersView: boolean;
 }
  
 const EmergencyContacts: React.FunctionComponent<EmergencyContactsProps> = (props) => {
@@ -35,23 +36,31 @@ const EmergencyContacts: React.FunctionComponent<EmergencyContactsProps> = (prop
 		);
 	};
 
-    return ( 
-        <Page title="Emergency Contacts" id={props.patientId} >
-            <div className="container">
-				<div className={"row text-info display-4 m-4"}>
-					Contact List
-				</div>
-				<table className={"table table-hover table-striped"}>
-					<thead className={"thead-light"}>
-					<tr>
-						<th>Name</th>
-						<th>Mobile</th>
-					</tr>
-					</thead>
-                    {renderEmergencyContactsRows()}
-				</table>
+	function renderEmergencyConactContentArea() {
+		return <div className="container">
+			<div className={"row text-info display-4 m-4"}>
+				Contact List
 			</div>
-        </Page>
+			<table className={"table table-hover table-striped"}>
+				<thead className={"thead-light"}>
+				<tr>
+					<th>Name</th>
+					<th>Mobile</th>
+				</tr>
+				</thead>
+				{renderEmergencyContactsRows()}
+			</table>
+		</div>;
+	}
+
+	return (
+		<React.Fragment>
+			{props.othersView ? renderEmergencyConactContentArea() :
+			 <Page title="Emergency Contacts" id={props.patientId} >
+				 {renderEmergencyConactContentArea()}
+			 </Page>
+			}
+		</React.Fragment>
      );
 }
  

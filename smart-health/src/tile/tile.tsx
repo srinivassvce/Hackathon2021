@@ -1,5 +1,6 @@
 import * as React from "react";
-import {Link, useRouteMatch} from "react-router-dom";
+import {FcPlus} from "react-icons/fc";
+import {Link} from "react-router-dom";
 
 export interface TileProps {
 	label: string;
@@ -24,10 +25,6 @@ const Tile: React.FunctionComponent<TileProps> = (props) => {
 	const [data, setData] = React.useState([]);
 	const [showModal, setShowModal] = React.useState(false);
 
-	const {path, url} = useRouteMatch();
-
-	console.log(path, url);
-
 	React.useEffect(
 		() => {
 			const getAndSetData = async () => {
@@ -40,18 +37,18 @@ const Tile: React.FunctionComponent<TileProps> = (props) => {
 	);
 
 	const {navigateTo, addEntityContent} = props;
-	const isFromViewRecord = path === "/viewRecords";
-	const newNavigateUrl = isFromViewRecord ? path + navigateTo : navigateTo;
 	return (
 		<React.Fragment>
 			{addEntityContent ? addEntityContent(showModal, setShowModal) : null}
 			<Link to={navigateTo ? navigateTo : "/notFound"}>
-				<button className="tile border border-info">
+				{/*<button className="tile border border-info">*/}
+				<button style={{backgroundColor:"lightgrey"}} className="btn btn-light tile border border-dark">
 					<h4>
                         <span>
                             {props.label}
                         </span>
-						<button disabled={props.isAddNotAllowed} onClick={(e) => onClick(e, props.label, setShowModal)} className="addIcon">+</button>
+						{/*<button disabled={props.isAddNotAllowed} onClick={(e) => onClick(e, props.label, setShowModal)} className="btn addIcon"><i className="fa fa-plus"></i> </button>*/}
+						<button disabled={props.isAddNotAllowed} onClick={(e) => onClick(e, props.label, setShowModal)} className="btn addIcon"><FcPlus size={28}></FcPlus> </button>
 					</h4>
 					<hr/>
 					<div>

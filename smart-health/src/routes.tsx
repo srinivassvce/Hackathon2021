@@ -45,22 +45,18 @@ const Routes: React.FunctionComponent<RoutesProps> = () => {
                 <Route path="/" exact>
                     <Login setPatientId={updatePatientId} setDoctorId={updateDoctorId}/>
                 </Route>
-                <Route path="/uploadPatientReports"> <UploadPatientReports patientId={patientId} /> </Route>
-                <Route path="/dashboard"> <Dashboard patientId={patientId} /> </Route>
+                <Route path="/dashboard"> <Dashboard isViewRecord={false} patientId={patientId} /> </Route>
                 <Route path="/profile"> <Profile patientId={patientId}/> </Route>
-                <Route path="/viewRecords"> <ViewRecord patientId={patientId} doctorId={doctorId} setPatientId={setPatientId}/> </Route>
-                <Route path="/viewRecords/allergy"> <Allergens patientId={patientId} doctorId={doctorId}/> </Route>
-                <Route path="/viewRecords/medicines"> <Medicines patientId={patientId} doctorId={doctorId}/> </Route>
-                <Route path="/viewRecords/immunization"> <Immunizations patientId={patientId} doctorId={doctorId}/> </Route>
-                <Route path="/allergens"> <Allergens patientId={patientId} /></Route>
-                <Route path="/medicines"> <Medicines patientId={patientId} /></Route>
-                <Route path="/doctors"> <Doctors patientId={patientId} /></Route>
-                <Route path="/immunizations"> <Immunizations patientId={patientId} /></Route>
-                <Route path="/insurances"> <MedicalInsurances patientId={patientId} /></Route>
-                <Route path="/visits"> <LastVisits patientId={patientId} /></Route>
-                <Route path="/history"> <MedicalHistory patientId={patientId} /></Route>
-                <Route path="/contacts"> <EmergencyContacts patientId={patientId} /></Route>
-                <Route path="/share"> <ShareHealthRecord patientId={patientId} /></Route>
+                <Route path="/view"> <ViewRecord patientId={patientId}/> </Route>
+                <Route path="/share"> <ShareHealthRecord patientId={patientId}/> </Route>
+                {/*<Route path="/allergens"> <Allergens patientId={patientId} /></Route>*/}
+                {/*<Route path="/medicines"> <Medicines patientId={patientId} /></Route>*/}
+                {/*<Route path="/doctors"> <Doctors patientId={patientId} /></Route>*/}
+                {/*<Route path="/immunizations"> <Immunizations patientId={patientId} /></Route>*/}
+                {/*<Route path="/insurances"> <MedicalInsurances patientId={patientId} /></Route>*/}
+                {/*<Route path="/visits"> <LastVisits patientId={patientId} /></Route>*/}
+                {/*<Route path="/history"> <MedicalHistory patientId={patientId} /></Route>*/}
+                {/*<Route path="/contacts"> <EmergencyContacts patientId={patientId} /></Route>*/}
                 <Route path="/notFound"> <Login setPatientId={() => patientId} /></Route>
                 <Route exact path="/"><Login setPatientId={updatePatientId} /> </Route>
                 

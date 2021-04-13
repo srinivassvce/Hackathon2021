@@ -7,6 +7,7 @@ import MedicineTableContent from "./MedicineTableContent";
 
 export interface MedicinesProps {
 	patientId: string;
+	othersView: boolean;
 }
 
 const Medicines: React.FunctionComponent<MedicinesProps> = (props) => {
@@ -40,15 +41,24 @@ const Medicines: React.FunctionComponent<MedicinesProps> = (props) => {
 			</tbody>
 		);
 	};
-	return (
-		<Page title="Medicines" id={props.patientId}>
-			<div className="container">
-				<div className={"row text-info display-4 m-4"}>
-					You have a total of {medicines.length} medications.
-				</div>
-				<MedicineTableContent medicines={medicines} />
+
+	function renderMedicinesContentArea() {
+		return <div className="container">
+			<div className={"row text-info display-4 m-4"}>
+				You have a total of {medicines.length} medications.
 			</div>
-		</Page>
+			<MedicineTableContent medicines={medicines}/>
+		</div>;
+	}
+
+	return (
+		<React.Fragment>
+		{props.othersView ? renderMedicinesContentArea() :
+		 <Page title="Medicines" id={props.patientId}>
+			       {renderMedicinesContentArea()}
+		       </Page>
+		}
+</React.Fragment>
 	);
 };
 

@@ -2,8 +2,7 @@ import * as React from 'react';
 import {Dropdown} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {getDoctorName, getPatientName} from "../api";
-import {FaPen, FaUser} from "react-icons/fa";
-import logo from "../assets/healthcare.jpg"
+import {FaPen, FaBars, FaHome, FaHospitalAlt, FaUser} from "react-icons/fa";
 export interface HeaderProps {
     id: string;
     currentPageTitle: string;
@@ -43,10 +42,13 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
             <div className="bg-info container-fluid text-white">
                 <div className="row">
                     <div className="col-1 text-center mt-4">
-                        <button onClick={toggleMenu}> = </button>
+                        <Link className="menuItem" to="/dashboard"><FaHome size={28} className="ml-3"></FaHome></Link>
+                        <a onClick={toggleMenu} > <FaBars size={28} className="m-2"></FaBars></a>
+
                     </div>
                     <div className="col-1">
-                        <img src={logo} alt="logo for healthcare" style={{ height: "100%", width: "100%" }} />
+                        {/*<img src={logo} alt="logo for healthcare" style={{ height: "100%", width: "100%" }} />*/}
+                        <FaHospitalAlt size={70}></FaHospitalAlt>
                     </div>
                     <div className="col-8 text-center display-4">
                         {currentPageTitle}

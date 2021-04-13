@@ -5,11 +5,9 @@ import { Patient, SharedRecordModel } from '../_gen/entity';
 
 export interface ShareHealthRecordProps {
     patientId: string;
-    showModal: boolean;
-    setModal: (showModal: boolean) => void;
 }
 
-const ShareHealthRecord: React.FunctionComponent<ShareHealthRecordProps> = ({ patientId, showModal, setModal }) => {
+const ShareHealthRecord: React.FunctionComponent<ShareHealthRecordProps> = ({ patientId }) => {
 
     const [sharedRecord, setSharedRecord] = React.useState<SharedRecordModel>(
         {

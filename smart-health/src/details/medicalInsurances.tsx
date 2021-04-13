@@ -6,6 +6,7 @@ import Page from "../common/page";
 
 export interface MedicalInsurancesProps {
 	patientId: string;
+	othersView: boolean;
 }
 
 const MedicalInsurances: React.FunctionComponent<MedicalInsurancesProps> = (props) => {
@@ -37,24 +38,33 @@ const MedicalInsurances: React.FunctionComponent<MedicalInsurancesProps> = (prop
 			</tbody>
 		);
 	};
-	return (
-		<Page title="Medical Insurance" id={props.patientId}>
-			<div className="container">
-				<div className={"row text-info display-4 m-4"}>
-					You have a total of {medicalInsuraces.length} Medical Insurances.
-				</div>
-				<table className={"table table-hover table-striped"}>
-					<thead className={"thead-light"}>
-					<tr>
-						<th>Insurance Company</th>
-						<th>TPA</th>
-						<th>Sum Insured</th>
-					</tr>
-					</thead>
-					{renderInsuranceRows()}
-				</table>
+
+	function renderMedicalInsuranceContent() {
+		return <div className="container">
+			<div className={"row text-info display-4 m-4"}>
+				You have a total of {medicalInsuraces.length} Medical Insurances.
 			</div>
-		</Page>
+			<table className={"table table-hover table-striped"}>
+				<thead className={"thead-light"}>
+				<tr>
+					<th>Insurance Company</th>
+					<th>TPA</th>
+					<th>Sum Insured</th>
+				</tr>
+				</thead>
+				{renderInsuranceRows()}
+			</table>
+		</div>;
+	}
+
+	return (
+		<React.Fragment>
+		{props.othersView ? renderMedicalInsuranceContent() :
+		 <Page title="Medical Insurance" id={props.patientId}>
+			       {renderMedicalInsuranceContent()}
+		       </Page>
+		}
+</React.Fragment>
 	);
 };
 
