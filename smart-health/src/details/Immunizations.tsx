@@ -58,7 +58,7 @@ const Immunizations: React.FunctionComponent<ImmunizationsProps> = (props) => {
 	return (
 		<React.Fragment>
 		{props.othersView ? renderImmunizationsContentArea() :
-		       <Page patientId={props.patientId} title="Immunizations">
+		 <Page title="Immunizations" id={props.patientId}>
 			       {renderImmunizationsContentArea()}
 		       </Page>
 		}

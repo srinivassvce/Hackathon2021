@@ -2,11 +2,12 @@ package com.siemens.dx.hackathon.smarthealthsystem.viewModels;
 
 import com.siemens.dx.hackathon.smarthealthsystem.entity.Patient;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 public
-class PatientVisitModel {
+class PatientVisitModel implements Serializable {
 
   private Patient patient;
 

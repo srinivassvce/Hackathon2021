@@ -62,7 +62,7 @@ const Allergens: React.FunctionComponent<AllergensProps> = (props) => {
 		<React.Fragment>
 			{console.log(" props others view is enabled" + props.othersView)}
 		{props.othersView ? renderAllergensCotentArea() :
-		       <Page patientId={props.patientId} title="Allergens">
+		 <Page title="Allergens" id={props.patientId}>
 			       {renderAllergensCotentArea()}
 		       </Page>
 		}

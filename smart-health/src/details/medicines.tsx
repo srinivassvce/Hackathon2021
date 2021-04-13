@@ -54,7 +54,7 @@ const Medicines: React.FunctionComponent<MedicinesProps> = (props) => {
 	return (
 		<React.Fragment>
 		{props.othersView ? renderMedicinesContentArea() :
-		       <Page patientId={props.patientId} title="Medicines">
+		 <Page title="Medicines" id={props.patientId}>
 			       {renderMedicinesContentArea()}
 		       </Page>
 		}

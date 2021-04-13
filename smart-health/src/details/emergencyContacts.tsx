@@ -56,7 +56,7 @@ const EmergencyContacts: React.FunctionComponent<EmergencyContactsProps> = (prop
 	return (
 		<React.Fragment>
 			{props.othersView ? renderEmergencyConactContentArea() :
-			 <Page patientId={props.patientId} title="Emergency Contacts">
+			 <Page title="Emergency Contacts" id={props.patientId} >
 				 {renderEmergencyConactContentArea()}
 			 </Page>
 			}

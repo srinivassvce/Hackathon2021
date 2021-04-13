@@ -62,7 +62,7 @@ const MedicalHistory: React.FunctionComponent<MedicalHistoryProps> = (props) => 
 	return (
 		<React.Fragment>
 		{props.othersView ? renderMedicalHistoryContent() :
-		       <Page patientId={props.patientId} title="Medical History">
+		 <Page title="Medical History" id={props.patientId}>
 			       {renderMedicalHistoryContent()}
 		       </Page>
 		}

@@ -65,7 +65,7 @@ const LastVisits: React.FunctionComponent<LastVisitsProps> = (props: LastVisitsP
   return (
     <React.Fragment>
     {props.othersView ? renderLastVisitsContentArea() :
-           <Page patientId={props.patientId} title="Visits">
+     <Page title="Visits" id={props.patientId}>
              {renderLastVisitsContentArea()}
            </Page>
     }

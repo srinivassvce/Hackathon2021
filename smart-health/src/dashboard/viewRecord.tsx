@@ -4,10 +4,16 @@ import {useRouteMatch} from "react-router";
 import {Link} from "react-router-dom";
 import { Patient} from "../_gen/entity";
 import Page from "../common/page";
+import Allergens from "../details/allergens";
+import LastVisits from "../details/lastVisits";
+import Medicines from "../details/medicines";
 import Dashboard from "./dashboard";
+import ViewRecordRoutes from "./viewRecordRoutes";
 
 export interface ViewRecordProps {
+	doctorId?: string;
 	patientId: string;
+	setPatientId: (patientId: number) => void;
 }
 
 const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
@@ -16,7 +22,7 @@ const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 	// const [records, setSharedRecords ] = React.useState([]);
 
 	// TODO to integrate the UI with backend..
-	const records: Patient[] = [{patientId: 1,patientName:"Arun",
+	const records: Patient[] = [{patientId: 1000,patientName:"Arun",
 	patientAddress: "add",
 	patientEmail: "test@gmail.com",
 	mobile: "123",
@@ -25,7 +31,7 @@ const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 	birthDate: "",
 	height: "",
 	weight: ""},
-		{patientId: 2,patientName:"Akshay",
+		{patientId: 1001,patientName:"Akshay",
 			patientAddress: "add",
 			patientEmail: "test1@gmail.com",
 			mobile: "123",
@@ -33,7 +39,8 @@ const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 			bloodGroup: "b+",
 			birthDate: "",
 			height: "",
-			weight: ""}
+			weight: ""
+		}
 
 	];
 
@@ -53,7 +60,8 @@ const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 
 	const handleClick = (id:number)=> {
 		setViewPatientId(id);
-	}
+		props.setPatientId && props.setPatientId(id);
+	};
 
 	const renderPatientsRows = () => {
 		// const patients: SharedRecordModel[] = records;
@@ -62,9 +70,8 @@ const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 			records.map(
 				patient =>
 					(
-						<th style={{color:"darkcyan"}} >
+						<th style={{color: "darkcyan"}}>
 							<button onClick={() => handleClick(patient.patientId)}>{patient.patientName}</button>
-							
 						</th>
 					)
 			)
@@ -96,16 +103,18 @@ const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 
 		<React.Fragment>
 
-			<Page patientId={props.patientId} title="ViewRecord">
+			<Page id={props.doctorId ? props.doctorId : props.patientId} isDoctor={props.doctorId !== undefined}
+			      title="ViewRecord">
 				<table className={"table table-hover table-striped"}>
 					<thead className={"thead-light"}>
 					{isExact? renderSecondHeader() : renderSecondHeaderForView()}
 					</thead>
 				</table>
-				{(viewPatientId) ? <Dashboard patientId={viewPatientId} isViewRecord={true}/> : undefined}
+				{(viewPatientId) ? <Dashboard doctorId={props.doctorId} patientId={viewPatientId} isViewRecord={true}/> : undefined}
 			</Page>
+
 		</React.Fragment>
 	);
-}
+};
 
 export default ViewRecord;

@@ -25,14 +25,16 @@ function ContextAwareToggle({ children, eventKey, callback }) {
 	}
 	return (
 		<div onClick={decoratedOnClick}>
-			<div className={"row text-center"}>
-				<div className={"col-md-11"}>
-					{children}
+			<button className={"btn btn-block btn-info"}>
+				<div className={"row text-center"}>
+					<div className={"col-md-11"}>
+						{children}
+					</div>
+					<div className={"col-md-1"}>
+						{getIcon()}
+					</div>
 				</div>
-				<div className={"col-md-1"}>
-					{getIcon()}
-				</div>
-			</div>
+			</button>
 		</div>
 	);
 }

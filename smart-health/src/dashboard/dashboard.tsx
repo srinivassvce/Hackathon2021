@@ -3,7 +3,6 @@ import * as React from "react";
 import {Route, Switch} from "react-router";
 import {PatientVisitModel} from "../_gen/entity";
 import AddAllergen from "../addPages/addAllergen";
-import AddEmergencyContact from "../addPages/addEmergencyContact";
 import AddInsurance from "../addPages/addInsurance";
 import AddLastVisits from "../addPages/addLastVisits";
 import AddMedicine from "../addPages/addMedicine";
@@ -29,10 +28,12 @@ import MedicalHistory from "../details/medicalHistory";
 import MedicalInsurances from "../details/medicalInsurances";
 import Medicines from "../details/medicines";
 import Tile from "../tile/tile";
+import AddEmergencyContact from "../addPages/addEmergencyContact";
 
 export interface DashboardProps {
 	patientId: string;
 	isViewRecord: boolean;
+	doctorId?: string;
 }
 
 const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
@@ -162,9 +163,11 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		const formattedContacts = [];
 		for (let i = lengthToDisplay - 1; i >= 0; i--) {
 			const contact = emergencyContacts[i];
-			formattedContacts.push(
-				`${contact.emergencyPatient.patientName}, Mob- ${contact.emergencyPatient.mobile}`
-			);
+			if(contact.emergencyPatient != null) {
+				formattedContacts.push(
+					`${contact.emergencyPatient.patientName}, Mob- ${contact.emergencyPatient.mobile}`
+				)
+			}
 		}
 
 		if (lengthToDisplay < emergencyContacts.length) {
@@ -174,7 +177,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		return {emergencyContacts: formattedContacts};
 	};
 	const responsiveClasses = "col-12 col-sm-6 col-md-4";
-
+	const viewRecordUrl = props.isViewRecord ? "/viewRecord": "";
 	function renderDashBoardContent() {
 		return <div className="container-fluid">
 			<div className="row tileRow">
@@ -202,6 +205,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						addEntityContent={getAddMedicineNode}
 						key="medicines"
 						isAddNotAllowed={props.isViewRecord}
+						isUpdateRequired={isUpdateRequired}
 					/>
 				</div>
 				<div className={responsiveClasses}>
@@ -214,6 +218,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						navigateTo={props.isViewRecord? "/view/doctors":"/dashboard/doctors"}
 						key="doctors"
 						isAddNotAllowed={props.isViewRecord}
+						isUpdateRequired={isUpdateRequired}
 					/>
 				</div>
 				<div className={responsiveClasses}>
@@ -252,7 +257,8 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						navigateTo={props.isViewRecord? "/view/visits":"/dashboard/visits"}
 						addEntityContent={getAddLastVisitsNode}
 						key="lastVisits"
-						isAddNotAllowed={props.isViewRecord}
+						isAddNotAllowed={props.doctorId === undefined && props.isViewRecord}
+						setIsUpdateRequired={setIsUpdateRequired}
 					/>
 				</div>
 				<div className={responsiveClasses}>
@@ -265,6 +271,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						navigateTo={props.isViewRecord? "/view/history":"/dashboard/history"}
 						key="medicalHistory"
 						isAddNotAllowed={props.isViewRecord}
+						isUpdateRequired={isUpdateRequired}
 					/>
 				</div>
 				<div className={responsiveClasses}>
@@ -284,17 +291,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		</div>;
 	}
 
-	// const renderDashboard = () => {
-	// 	return <React.Fragment>
-	// 		{props.isViewRecord ? renderDashBoardContent() :
-	// 		 <Page patientId={props.patientId} title="Dashboard">
-	// 			 {renderDashBoardContent()}
-	// 		 </Page>
-	// 		}
-	// 	</React.Fragment>
-	// 	};
-	// }
-
+	const [isUpdateRequired, setIsUpdateRequired] = useState(false);
 	return (
 		<Switch>
 			<Route exact path="/dashboard" render={ () =>
@@ -356,6 +353,11 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		);
 	}
 
+	const setModalForLastVisit = (b: boolean, cb: (b: boolean)=>void) => {
+		cb(b);
+		setIsUpdateRequired(!isUpdateRequired);
+	}
+
 	function getMedicalInsuranceNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
 		return (
 			<AddInsurance patientId={props.patientId} showModal={showModal} setModal={setModal}/>
@@ -370,7 +372,10 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 
 	function getAddLastVisitsNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
 		return (
-			<AddLastVisits patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+			<AddLastVisits doctorId={props.doctorId} patientId={props.patientId} showModal={showModal} setModal={(b) => {
+				setModal(b);
+				setIsUpdateRequired(!isUpdateRequired);
+			}}/>
 		);
 	}
 };

@@ -15,9 +15,9 @@ const MenuBar: React.FunctionComponent<MenubarProps> = (props) => {
 
 				<div style={{paddingLeft:"10px"}}>
 					<br/>
-					{/*<Link className="menuItem" to="/dashboard"><FaHome className="ml-3"></FaHome></Link>*/}
+					{/*<Link className="menuItem" to="/dashboard">Home</Link>*/}
 					{/*<hr></hr>*/}
-				<Link className="menuItem" to="/view">Share Health Records</Link><br/>
+				<Link className="menuItem" to="/share">Share Health Records</Link><br/>
 				<Link className="menuItem" to="/view">View Health Records</Link><br/>
 				<Link className="menuItem" to="/uploadReports">Upload Reports</Link><br/>
 				<Link className="menuItem" to="/searchMedicine">Search Alternate Medicine</Link><br/>

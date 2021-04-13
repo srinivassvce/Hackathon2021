@@ -60,7 +60,7 @@ const MedicalInsurances: React.FunctionComponent<MedicalInsurancesProps> = (prop
 	return (
 		<React.Fragment>
 		{props.othersView ? renderMedicalInsuranceContent() :
-		       <Page patientId={props.patientId} title="Medical Insurance">
+		 <Page title="Medical Insurance" id={props.patientId}>
 			       {renderMedicalInsuranceContent()}
 		       </Page>
 		}
