@@ -1,14 +1,14 @@
 import {useContext, useState} from "react";
 import * as React from "react";
 import {Accordion, AccordionContext, Button, useAccordionToggle} from "react-bootstrap";
-import Card from "react-bootstrap/Card"
+import Card from "react-bootstrap/Card";
 import {FaMinus, FaPlus} from "react-icons/all";
 import {PatientMedicineModel, PatientVisitModel} from "../_gen/entity";
 import {ArrowDown, ArrowLeft, ArrowRight, Plus} from "react-bootstrap-icons";
 import MenuBar from "../common/menuBar";
 import MedicineTableContent from "./MedicineTableContent";
 
-function ContextAwareToggle({ children, eventKey, callback }) {
+function ContextAwareToggle({children, eventKey, callback}) {
 	const currentEventKey = useContext(AccordionContext);
 
 	const decoratedOnClick = useAccordionToggle(
@@ -20,9 +20,9 @@ function ContextAwareToggle({ children, eventKey, callback }) {
 
 	const getIcon = () => {
 		return (
-			isCurrentEventKey ? <FaMinus /> : <FaPlus />
+			isCurrentEventKey ? <FaMinus/> : <FaPlus/>
 		);
-	}
+	};
 	return (
 		<div onClick={decoratedOnClick}>
 			<button className={"btn btn-block btn-info"}>
@@ -60,7 +60,8 @@ const renderMedicines = (medicines: PatientMedicineModel[], id: string) => {
 		<Accordion defaultActiveKey="1" style={{width: "100%"}}>
 			<Card>
 				<Card.Header>
-					<ContextAwareToggle eventKey="0" callback={() => {}}>
+					<ContextAwareToggle eventKey="0" callback={() => {
+					}}>
 						Medicines ({medicines.length})
 					</ContextAwareToggle>
 				</Card.Header>
@@ -69,7 +70,7 @@ const renderMedicines = (medicines: PatientMedicineModel[], id: string) => {
 						<div>
 							<div className={"medicine-details"}>
 								<div id={`#medicine-${id}`} data-parent={`visit-${id}-accordion`}>
-									<MedicineTableContent medicines={medicines} />
+									<MedicineTableContent medicines={medicines}/>
 								</div>
 							</div>
 						</div>
@@ -77,26 +78,45 @@ const renderMedicines = (medicines: PatientMedicineModel[], id: string) => {
 				</Accordion.Collapse>
 			</Card>
 		</Accordion>
-	)
+	);
+};
+
+interface IDataProps {
+	name: string;
+	value: string;
 }
+
+const DataField = (props: IDataProps) => {
+	const {name, value} = props;
+	return (
+		<tr scope={"row"}>
+			<td>
+				{name}
+			</td>
+			<td>
+				{value}
+			</td>
+		</tr>
+	);
+};
 
 const Visit = (props: IVisitProps) => {
 	const {visit, id} = props;
 	return (
 		<React.Fragment>
 			<div className={"container"}>
-				<div className={"row"}>
-					Visited <strong>{visit.doctor.doctorName}
-				</strong> at <strong>
-					{visit.healthCareProvider.hcpName}
-				</strong> on <strong>
-					{formatDate(visit.visitDateTime)}</strong> at <strong>{formatTime(visit.visitDateTime)}</strong>
-				</div>
-				<div className={"row"}>
-					The next visit is on <strong>
-					{formatDate(visit.nextVisitDateTime)}
-				</strong> at <strong>{formatTime(visit.nextVisitDateTime)}
-				</strong>
+				<div>
+					<table className={"table table-hover table-striped"}>
+						<tbody>
+
+						<DataField name={"Doctor"} value={visit.doctor.doctorName}/>
+						<DataField name={"Health Care"} value={visit.healthCareProvider.hcpName}/>
+						<DataField name={"Visit Date"}
+						           value={`${formatDate(visit.visitDateTime)} , ${formatTime(visit.visitDateTime)}`}/>
+						<DataField name={"Next Visit Date"}
+						           value={`${formatDate(visit.nextVisitDateTime)} , ${formatTime(visit.nextVisitDateTime)}`}/>
+						</tbody>
+					</table>
 				</div>
 				<div className={"row"}>
 					{renderMedicines(visit.medicines, id)}

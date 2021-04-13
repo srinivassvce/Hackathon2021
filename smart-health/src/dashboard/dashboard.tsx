@@ -77,7 +77,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		for (let i = lengthToDisplay - 1; i >= 0; i--) {
 			const visit = visits[i];
 			formattedVisits.push(
-				`${visit.doctor.doctorName} (${new Date(visit.visitDateTime).toLocaleDateString()})}`
+				`${visit.doctor.doctorName} (${new Date(visit.visitDateTime).toLocaleDateString()})`
 			);
 		}
 		if (lengthToDisplay < visits.length) {
@@ -295,7 +295,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 	return (
 		<Switch>
 			<Route exact path="/dashboard" render={ () =>
-				 <Page patientId={props.patientId} title="Dashboard">
+				 <Page id={props.patientId} title="Dashboard">
 					 {renderDashBoardContent()}
 				 </Page>
 				}/>
