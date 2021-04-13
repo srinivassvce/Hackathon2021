@@ -158,7 +158,7 @@ const AddVaccine: React.FunctionComponent<AddVaccineProps> = ({patientId, showMo
 												name="submit"
 												disabled={disabled}
 												className="btn btn-info btn-md"
-												value="Add"></input>
+												value="Add Vaccine"></input>
 										</div>
 									</form>
 								</div>

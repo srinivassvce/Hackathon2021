@@ -170,7 +170,7 @@ const AddInsurance: React.FunctionComponent<AddInsuranceProps> = ({patientId, sh
 												name="submit"
 												disabled={disabled}
 												className="btn btn-info btn-md"
-												value="Add"></input>
+												value="Add Insurance"></input>
 										</div>
 									</form>
 								</div>

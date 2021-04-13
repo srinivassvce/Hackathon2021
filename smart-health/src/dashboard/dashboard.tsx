@@ -249,7 +249,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 				</div>
 				<div className={responsiveClasses}>
 					<Tile
-						label={"Last Visits"}
+						label={"Visits"}
 						onExpand={() => {
 						}}
 						propertyName={"visits"}
