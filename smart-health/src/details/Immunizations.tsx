@@ -6,6 +6,7 @@ import Page from "../common/page";
 
 export interface ImmunizationsProps {
 	patientId: string;
+	othersView: boolean;
 }
 
 const Immunizations: React.FunctionComponent<ImmunizationsProps> = (props) => {
@@ -36,23 +37,32 @@ const Immunizations: React.FunctionComponent<ImmunizationsProps> = (props) => {
 			</tbody>
 		);
 	};
-	return (
-		<Page title="Immunizations" patientId={props.patientId}>
-			<div className="container">
-				<div className={"row text-info display-4 m-4"}>
-					You have a total of {immunizations.length} Immunizations.
-				</div>
-				<table className={"table table-hover table-striped"}>
-					<thead className={"thead-light"}>
-					<tr>
-						<th>Vaccine Name</th>
-						<th>Vaccine Date</th>
-					</tr>
-					</thead>
-					{renderImmunizationRows()}
-				</table>
+
+	function renderImmunizationsContentArea() {
+		return <div className="container">
+			<div className={"row text-info display-4 m-4"}>
+				You have a total of {immunizations.length} Immunizations.
 			</div>
-		</Page>
+			<table className={"table table-hover table-striped"}>
+				<thead className={"thead-light"}>
+				<tr>
+					<th>Vaccine Name</th>
+					<th>Vaccine Date</th>
+				</tr>
+				</thead>
+				{renderImmunizationRows()}
+			</table>
+		</div>;
+	}
+
+	return (
+		<React.Fragment>
+		{props.othersView ? renderImmunizationsContentArea() :
+		       <Page patientId={props.patientId} title="Immunizations">
+			       {renderImmunizationsContentArea()}
+		       </Page>
+		}
+</React.Fragment>
 	);
 };
 

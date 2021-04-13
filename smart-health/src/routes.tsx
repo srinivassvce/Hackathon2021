@@ -33,17 +33,17 @@ const Routes: React.FunctionComponent<RoutesProps> = () => {
                 <Route path="/" exact>
                     <Login setPatientId={updatePatientId} />
                 </Route>
-                <Route path="/dashboard"> <Dashboard patientId={patientId} /> </Route>
+                <Route path="/dashboard"> <Dashboard isViewRecord={false} patientId={patientId} /> </Route>
                 <Route path="/profile"> <Profile patientId={patientId}/> </Route>
-                <Route path="/viewRecords"> <ViewRecord patientId={patientId}/> </Route>
-                <Route path="/allergens"> <Allergens patientId={patientId} /></Route>
-                <Route path="/medicines"> <Medicines patientId={patientId} /></Route>
-                <Route path="/doctors"> <Doctors patientId={patientId} /></Route>
-                <Route path="/immunizations"> <Immunizations patientId={patientId} /></Route>
-                <Route path="/insurances"> <MedicalInsurances patientId={patientId} /></Route>
-                <Route path="/visits"> <LastVisits patientId={patientId} /></Route>
-                <Route path="/history"> <MedicalHistory patientId={patientId} /></Route>
-                <Route path="/contacts"> <EmergencyContacts patientId={patientId} /></Route>
+                <Route path="/view"> <ViewRecord patientId={patientId}/> </Route>
+                {/*<Route path="/allergens"> <Allergens patientId={patientId} /></Route>*/}
+                {/*<Route path="/medicines"> <Medicines patientId={patientId} /></Route>*/}
+                {/*<Route path="/doctors"> <Doctors patientId={patientId} /></Route>*/}
+                {/*<Route path="/immunizations"> <Immunizations patientId={patientId} /></Route>*/}
+                {/*<Route path="/insurances"> <MedicalInsurances patientId={patientId} /></Route>*/}
+                {/*<Route path="/visits"> <LastVisits patientId={patientId} /></Route>*/}
+                {/*<Route path="/history"> <MedicalHistory patientId={patientId} /></Route>*/}
+                {/*<Route path="/contacts"> <EmergencyContacts patientId={patientId} /></Route>*/}
                 <Route path="/notFound"> <Login setPatientId={() => patientId} /></Route>
                 <Route exact path="/"><Login setPatientId={updatePatientId} /> </Route>
                 

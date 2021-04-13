@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {HealthCareProviderModel, Patient, PatientVisitModel} from "./_gen/entity";
+import {HealthCareProviderModel, Patient, PatientVisitModel, SharedRecordModel} from "./_gen/entity";
 
 export function getUrl(): string {
 	return `http://localhost:8080/api/`;
@@ -196,6 +196,11 @@ export async function saveEmergencyContactDetails(patient: Patient, aPatientId: 
 		}
 	);
 	return true;
+}
+
+export async function getAllReceivedSharedRecords(id: string): Promise<SharedRecordModel[]> {
+	const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/receivedSharedRecords/all/${id}`);;
+	return response.data;
 }
 
 export async function getAllergen(allergenId: string) {

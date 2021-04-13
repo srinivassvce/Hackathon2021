@@ -6,6 +6,7 @@ import Page from '../common/page';
 import Visit from "./visit";
 export interface LastVisitsProps {
     patientId: string;
+  othersView: boolean;
 }
  
 const LastVisits: React.FunctionComponent<LastVisitsProps> = (props: LastVisitsProps) => {
@@ -37,29 +38,38 @@ const LastVisits: React.FunctionComponent<LastVisitsProps> = (props: LastVisitsP
       </tbody>
     );
   };
-  return (
-    <Page title="Visits" patientId={props.patientId}>
-      <div className="container">
-        <div className={"row text-info display-4 m-4"}>
-          You have a total of {patientVisits.length} Patient visits.
-        </div>
-        <div className={"container-fluid"}>
-          {
-            patientVisits.map(
-              (visit, index) => (
-                <React.Fragment>
-                  <div className={"row"}>
-                    <Visit visit={visit} id={index}/>
-                  </div>
-                  <hr />
-                </React.Fragment>
-              )
-            )
-          }
-        </div>
 
+  function renderLastVisitsContentArea() {
+    return <div className="container">
+      <div className={"row text-info display-4 m-4"}>
+        You have a total of {patientVisits.length} Patient visits.
       </div>
-    </Page>
+      <div className={"container-fluid"}>
+        {
+          patientVisits.map(
+            (visit, index) => (
+              <React.Fragment>
+                <div className={"row"}>
+                  <Visit visit={visit} id={index}/>
+                </div>
+                <hr/>
+              </React.Fragment>
+            )
+          )
+        }
+      </div>
+
+    </div>;
+  }
+
+  return (
+    <React.Fragment>
+    {props.othersView ? renderLastVisitsContentArea() :
+           <Page patientId={props.patientId} title="Visits">
+             {renderLastVisitsContentArea()}
+           </Page>
+    }
+</React.Fragment>
   );
 }
  

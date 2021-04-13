@@ -6,6 +6,7 @@ import Page from "../common/page";
 
 export interface MedicalHistoryProps {
 	patientId: string;
+	othersView: boolean;
 }
 
 const MedicalHistory: React.FunctionComponent<MedicalHistoryProps> = (props) => {
@@ -38,25 +39,34 @@ const MedicalHistory: React.FunctionComponent<MedicalHistoryProps> = (props) => 
 			</tbody>
 		);
 	};
-	return (
-		<Page title="Medical History" patientId={props.patientId}>
-			<div className="container">
-				<div className={"row text-info display-4 m-4"}>
 
-				</div>
-				<table className={"table table-hover table-striped"}>
-					<thead className={"thead-light"}>
-					<tr>
-						<th>Visited Date</th>
-						<th>Diagnose History</th>
-						<th>Surgical History</th>
-						<th>Lab Tests History</th>
-					</tr>
-					</thead>
-					{renderMedicalHistories()}
-				</table>
+	function renderMedicalHistoryContent() {
+		return <div className="container">
+			<div className={"row text-info display-4 m-4"}>
+
 			</div>
-		</Page>
+			<table className={"table table-hover table-striped"}>
+				<thead className={"thead-light"}>
+				<tr>
+					<th>Visited Date</th>
+					<th>Diagnose History</th>
+					<th>Surgical History</th>
+					<th>Lab Tests History</th>
+				</tr>
+				</thead>
+				{renderMedicalHistories()}
+			</table>
+		</div>;
+	}
+
+	return (
+		<React.Fragment>
+		{props.othersView ? renderMedicalHistoryContent() :
+		       <Page patientId={props.patientId} title="Medical History">
+			       {renderMedicalHistoryContent()}
+		       </Page>
+		}
+</React.Fragment>
 	);
 };
 
