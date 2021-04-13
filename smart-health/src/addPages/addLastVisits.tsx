@@ -26,6 +26,19 @@ export interface AddLastVisitsProps {
 const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, doctorId, showModal, setModal}) => {
 	// obtain master data:
 
+	const initialPatientVisitState: PatientVisitModel = {
+		patient: {} as Patient,
+		doctor: {} as DoctorModel,
+		healthCareProvider: {} as HealthCareProviderModel,
+		diagnoseNotes: "",
+		additionalTests: "",
+		surgeryNotes: "",
+		medicines: [] as PatientMedicineModel[],
+		visitDateTime: undefined,
+		nextVisitDateTime: undefined
+	};
+
+	const [currentVisit, setCurrentVisit] = useState<PatientVisitModel>(initialPatientVisitState);
 	const [hcps, setHcps] = useState<HealthCareProviderModel[]>([] as HealthCareProviderModel[]);
 
 	useEffect(
@@ -40,6 +53,7 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 
 	useEffect(
 		() => {
+			console.log("useEffect-patient", patientId);
 			const getPatient = async () => {
 				const patient = await getPatientDetails(patientId);
 				setCurrentVisit(
@@ -48,9 +62,11 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 						patient: patient
 					}
 				);
+				console.log(patient);
+				console.log(currentVisit.patient);
 			};
 			getPatient();
-		}, [patientId]
+		}, [patientId, showModal]
 	);
 
 	useEffect(
@@ -68,19 +84,6 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 		}, [doctorId]
 	);
 
-	const initialPatientVisitState: PatientVisitModel = {
-		patient: {} as Patient,
-		doctor: {} as DoctorModel,
-		healthCareProvider: {} as HealthCareProviderModel,
-		diagnoseNotes: "",
-		additionalTests: "",
-		surgeryNotes: "",
-		medicines: [] as PatientMedicineModel[],
-		visitDateTime: undefined,
-		nextVisitDateTime: undefined
-	};
-
-	const [currentVisit, setCurrentVisit] = useState<PatientVisitModel>(initialPatientVisitState);
 
 	const savePatientVisit = async () => {
 		await savePatientVisits(currentVisit);
@@ -94,12 +97,13 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 	};
 
 	const safeExit = () => {
-		setModal(false);
 		setCurrentVisit({
 			                ...initialPatientVisitState,
-			patient: currentVisit.patient,
-			doctor: doctorId !== undefined ? currentVisit.doctor: {} as DoctorModel
-		});
+			                patient: currentVisit.patient,
+			                doctor: doctorId !== undefined ? currentVisit.doctor : {} as DoctorModel
+		                });
+		setModal(false);
+
 	};
 
 	const handleTextChange = (e: { target: { name: string, value: string }; }) => {
@@ -129,7 +133,7 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 					value: healthCareProvider.hcpId as number,
 				}
 			)
-		): null;
+		) : null;
 	}
 
 	function handleHealthcareProviderChange(selectedOption: any, action: any) {
@@ -190,7 +194,6 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 	const renderMedicines = () => {
 
 		const addMedicine = (medicine: PatientMedicineModel) => {
-			console.log("medicines");
 			const {medicines} = currentVisit;
 			medicines.push(medicine);
 			setCurrentVisit(
@@ -282,7 +285,7 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 					{currentVisit.doctor.doctorName}
 				</div>
 			</div>
-		)
+		);
 	}
 
 	return (
@@ -318,7 +321,9 @@ const AddLastVisits: React.FunctionComponent<AddLastVisitsProps> = ({patientId, 
 												handleHealthcareProviderChange, "Select Healthcare Provider")}
 										</div>
 										<div className="form-group">
-											{doctorId === undefined ? renderSelectField("doctor", getDoctors(), "Doctor", handleDoctorChange, "Select Doctor") : renderReadonlyDoctor()}
+											{doctorId === undefined ?
+											 renderSelectField("doctor", getDoctors(), "Doctor", handleDoctorChange, "Select Doctor") :
+											 renderReadonlyDoctor()}
 										</div>
 										<div className="form-group">
 											{renderDateField("visitDateTime", "Visited On", getVisitDate(), "Select Visit Date")}

@@ -57,10 +57,7 @@ const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 				patient =>
 					(
 						<th style={{color: "darkcyan"}}>
-							<Link to={"/viewRecord/dashboard"}>
-								<button onClick={() => handleClick(patient.patientId)}>{patient.patientName}</button>
-							</Link>
-
+							<button onClick={() => handleClick(patient.patientId)}>{patient.patientName}</button>
 						</th>
 					)
 			)
@@ -85,7 +82,7 @@ const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 					</tr>
 					</thead>
 				</table>
-				< ViewRecordRoutes doctorId={props.doctorId} patientId={props.patientId}/>
+				{(viewPatientId) ? <Dashboard doctorId={props.doctorId} patientId={viewPatientId} isViewRecord={true}/> :undefined}
 				{/*{(viewPatientId) ? <Dashboard doctorId={props.doctorId} patientId={viewPatientId} isViewRecord={true}/> :undefined}*/}
 			</Page>
 
