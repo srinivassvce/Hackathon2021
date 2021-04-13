@@ -38,12 +38,9 @@ class NotificationController {
         getRecommendationsForMedicine(patientMedicineModels);
 
     List<NotificationModel> notificationModels = new ArrayList<>();
-    NotificationModel notificationModel = new NotificationModel();
-    notificationModel.setTimestamp(new Date());
-    notificationModel.setUpdate("HEHEHEHEHEHEHEHH");
-    notificationModels.add(notificationModel);
+    notificationModels.addAll(medicineNotifications);
 
-    return new ResponseEntity<>(medicineNotifications, HttpStatus.OK);
+    return new ResponseEntity<>(notificationModels, HttpStatus.OK);
   }
 
   private

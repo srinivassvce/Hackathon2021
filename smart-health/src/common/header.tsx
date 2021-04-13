@@ -23,7 +23,7 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 			}
 		}, [patientId]
 	);
-	const [notifications, setNotifications] = React.useState("");
+	const [notifications, setNotifications] = React.useState([]);
 	React.useEffect(
 		() => {
 			if (patientId !== undefined && patientId !== "") {
@@ -38,7 +38,7 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 		setName(name);
 	};
 
-	const getAndSetNotifications= async () => {
+	const getAndSetNotifications = async () => {
 		const notifications = await getNotifications(patientId);
 		setNotifications(notifications);
 	};
@@ -50,7 +50,7 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 
 	const userString = patientId === "" ? "Please login" : name;
 	console.log(userString);
-	const data = [
+/*	const data = [
 		{
 			"update": "70 new employees are shifted",
 			"timestamp": 1596119688264
@@ -59,7 +59,25 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 			"update": "Time to Take a Break, TADA!!!",
 			"timestamp": 1596119686811
 		}
-	];
+	];*/
+
+	const renderNotifyMe = () => {
+		if (patientId === null || patientId === undefined || patientId === "") {
+			return null;
+		} else {
+			return <NotifyMe
+				data={notifications}
+				storageKey='notific_key'
+				notific_key='timestamp'
+				notific_value='update'
+				heading='Notification Alerts'
+				sortedByKey={false}
+				showDate={true}
+				size={90}
+				color="yellow"
+			/>;
+		}
+	};
 	return (
 		<React.Fragment>
 			<div className="bg-info container-fluid text-white">
@@ -70,17 +88,7 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 					<div className="col-1">
 						<img src={logo} alt="logo for healthcare" style={{height: "100%", width: "100%"}}/>
 					</div>
-					<NotifyMe
-						data={notifications}
-						storageKey='notific_key'
-						notific_key='timestamp'
-						notific_value='update'
-						heading='Notification Alerts'
-						sortedByKey={false}
-						showDate={true}
-						size={64}
-						color="yellow"
-					/>
+					{renderNotifyMe()}
 					<div className="col-8 text-center display-4">
 						{currentPageTitle}
 					</div>
