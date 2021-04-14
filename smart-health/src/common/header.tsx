@@ -1,9 +1,9 @@
 import * as React from "react";
-import {Dropdown} from "react-bootstrap";
-import {FaBars, FaHome, FaHospitalAlt, FaPen, FaUser} from "react-icons/fa";
+import { Dropdown } from "react-bootstrap";
+import { FaBars, FaHome, FaHospitalAlt, FaPen, FaUser } from "react-icons/fa";
 import NotifyMe from "react-notification-timeline";
-import {Link} from "react-router-dom";
-import {getDoctorName, getNotifications, getPatientName} from "../api";
+import { Link } from "react-router-dom";
+import { getDoctorName, getNotifications, getPatientName } from "../api";
 
 export interface HeaderProps {
 	id: string;
@@ -14,11 +14,10 @@ export interface HeaderProps {
 
 const Header: React.FunctionComponent<HeaderProps> = (props) => {
 
-	const {id, currentPageTitle, displayMenu} = props;
+	const { id, currentPageTitle, displayMenu } = props;
 	const [name, setName] = React.useState("");
 	React.useEffect(
 		() => {
-			console.log(id);
 			if (id !== undefined && id !== "") {
 				getAndSetName();
 			}
@@ -65,7 +64,6 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 		}
 	};
 	const userString = id === "" ? "Please login" : name;
-	console.log(userString);
 	return (
 		<React.Fragment>
 			<div className="bg-info container-fluid text-white">
@@ -86,10 +84,10 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 
 						{id === "" ? <a href="\">{"Please Login"}</a> :
 
-						 <Dropdown>
-							 <Dropdown.Toggle variant="success" id="dropdown-basic">
-								 {!props.isDoctor ? (<FaUser className="m-2"/>) : (<FaPen className={"m-2"}/>)} {name}
-							 </Dropdown.Toggle>
+							<Dropdown>
+								<Dropdown.Toggle variant="success" id="dropdown-basic">
+									{!props.isDoctor ? (<FaUser className="m-2" />) : (<FaPen className={"m-2"} />)} {name}
+								</Dropdown.Toggle>
 
 							 <Dropdown.Menu>
 								 <Dropdown.Item>

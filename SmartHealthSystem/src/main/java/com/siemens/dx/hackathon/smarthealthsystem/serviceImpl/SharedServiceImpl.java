@@ -52,7 +52,7 @@ class SharedServiceImpl implements ISharedRecordsService {
     List<SharedRecord> sharedRecords = sharedRecordRepository.findAllByPatient_PatientId(patientId);
     List<EmergencyContactModel> emergencyContactModels = new ArrayList<>();
     for (SharedRecord sharedRecord : sharedRecords) {
-      if (null != sharedRecord.getPatient()) {
+      if (null != sharedRecord.getPatient() && sharedRecord.isEmergencyContact()) {
         emergencyContactModels.add(
             EntityToViewModelConverter.convertSharedRecordToEmergencyContactModel(sharedRecord));
       } else {
@@ -131,7 +131,11 @@ class SharedServiceImpl implements ISharedRecordsService {
     SharedRecord sharedRecord = new SharedRecord();
     if (sharedRecordId != -1) {
       sharedRecord = sharedRecordRepository.findById(sharedRecordId).get();
-      sharedRecordRepository.delete(sharedRecord);
+      if(!sharedRecord.isEmergencyContact()){
+        sharedRecordRepository.delete(sharedRecord);
+      } else {
+        return "false";
+      }
     }
     return "Deleted share";
   }

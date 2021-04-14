@@ -25,14 +25,10 @@ export interface RoutesProps {
 const Routes: React.FunctionComponent<RoutesProps> = () => {
     const [patientId, setPatientId] = React.useState<number>();
     const updatePatientId = (patientId: number) => {
-        console.log("Upating patient id");
-        console.log(patientId);
         setPatientId(patientId);
     }
     const [isDoctor, setIsDoctor] = useState(false);
     const updateDoctorId = (docId: string) => {
-        console.log("routes");
-        console.log(docId);
         setDoctorId(docId);
         setIsDoctor(true);
     }

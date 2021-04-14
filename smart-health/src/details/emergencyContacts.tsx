@@ -1,37 +1,37 @@
 import * as React from 'react';
-import {useEffect, useState} from "react";
-import {EmergencyContactModel} from "../_gen/entity";
+import { useEffect, useState } from "react";
+import { EmergencyContactModel } from "../_gen/entity";
 import Page from '../common/page';
 import { getEmergencyContacts } from '../api';
 export interface EmergencyContactsProps {
-    patientId: string;
+	patientId: string;
 	othersView: boolean;
 }
- 
+
 const EmergencyContacts: React.FunctionComponent<EmergencyContactsProps> = (props) => {
 
-    const [emergencyContacts, setEmergencyContacts] = useState<EmergencyContactModel[]>([]);
+	const [emergencyContacts, setEmergencyContacts] = useState<EmergencyContactModel[]>([]);
 
-    useEffect(() => {
-        const getAndSetContacts = async () => {
-            const emergencyContacts: EmergencyContactModel[] =  await getEmergencyContacts(props.patientId);
-            setEmergencyContacts(emergencyContacts);
-        }
-        getAndSetContacts();
-    }, []);
+	useEffect(() => {
+		const getAndSetContacts = async () => {
+			const emergencyContacts: EmergencyContactModel[] = await getEmergencyContacts(props.patientId);
+			setEmergencyContacts(emergencyContacts);
+		}
+		getAndSetContacts();
+	}, []);
 
-    const renderEmergencyContactsRows = () => {
+	const renderEmergencyContactsRows = () => {
 		return (
 			<tbody>
-			{emergencyContacts.map(
-				contact =>
+				{emergencyContacts.map(
+					contact =>
 					(
 						<tr>
-						<th scope={"row"}>{contact.emergencyPatient.patientName}</th>
+							<th scope={"row"}>{contact.emergencyPatient.patientName}</th>
 							<td>{contact.emergencyPatient.mobile}</td>
-							</tr>
+						</tr>
 					)
-			)}
+				)}
 			</tbody>
 		);
 	};
@@ -43,10 +43,10 @@ const EmergencyContacts: React.FunctionComponent<EmergencyContactsProps> = (prop
 			</div>
 			<table className={"table table-hover table-striped"}>
 				<thead className={"thead-light"}>
-				<tr>
-					<th>Name</th>
-					<th>Mobile</th>
-				</tr>
+					<tr>
+						<th>Name</th>
+						<th>Mobile</th>
+					</tr>
 				</thead>
 				{renderEmergencyContactsRows()}
 			</table>
@@ -56,12 +56,12 @@ const EmergencyContacts: React.FunctionComponent<EmergencyContactsProps> = (prop
 	return (
 		<React.Fragment>
 			{props.othersView ? renderEmergencyConactContentArea() :
-			 <Page title="Emergency Contacts" id={props.patientId} >
-				 {renderEmergencyConactContentArea()}
-			 </Page>
+				<Page title="Emergency Contacts" id={props.patientId} >
+					{renderEmergencyConactContentArea()}
+				</Page>
 			}
 		</React.Fragment>
-     );
+	);
 }
- 
+
 export default EmergencyContacts;

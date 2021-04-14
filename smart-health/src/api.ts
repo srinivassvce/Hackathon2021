@@ -1,5 +1,5 @@
-import axios, {AxiosResponse} from "axios";
-import {DoctorModel, HealthCareProviderModel, Patient, PatientVisitModel, SharedRecordModel} from "./_gen/entity";
+import axios, { AxiosResponse } from "axios";
+import { DoctorModel, HealthCareProviderModel, Patient, PatientVisitModel, SharedRecordModel } from "./_gen/entity";
 
 export function getUrl(): string {
 	return `http://localhost:8080/api/`;
@@ -14,10 +14,9 @@ export function doctorLoginUrl(): string {
 }
 
 export async function registerUser(user: any): Promise<boolean> {
-	console.log(user);
 	await axios.post(
 		"http://localhost:8080/api/create/patient",
-		{...user}
+		{ ...user }
 	);
 	return true;
 }
@@ -65,8 +64,8 @@ export async function getAllPatients() {
 }
 
 export async function getPatientByEmail(patientEmail: string): Promise<Patient> {
-    const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/patient/email/${patientEmail}`);;
-    return response.data;
+	const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/patient/email/${patientEmail}`);;
+	return response.data;
 }
 
 export async function getPatientVisits(patientId: string) {
@@ -209,14 +208,13 @@ export async function getMedicalHistory(patientId: string) {
 }
 
 export async function getEmergencyContacts(patientId: string) {
-    const response = await axios.get(
-        `${getUrl()}get/patient/emergencyContact/${patientId}`
-    )
-    return Promise.resolve(response.data);
+	const response = await axios.get(
+		`${getUrl()}get/patient/emergencyContact/${patientId}`
+	)
+	return Promise.resolve(response.data);
 }
 
 export async function saveEmergencyContactDetails(patient: Patient, aPatientId: string): Promise<boolean> {
-	console.log("About to save");
 	await axios.post(
 		`${getUrl()}add/patient/emergencyContact/${aPatientId}`,
 		{
@@ -243,28 +241,28 @@ export async function getHealthcareProviders(): Promise<HealthCareProviderModel[
 }
 
 export async function getDoctorOrPatientDetails(patientEmail: string): Promise<SharedRecordModel> {
-    const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/confirmation/share/${patientEmail}`);;
-    return response.data;
+	const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/confirmation/share/${patientEmail}`);;
+	return response.data;
 }
 
 export async function getAllSentSharedRecords(patientId: string): Promise<SharedRecordModel[]> {
-    const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/sentSharedRecords/all/${patientId}`);;
-    return response.data;
+	const response: AxiosResponse<any> = await axios.get(`${getUrl()}get/sentSharedRecords/all/${patientId}`);;
+	return response.data;
 }
 
 export async function saveSharedRecords(sharedRecord: any, aPatientId: string): Promise<any> {
-    const response =await axios.post(
-        `${getUrl()}add/shareRecord/${aPatientId}`,
-        {
-            ...sharedRecord,
+	const response = await axios.post(
+		`${getUrl()}add/shareRecord/${aPatientId}`,
+		{
+			...sharedRecord,
 			aPatientId
-        }
-    );
-    return response.data;
+		}
+	);
+	return response.data;
 }
 
 export async function deleteSharedRecord(sharedRecordId: number): Promise<SharedRecordModel[]> {
-    const response: AxiosResponse<any> = await axios.delete(`${getUrl()}delete/sharedRecord/${sharedRecordId}`);;
-    return response.data;
+	const response: AxiosResponse<any> = await axios.delete(`${getUrl()}delete/sharedRecord/${sharedRecordId}`);
+	return response.data;
 }
 

@@ -1,8 +1,9 @@
 import {useEffect} from "react";
 import * as React from "react";
-import {FaArrowLeft} from "react-icons/fa";
-import {useRouteMatch} from "react-router";
-import {Link} from "react-router-dom";
+import { FaArrowLeft, FaHome, FaUser } from "react-icons/fa";
+import { useRouteMatch } from "react-router";
+import { Link } from "react-router-dom";
+import { Patient } from "../_gen/entity";
 import Select from "react-select";
 import {SharedRecordModel} from "../_gen/entity";
 import {getAllReceivedSharedRecords} from "../api";
@@ -91,17 +92,18 @@ const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 			textAlign: "center",
 			background: "aliceblue"
 		}}>
-			<h2> <Link style={{float:"left"}} to={"/view"}> <FaArrowLeft className="m-2"/></Link>Reviewing Patient's Profile</h2>
+			<h2> <Link style={{ float: "left" }} to={"/view"}> <FaArrowLeft className="m-2" /></Link>Reviewing Patient's Profile</h2>
 		</tr>;
 	}
+
 	return (
 
 		<React.Fragment>
 			<Page id={props.doctorId ? props.doctorId : props.patientId} isDoctor={props.doctorId !== undefined}
-			      title="ViewRecord">
+				title="View Record">
 				<table className={"table table-hover table-striped"}>
 					<thead className={"thead-light"}>
-					{isExact? renderSecondHeader() : renderSecondHeaderForView()}
+						{isExact ? renderSecondHeader() : renderSecondHeaderForView()}
 					</thead>
 				</table>
 				{(viewPatientId.patientId) ? <Dashboard doctorId={props.doctorId} patientId={viewPatientId.patientId} isViewRecord={true}/> : undefined}

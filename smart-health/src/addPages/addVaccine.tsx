@@ -1,9 +1,9 @@
 import * as React from "react";
 import DatePicker from "react-datepicker";
 import ReactModal from "react-modal";
-import Select, {OptionTypeBase} from "react-select";
-import {Immunization} from "../_gen/entity";
-import {getAllImmunizations, saveImmunizationDetails} from "../api";
+import Select, { OptionTypeBase } from "react-select";
+import { Immunization } from "../_gen/entity";
+import { getAllImmunizations, saveImmunizationDetails } from "../api";
 
 export interface AddVaccineProps {
 	patientId: string;
@@ -11,7 +11,7 @@ export interface AddVaccineProps {
 	setModal: (showModal: boolean) => void;
 }
 
-const AddVaccine: React.FunctionComponent<AddVaccineProps> = ({patientId, showModal, setModal}) => {
+const AddVaccine: React.FunctionComponent<AddVaccineProps> = ({ patientId, showModal, setModal }) => {
 	const [immunizations, setImmunizations] = React.useState<Immunization[]>([]);
 	React.useEffect(() => {
 		getAndSetImmunizations();
@@ -49,9 +49,9 @@ const AddVaccine: React.FunctionComponent<AddVaccineProps> = ({patientId, showMo
 		const values: OptionTypeBase[] = [];
 		immunizationNamesSet.forEach(
 			vaccineName => values.push({
-				                           label: vaccineName,
-				                           value: vaccineName
-			                           })
+				label: vaccineName,
+				value: vaccineName
+			})
 		);
 		return values;
 	};
@@ -66,7 +66,7 @@ const AddVaccine: React.FunctionComponent<AddVaccineProps> = ({patientId, showMo
 	};
 	const handleImmunizationNameChange = (option: any, action: any) => {
 		const found = immunizations.find(vaccine =>
-			                                 vaccine.vaccineName.localeCompare(option.value) === 0
+			vaccine.vaccineName.localeCompare(option.value) === 0
 		);
 		const immunizationId = found.vaccineId === null ? 1 : found.vaccineId;
 		setImmunization(
@@ -123,7 +123,7 @@ const AddVaccine: React.FunctionComponent<AddVaccineProps> = ({patientId, showMo
 							</div>
 						</div>
 					</div>
-					<hr/>
+					<hr />
 					<div className="container">
 						<div
 							className="row justify-content-center align-items-center">

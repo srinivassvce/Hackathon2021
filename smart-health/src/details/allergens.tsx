@@ -1,7 +1,7 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import * as React from "react";
-import {PatientAllergyModel} from "../_gen/entity";
-import {getAllergens} from "../api";
+import { PatientAllergyModel } from "../_gen/entity";
+import { getAllergens } from "../api";
 import Page from "../common/page";
 
 export interface AllergensProps {
@@ -25,16 +25,16 @@ const Allergens: React.FunctionComponent<AllergensProps> = (props) => {
 	const renderAllergensRows = () => {
 		return (
 			<tbody>
-			{allergens.map(
-				allergy =>
+				{allergens.map(
+					allergy =>
 					(
 						<tr>
-						<th scope={"row"}>{allergy.allergyType}</th>
+							<th scope={"row"}>{allergy.allergyType}</th>
 							<td>{allergy.allergens}</td>
 							<td>{allergy.symptoms}</td>
-							</tr>
+						</tr>
 					)
-			)}
+				)}
 			</tbody>
 		);
 	};
@@ -46,11 +46,11 @@ const Allergens: React.FunctionComponent<AllergensProps> = (props) => {
 			</div>
 			<table className={"table table-hover table-striped"}>
 				<thead className={"thead-light"}>
-				<tr>
-					<th>Type</th>
-					<th>Name</th>
-					<th>Symptoms</th>
-				</tr>
+					<tr>
+						<th>Type</th>
+						<th>Name</th>
+						<th>Symptoms</th>
+					</tr>
 				</thead>
 				{renderAllergensRows()}
 			</table>
@@ -60,13 +60,12 @@ const Allergens: React.FunctionComponent<AllergensProps> = (props) => {
 	return (
 
 		<React.Fragment>
-			{console.log(" props others view is enabled" + props.othersView)}
-		{props.othersView ? renderAllergensCotentArea() :
-		 <Page title="Allergens" id={props.patientId}>
-			       {renderAllergensCotentArea()}
-		       </Page>
-		}
-</React.Fragment>
+			{props.othersView ? renderAllergensCotentArea() :
+				<Page title="Allergens" id={props.patientId}>
+					{renderAllergensCotentArea()}
+				</Page>
+			}
+		</React.Fragment>
 	);
 };
 
