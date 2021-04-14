@@ -173,22 +173,23 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		return { emergencyContacts: formattedContacts };
 	};
 	const responsiveClasses = "col-12 col-sm-6 col-md-4";
-	const viewRecordUrl = props.isViewRecord ? "/viewRecord": "";
+	const viewRecordUrl = props.isViewRecord ? "/viewRecord" : "";
 	const isAddAddNotAllowedForVisit = props.isViewRecord && props.doctorId === undefined || props.doctorId === "";
 	function renderDashBoardContent() {
 		return <div className="container-fluid">
 			<div className="row tileRow">
 				<div className={responsiveClasses}>
 					<Tile
-						label={"Allergens"}
+						label={"Visits"}
 						onExpand={() => {
 						}}
-						propertyName={"allergens"}
-						requestFunction={() => getFormattedAllergens(props.patientId)}
-						navigateTo={props.isViewRecord ? "/view/allergens" : "/dashboard/allergens"}
-						addEntityContent={getAddAllergenNode}
-						key="allergens"
-						isAddNotAllowed={props.isViewRecord}
+						propertyName={"visits"}
+						requestFunction={() => getFormattedVisits(props.patientId)}
+						navigateTo={props.isViewRecord ? "/view/visits" : "/dashboard/visits"}
+						addEntityContent={getAddLastVisitsNode}
+						key="lastVisits"
+						isAddNotAllowed={isAddAddNotAllowedForVisit}
+						setIsUpdateRequired={setIsUpdateRequired}
 					/>
 				</div>
 				<div className={responsiveClasses}>
@@ -220,6 +221,32 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 				</div>
 				<div className={responsiveClasses}>
 					<Tile
+						label={"Medical History"}
+						onExpand={() => {
+						}}
+						propertyName={"medicalHistory"}
+						requestFunction={() => getFormattedMedicalHistory(props.patientId)}
+						navigateTo={props.isViewRecord ? "/view/history" : "/dashboard/history"}
+						key="medicalHistory"
+						isAddNotAllowed={props.isViewRecord}
+						isUpdateRequired={isUpdateRequired}
+					/>
+				</div>
+				<div className={responsiveClasses}>
+					<Tile
+						label={"Allergens"}
+						onExpand={() => {
+						}}
+						propertyName={"allergens"}
+						requestFunction={() => getFormattedAllergens(props.patientId)}
+						navigateTo={props.isViewRecord ? "/view/allergens" : "/dashboard/allergens"}
+						addEntityContent={getAddAllergenNode}
+						key="allergens"
+						isAddNotAllowed={props.isViewRecord}
+					/>
+				</div>
+				<div className={responsiveClasses}>
+					<Tile
 						label={"Immunizations"}
 						onExpand={() => {
 						}}
@@ -246,39 +273,12 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 				</div>
 				<div className={responsiveClasses}>
 					<Tile
-						label={"Visits"}
-						onExpand={() => {
-						}}
-						propertyName={"visits"}
-						requestFunction={() => getFormattedVisits(props.patientId)}
-						navigateTo={props.isViewRecord ? "/view/visits" : "/dashboard/visits"}
-						addEntityContent={getAddLastVisitsNode}
-						key="lastVisits"
-						isAddNotAllowed={isAddAddNotAllowedForVisit}
-						setIsUpdateRequired={setIsUpdateRequired}
-					/>
-				</div>
-				<div className={responsiveClasses}>
-					<Tile
-						label={"Medical History"}
-						onExpand={() => {
-						}}
-						propertyName={"medicalHistory"}
-						requestFunction={() => getFormattedMedicalHistory(props.patientId)}
-						navigateTo={props.isViewRecord ? "/view/history" : "/dashboard/history"}
-						key="medicalHistory"
-						isAddNotAllowed={props.isViewRecord}
-						isUpdateRequired={isUpdateRequired}
-					/>
-				</div>
-				<div className={responsiveClasses}>
-					<Tile
 						label={"Emergency Contacts"}
 						onExpand={() => {
 						}}
 						propertyName={"emergencyContacts"}
 						requestFunction={() => getFormattedEmergencyContacts(props.patientId)}
-						navigateTo={props.isViewRecord? "/view/contacts":"/dashboard/contacts"}
+						navigateTo={props.isViewRecord ? "/view/contacts" : "/dashboard/contacts"}
 						addEntityContent={getAddEmergencyContactNode}
 						key="emergencyContacts"
 						isAddNotAllowed={props.isViewRecord}
