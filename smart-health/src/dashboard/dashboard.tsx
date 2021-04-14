@@ -178,6 +178,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 	};
 	const responsiveClasses = "col-12 col-sm-6 col-md-4";
 	const viewRecordUrl = props.isViewRecord ? "/viewRecord": "";
+	const isAddAddNotAllowedForVisit = props.isViewRecord && props.doctorId === undefined || props.doctorId === "";
 	function renderDashBoardContent() {
 		return <div className="container-fluid">
 			<div className="row tileRow">
@@ -257,7 +258,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						navigateTo={props.isViewRecord? "/view/visits":"/dashboard/visits"}
 						addEntityContent={getAddLastVisitsNode}
 						key="lastVisits"
-						isAddNotAllowed={props.doctorId === undefined && props.isViewRecord}
+						isAddNotAllowed={isAddAddNotAllowedForVisit}
 						setIsUpdateRequired={setIsUpdateRequired}
 					/>
 				</div>
