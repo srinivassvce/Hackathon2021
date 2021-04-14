@@ -1,14 +1,13 @@
+import {useEffect} from "react";
 import * as React from "react";
-import {FaArrowLeft, FaHome, FaUser} from "react-icons/fa";
+import {FaArrowLeft} from "react-icons/fa";
 import {useRouteMatch} from "react-router";
 import {Link} from "react-router-dom";
-import { Patient} from "../_gen/entity";
+import Select from "react-select";
+import {SharedRecordModel} from "../_gen/entity";
+import {getAllReceivedSharedRecords} from "../api";
 import Page from "../common/page";
-import Allergens from "../details/allergens";
-import LastVisits from "../details/lastVisits";
-import Medicines from "../details/medicines";
 import Dashboard from "./dashboard";
-import ViewRecordRoutes from "./viewRecordRoutes";
 
 export interface ViewRecordProps {
 	doctorId?: string;
@@ -18,74 +17,70 @@ export interface ViewRecordProps {
 
 const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 
-	const [viewPatientId, setViewPatientId ] = React.useState(undefined);
-	// const [records, setSharedRecords ] = React.useState([]);
+	const [viewPatientId, setViewPatientId ] = React.useState({
+		                                                          patientId: undefined,
+		                                                          patientName: undefined,
+	                                                          });
+	const [records, setSharedRecords] = React.useState<SharedRecordModel[]>(
+		[]);
 
-	// TODO to integrate the UI with backend..
-	const records: Patient[] = [{patientId: 1000,patientName:"Arun",
-	patientAddress: "add",
-	patientEmail: "test@gmail.com",
-	mobile: "123",
-	password: "123",
-	bloodGroup: "b+",
-	birthDate: "",
-	height: "",
-	weight: ""},
-		{patientId: 1001,patientName:"Akshay",
-			patientAddress: "add",
-			patientEmail: "test1@gmail.com",
-			mobile: "123",
-			password: "123",
-			bloodGroup: "b+",
-			birthDate: "",
-			height: "",
-			weight: ""
+	useEffect(() => {
+		const getSharedPatients = async () => {
+			const id= props.doctorId ? props.doctorId : props.patientId;
+			const sharedRecords: SharedRecordModel[] =  await getAllReceivedSharedRecords(id);
+			setSharedRecords(sharedRecords);
 		}
-
-	];
-
-
-	// useEffect(() => {
-	// 	const getSharedPatients = async () => {
-	// 		const sharedRecords: SharedRecordModel[] =  await getAllReceivedSharedRecords(props.patientId);
-	// 		setSharedRecords(sharedRecords);
-	// 		// names:await sharedRecords.forEach(record => getPatientName(record.patientId.toString()));
-	// 	}
-	// 	getSharedPatients();
-	// }, []);
+		getSharedPatients();
+	}, []);
 
 
-	const pathname = window.location.pathname;
-	const {path, url ,isExact} = useRouteMatch();
+	const {isExact} = useRouteMatch();
 
-	const handleClick = (id:number)=> {
-		setViewPatientId(id);
-		props.setPatientId && props.setPatientId(id);
+	const getPatients = () => {
+		const values = records.map(
+			record => (
+				{
+					label: record.sharedName,
+					value: record.patientId
+				}
+			)
+		);
+
+		return values;
 	};
 
+	const handlePatientChange = (option: any, action: any) => {
+		setViewPatientId(
+			{
+				patientId: option.value,
+				patientName: option.label
+			});
+	}
+
 	const renderPatientsRows = () => {
-		// const patients: SharedRecordModel[] = records;
-		// console.log("patients are" ,patients);
 		return (
-			records.map(
-				patient =>
-					(
-						<th style={{color: "darkcyan"}}>
-							<button onClick={() => handleClick(patient.patientId)}>{patient.patientName}</button>
-						</th>
-					)
-			)
+			<th >
+				<div style={{width:"25%"}}>
+				<Select
+					options={getPatients()}
+					onChange={handlePatientChange}
+					placeholder={"Select Patient"}
+				/>
+				</div>
+			</th>
 		);
 	};
 
 	function renderSecondHeader() {
 		return <tr>
 			<th style={{
-				textAlign: "center",
-				background: "aliceblue"
-			}}>Patient Shared Records With You -
-			</th>
+				textAlign: "right",
+				background: "aliceblue",
+				width:"50%",
+				fontFamily:"sans-serif"
 
+			}}>Select Patient's Shared Record-
+			</th>
 			{renderPatientsRows()}
 		</tr>;
 	}
@@ -102,7 +97,6 @@ const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 	return (
 
 		<React.Fragment>
-
 			<Page id={props.doctorId ? props.doctorId : props.patientId} isDoctor={props.doctorId !== undefined}
 			      title="ViewRecord">
 				<table className={"table table-hover table-striped"}>
@@ -110,9 +104,8 @@ const ViewRecord: React.FunctionComponent<ViewRecordProps> = (props) => {
 					{isExact? renderSecondHeader() : renderSecondHeaderForView()}
 					</thead>
 				</table>
-				{(viewPatientId) ? <Dashboard doctorId={props.doctorId} patientId={viewPatientId} isViewRecord={true}/> : undefined}
+				{(viewPatientId.patientId) ? <Dashboard doctorId={props.doctorId} patientId={viewPatientId.patientId} isViewRecord={true}/> : undefined}
 			</Page>
-
 		</React.Fragment>
 	);
 };
