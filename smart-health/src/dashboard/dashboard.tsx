@@ -1,7 +1,7 @@
-import {useState} from "react";
+import { useState } from "react";
 import * as React from "react";
-import {Route, Switch} from "react-router";
-import {PatientVisitModel} from "../_gen/entity";
+import { Route, Switch } from "react-router";
+import { PatientVisitModel } from "../_gen/entity";
 import AddAllergen from "../addPages/addAllergen";
 import AddInsurance from "../addPages/addInsurance";
 import AddLastVisits from "../addPages/addLastVisits";
@@ -39,7 +39,6 @@ export interface DashboardProps {
 const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 	const getFormattedAllergens = async (patientId: string) => {
 		const allergens = await getAllergens(patientId);
-		console.log(allergens);
 		const lengthToDisplay = allergens.length > 3 ? 3 : allergens.length;
 		const formattedAllergens = [];
 		for (let i = lengthToDisplay - 1; i >= 0; i--) {
@@ -51,12 +50,11 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		if (lengthToDisplay < allergens.length) {
 			formattedAllergens.push("(Click for more.)");
 		}
-		return {allergens: formattedAllergens};
+		return { allergens: formattedAllergens };
 	};
 
 	const getFormattedMedicines = async (patientId: string) => {
 		const medicines = await getMedicines(patientId);
-		console.log(medicines);
 		const lengthToDisplay = medicines.length > 3 ? 3 : medicines.length;
 		const formattedMedicines = [];
 		for (let i = lengthToDisplay - 1; i >= 0; i--) {
@@ -68,7 +66,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		if (lengthToDisplay < medicines.length) {
 			formattedMedicines.push("(Click for more.)");
 		}
-		return {medicines: formattedMedicines};
+		return { medicines: formattedMedicines };
 	};
 	const getFormattedVisits = async (patientId: string) => {
 		const visits: PatientVisitModel[] = await getPatientVisits(patientId);
@@ -83,7 +81,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		if (lengthToDisplay < visits.length) {
 			formattedVisits.push("(Click for more.)");
 		}
-		return {visits: formattedVisits};
+		return { visits: formattedVisits };
 	};
 
 	const getFormattedImmunizations = async (patientId: string) => {
@@ -100,7 +98,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		if (lengthToDisplay < immunizations.length) {
 			formattedVaccines.push("(Click for more.)");
 		}
-		return {immunizations: formattedVaccines};
+		return { immunizations: formattedVaccines };
 	};
 
 	const getFormattedDoctors = async (patientId: string) => {
@@ -116,7 +114,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		if (lengthToDisplay < doctors.length) {
 			formattedDoctors.push("(Click for more.)");
 		}
-		return {doctors: formattedDoctors};
+		return { doctors: formattedDoctors };
 	};
 
 	const getFormattedMedicalInsurances = async (patientId: string) => {
@@ -132,7 +130,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		if (lengthToDisplay < medicalInsurances.length) {
 			formattedMedicalInsurances.push("(Click for more.)");
 		}
-		return {medicalInsurances: formattedMedicalInsurances};
+		return { medicalInsurances: formattedMedicalInsurances };
 	};
 
 	const getFormattedMedicalHistory = async (patientId: string) => {
@@ -143,7 +141,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 			const medicalHistory = medicalHistories[lengthToDisplay - 1];
 			formattedMedicalHistories.push(
 				<div>
-					<ul style={{listStyleType: "none"}}>
+					<ul style={{ listStyleType: "none" }}>
 						<div className={"row"}><strong>{new Date(medicalHistory.visitedDate).toDateString()}</strong></div>
 						<li>Diagnose Notes- {(medicalHistory.diagnoseNotes)}</li>
 						<li>Surgical Notes - {medicalHistory.surgicalNotes}</li>
@@ -154,16 +152,15 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		if (medicalHistories.length > 1) {
 			formattedMedicalHistories.push("(Click for more.)");
 		}
-		return {medicalHistory: formattedMedicalHistories};
+		return { medicalHistory: formattedMedicalHistories };
 	};
 	const getFormattedEmergencyContacts = async (patientId: string) => {
 		const emergencyContacts = await getEmergencyContacts(patientId);
-		console.log(emergencyContacts);
 		const lengthToDisplay = emergencyContacts.length > 3 ? 3 : emergencyContacts.length;
 		const formattedContacts = [];
 		for (let i = lengthToDisplay - 1; i >= 0; i--) {
 			const contact = emergencyContacts[i];
-			if(contact.emergencyPatient != null) {
+			if (contact.emergencyPatient != null) {
 				formattedContacts.push(
 					`${contact.emergencyPatient.patientName}, Mob- ${contact.emergencyPatient.mobile}`
 				)
@@ -173,11 +170,10 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 		if (lengthToDisplay < emergencyContacts.length) {
 			formattedContacts.push("(Click for more.)");
 		}
-		console.log(formattedContacts);
-		return {emergencyContacts: formattedContacts};
+		return { emergencyContacts: formattedContacts };
 	};
 	const responsiveClasses = "col-12 col-sm-6 col-md-4";
-	const viewRecordUrl = props.isViewRecord ? "/viewRecord": "";
+	const viewRecordUrl = props.isViewRecord ? "/viewRecord" : "";
 	function renderDashBoardContent() {
 		return <div className="container-fluid">
 			<div className="row tileRow">
@@ -188,7 +184,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"allergens"}
 						requestFunction={() => getFormattedAllergens(props.patientId)}
-						navigateTo={props.isViewRecord? "/view/allergens":"/dashboard/allergens"}
+						navigateTo={props.isViewRecord ? "/view/allergens" : "/dashboard/allergens"}
 						addEntityContent={getAddAllergenNode}
 						key="allergens"
 						isAddNotAllowed={props.isViewRecord}
@@ -201,7 +197,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"medicines"}
 						requestFunction={() => getFormattedMedicines(props.patientId)}
-						navigateTo={props.isViewRecord? "/view/medicines":"/dashboard/medicines"}
+						navigateTo={props.isViewRecord ? "/view/medicines" : "/dashboard/medicines"}
 						addEntityContent={getAddMedicineNode}
 						key="medicines"
 						isAddNotAllowed={props.isViewRecord}
@@ -215,7 +211,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"doctors"}
 						requestFunction={() => getFormattedDoctors(props.patientId)}
-						navigateTo={props.isViewRecord? "/view/doctors":"/dashboard/doctors"}
+						navigateTo={props.isViewRecord ? "/view/doctors" : "/dashboard/doctors"}
 						key="doctors"
 						isAddNotAllowed={props.isViewRecord}
 						isUpdateRequired={isUpdateRequired}
@@ -228,7 +224,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"immunizations"}
 						requestFunction={() => getFormattedImmunizations(props.patientId)}
-						navigateTo={props.isViewRecord? "/view/immunizations":"/dashboard/immunizations"}
+						navigateTo={props.isViewRecord ? "/view/immunizations" : "/dashboard/immunizations"}
 						key="immunizations"
 						addEntityContent={getAddVaccineNode}
 						isAddNotAllowed={props.isViewRecord}
@@ -241,7 +237,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"medicalInsurances"}
 						requestFunction={() => getFormattedMedicalInsurances(props.patientId)}
-						navigateTo={props.isViewRecord? "/view/insurances":"/dashboard/insurances"}
+						navigateTo={props.isViewRecord ? "/view/insurances" : "/dashboard/insurances"}
 						key="medicalInsurances"
 						addEntityContent={getMedicalInsuranceNode}
 						isAddNotAllowed={props.isViewRecord}
@@ -254,7 +250,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"visits"}
 						requestFunction={() => getFormattedVisits(props.patientId)}
-						navigateTo={props.isViewRecord? "/view/visits":"/dashboard/visits"}
+						navigateTo={props.isViewRecord ? "/view/visits" : "/dashboard/visits"}
 						addEntityContent={getAddLastVisitsNode}
 						key="lastVisits"
 						isAddNotAllowed={props.doctorId === undefined && props.isViewRecord}
@@ -268,7 +264,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"medicalHistory"}
 						requestFunction={() => getFormattedMedicalHistory(props.patientId)}
-						navigateTo={props.isViewRecord? "/view/history":"/dashboard/history"}
+						navigateTo={props.isViewRecord ? "/view/history" : "/dashboard/history"}
 						key="medicalHistory"
 						isAddNotAllowed={props.isViewRecord}
 						isUpdateRequired={isUpdateRequired}
@@ -281,7 +277,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 						}}
 						propertyName={"emergencyContacts"}
 						requestFunction={() => getFormattedEmergencyContacts(props.patientId)}
-						navigateTo={props.isViewRecord? "/view/contacts":"/dashboard/contacts"}
+						navigateTo={props.isViewRecord ? "/view/contacts" : "/dashboard/contacts"}
 						addEntityContent={getAddEmergencyContactNode}
 						key="emergencyContacts"
 						isAddNotAllowed={props.isViewRecord}
@@ -294,16 +290,16 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 	const [isUpdateRequired, setIsUpdateRequired] = useState(false);
 	return (
 		<Switch>
-			<Route exact path="/dashboard" render={ () =>
-				 <Page id={props.patientId} title="Dashboard">
-					 {renderDashBoardContent()}
-				 </Page>
-				}/>
-			<Route exact path="/view" render={()=>
+			<Route exact path="/dashboard" render={() =>
+				<Page id={props.patientId} title="Dashboard">
+					{renderDashBoardContent()}
+				</Page>
+			} />
+			<Route exact path="/view" render={() =>
 				<React.Fragment>
 					{renderDashBoardContent()}
 				</React.Fragment>
-				}/>
+			} />
 
 
 			<Route path="/dashboard/allergens"> <Allergens othersView={false} patientId={props.patientId} /></Route>
@@ -312,7 +308,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 			<Route path="/dashboard/immunizations"> <Immunizations othersView={false} patientId={props.patientId} /></Route>
 			<Route path="/dashboard/insurances"> <MedicalInsurances othersView={false} patientId={props.patientId} /></Route>
 			<Route path="/dashboard/visits"> <LastVisits othersView={false} patientId={props.patientId} /></Route>
-			<Route path="/dashboard/history"> <MedicalHistory othersView={false} patientId={props.patientId}/></Route>
+			<Route path="/dashboard/history"> <MedicalHistory othersView={false} patientId={props.patientId} /></Route>
 			<Route path="/dashboard/contacts"> <EmergencyContacts othersView={false} patientId={props.patientId} /></Route>
 
 
@@ -322,7 +318,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 			<Route path="/view/immunizations"> <Immunizations othersView={true} patientId={props.patientId} /></Route>
 			<Route path="/view/insurances"> <MedicalInsurances othersView={true} patientId={props.patientId} /></Route>
 			<Route path="/view/visits"> <LastVisits othersView={true} patientId={props.patientId} /></Route>
-			<Route path="/view/history"> <MedicalHistory othersView={true} patientId={props.patientId}/></Route>
+			<Route path="/view/history"> <MedicalHistory othersView={true} patientId={props.patientId} /></Route>
 			<Route path="/view/contacts"> <EmergencyContacts othersView={true} patientId={props.patientId} /></Route>
 		</Switch>
 
@@ -337,36 +333,36 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 
 	function getAddAllergenNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
 		return (
-			<AddAllergen patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+			<AddAllergen patientId={props.patientId} showModal={showModal} setModal={setModal} />
 		);
 	}
 
 	function getAddMedicineNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
 		return (
-			<AddMedicine patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+			<AddMedicine patientId={props.patientId} showModal={showModal} setModal={setModal} />
 		);
 	}
 
 	function getAddVaccineNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
 		return (
-			<AddVaccine patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+			<AddVaccine patientId={props.patientId} showModal={showModal} setModal={setModal} />
 		);
 	}
 
-	const setModalForLastVisit = (b: boolean, cb: (b: boolean)=>void) => {
+	const setModalForLastVisit = (b: boolean, cb: (b: boolean) => void) => {
 		cb(b);
 		setIsUpdateRequired(!isUpdateRequired);
 	}
 
 	function getMedicalInsuranceNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
 		return (
-			<AddInsurance patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+			<AddInsurance patientId={props.patientId} showModal={showModal} setModal={setModal} />
 		);
 	}
 
 	function getAddEmergencyContactNode(showModal: boolean, setModal: (x: boolean) => void): React.ReactNode {
 		return (
-			<AddEmergencyContact patientId={props.patientId} showModal={showModal} setModal={setModal}/>
+			<AddEmergencyContact patientId={props.patientId} showModal={showModal} setModal={setModal} />
 		);
 	}
 
@@ -375,7 +371,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 			<AddLastVisits doctorId={props.doctorId} patientId={props.patientId} showModal={showModal} setModal={(b) => {
 				setModal(b);
 				setIsUpdateRequired(!isUpdateRequired);
-			}}/>
+			}} />
 		);
 	}
 };

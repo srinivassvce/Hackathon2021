@@ -1,9 +1,9 @@
 import * as React from "react";
 import DatePicker from "react-datepicker";
 import ReactModal from "react-modal";
-import Select, {OptionTypeBase} from "react-select";
-import {Medicine, MedicineType, PatientMedicineModel} from "../_gen/entity";
-import {getAllMedicines, saveMedicineDetails} from "../api";
+import Select, { OptionTypeBase } from "react-select";
+import { Medicine, MedicineType, PatientMedicineModel } from "../_gen/entity";
+import { getAllMedicines, saveMedicineDetails } from "../api";
 
 export interface AddMedicineProps {
 	patientId: string;
@@ -12,7 +12,7 @@ export interface AddMedicineProps {
 	onSubmit?: (medicine: PatientMedicineModel) => void;
 }
 
-const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, showModal, setModal, onSubmit}) => {
+const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({ patientId, showModal, setModal, onSubmit }) => {
 	const [medicines, setMedicines] = React.useState<Medicine[]>([]);
 	React.useEffect(() => {
 		getAndSetMedicines();
@@ -57,7 +57,7 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 		await saveMedicineDetails(medicine, patientId);
 	};
 	const handleChange = (e: { target: { name: string; value: string; }; }) => {
-		const {name, value} = e.target;
+		const { name, value } = e.target;
 		const newMedicine = {
 			...medicine,
 			fromDate: medicine.fromDate,
@@ -76,9 +76,9 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 		const values: OptionTypeBase[] = [];
 		medicineGenericNamesSet.forEach(
 			genericName => values.push({
-				                           label: genericName,
-				                           value: genericName
-			                           })
+				label: genericName,
+				value: genericName
+			})
 		);
 		return values;
 	};
@@ -240,7 +240,7 @@ const AddMedicine: React.FunctionComponent<AddMedicineProps> = ({patientId, show
 							</div>
 						</div>
 					</div>
-					<hr/>
+					<hr />
 					<div className="container">
 						<div
 							className="row justify-content-center align-items-center">

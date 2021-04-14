@@ -33,7 +33,6 @@ const AddEmergencyContact: React.FunctionComponent<AddEmergencyContactProps> = (
 
     const getAndSetPatient = async () => {
         const patient = await getPatientByEmail(patientEmail);
-        //console.log("Patient: ", patient);
         setPatient(patient);
     };
 
@@ -43,35 +42,38 @@ const AddEmergencyContact: React.FunctionComponent<AddEmergencyContactProps> = (
     };
 
     const saveEmergencyContact = async () => {
-        if(patient.patientId.toString().localeCompare(patientId) === 0){
-            console.log("same user!");
-        } else{
-            await saveEmergencyContactDetails(patient, patientId);
+        if (patient.patientId.toString().localeCompare(patientId) === 0) {
+            return false;
+        } else {
+            return await saveEmergencyContactDetails(patient, patientId);
         }
-	};
+    };
 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-		e.preventDefault();
-		await saveEmergencyContact();
-		// closes the modal after save
-		setPatient({
-            patientId: -1,
-            patientName: "",
-            patientEmail: "",
-            patientAddress: "",
-            mobile: -1,
-            password: "",
-            bloodGroup: "",
-            birthDate: new Date(),
-            height: "",
-            weight: ""
-        });
-		setModal(false);
-	};
+        e.preventDefault();
+        const result = await saveEmergencyContact();
+        if (result) {
+            // closes the modal after save
+            setPatient({
+                patientId: -1,
+                patientName: "",
+                patientEmail: "",
+                patientAddress: "",
+                mobile: -1,
+                password: "",
+                bloodGroup: "",
+                birthDate: new Date(),
+                height: "",
+                weight: ""
+            });
+            setModal(false);
+        } else {
+            alert("Can't add yourself");
+        }
+    };
 
     const safeExit = () => {
         setModal(false);
-        
     }
 
     return (
@@ -99,38 +101,36 @@ const AddEmergencyContact: React.FunctionComponent<AddEmergencyContactProps> = (
                             <div className="col-md-6">
                                 <div className="col-md-12">
                                     <form className="form" onSubmit={handleSubmit}>
-                                        <div className="form-group">
-                                            <label htmlFor="email" className="text-info">
-                                                Enter Email
-											</label>
+                                        <label htmlFor="email" className="text-info">
+                                            Enter Email
+										</label>
+                                        <div className="input-group m-1">
                                             <input
                                                 type="text"
                                                 name="email"
                                                 id="email"
-                                                className="form-control"
+                                                className="form-control m-1"
                                                 value={patientEmail}
                                                 placeholder={"Search Name By Email"}
                                                 onChange={(e) => setEmail(e.target.value)}>
                                             </input>
-                                            <div>
-                                                <button
-                                                    className="btn btn-info btn-md"
-                                                    onClick={handleSearch}>
-                                                    Search
-                                                </button>
-                                            </div>
+                                            <button
+                                                className="btn btn-info btn-warning m-1"
+                                                onClick={handleSearch}>
+                                                Search
+                                            </button>
                                         </div>
                                         <div>
-                                            <span style={{ fontSize: 25, fontWeight: "normal" }}>
+                                            <span style={{ fontSize: 25, fontWeight: "bold", color: "blue" }}>
                                                 Name: {patient.patientName}
                                             </span>
                                         </div>
-                                        <br/>
+                                        <br />
                                         <div className="form-group d-grid">
                                             <input
                                                 type="submit"
                                                 name="submit"
-                                                className="btn btn-info btn-md"
+                                                className="btn btn-info btn-dark"
                                                 value="Add" />
                                         </div>
                                     </form>

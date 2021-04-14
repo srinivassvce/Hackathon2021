@@ -31,30 +31,26 @@ const ShareHealthRecord: React.FunctionComponent<ShareHealthRecordProps> = ({ pa
 
     const getAndSetRecords = async () => {
         const sharedRecords: SharedRecordModel[] = await getAllSentSharedRecords(patientId);
-        sharedRecords.forEach((record) => {
-            console.log("ID ", record.patientId);
-            console.log("Name ", record.sharedName);
-            console.log("Email ", record.sharedEmail);
-            console.log("Date ", record.sharedDate);
-            console.log("RecordId", record.sharedRecordId);
-        });
         setSharedRecords([...sharedRecords]);
     }
 
     const getAndSetPatient = async () => {
         const sharedRecord = await getDoctorOrPatientDetails(sharedEmail);
-        console.log(sharedRecord);
         setSharedRecord(sharedRecord);
     };
 
     const getAndDeleteShare = async (id: number) => {
-            await deleteSharedRecord(id);
-            const newSharedRecords =sharedRecords.filter(
+        const isDeleted = await deleteSharedRecord(id);
+        if(isDeleted.toString() === "false"){
+            alert("Emergency Contact can't be deleted!!!");
+        } else {
+            const newSharedRecords = sharedRecords.filter(
                 (record) => {
-                   return record.sharedRecordId !== id;
+                    return record.sharedRecordId !== id;
                 }
             );
             setSharedRecords([...newSharedRecords]);
+        }   
     };
 
     const handleSearch: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
@@ -64,11 +60,13 @@ const ShareHealthRecord: React.FunctionComponent<ShareHealthRecordProps> = ({ pa
 
     const handleShare: React.FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
-        const record = await saveSharedRecords(sharedRecord, patientId);
-        console.log("after share ", record);
-        setSharedRecord({...record});
-        setSharedRecords([...sharedRecords, record]);
-        console.log(sharedRecords);
+        if (sharedRecord.patientId.toString().localeCompare(patientId) === 0) {
+            alert("You can't share with yourself!!!");
+        } else {
+            const record = await saveSharedRecords(sharedRecord, patientId);
+            setSharedRecord({ ...record });
+            setSharedRecords([...sharedRecords, record]);
+        }
     };
 
     const handleDelete = async (event: any, id: number) => {
@@ -77,7 +75,6 @@ const ShareHealthRecord: React.FunctionComponent<ShareHealthRecordProps> = ({ pa
     };
 
     const renderSharedRecordRows = () => {
-        console.log(sharedRecords);
         return (
             <tbody>
                 {sharedRecords.map(
@@ -86,10 +83,10 @@ const ShareHealthRecord: React.FunctionComponent<ShareHealthRecordProps> = ({ pa
                         <tr>
                             <th scope={"row"}>{record.sharedName}</th>
                             <td>{record.sharedEmail}</td>
-                            <td>{record.sharedDate}</td>
-                            <button className="btn btn-info btn-danger m-1" 
-                                    onClick={(e: any) => handleDelete(e, record.sharedRecordId)}
-                                    value={record.sharedRecordId}>
+                            <td>{new Date(record.sharedDate).toDateString()}</td>
+                            <button className="btn btn-info btn-danger m-1"
+                                onClick={(e: any) => handleDelete(e, record.sharedRecordId)}
+                                value={record.sharedRecordId}>
                                 Delete
                             </button>
                         </tr>
@@ -101,7 +98,7 @@ const ShareHealthRecord: React.FunctionComponent<ShareHealthRecordProps> = ({ pa
 
     return (
         <React.Fragment>
-            <Page title="Share Records" patientId={patientId} >
+            <Page title="Share Records" id={patientId} >
                 <div className="container">
                     <div className="col-md-6">
                         <label htmlFor="email" className="text-info">
@@ -122,10 +119,10 @@ const ShareHealthRecord: React.FunctionComponent<ShareHealthRecordProps> = ({ pa
                                     className="btn btn-info btn-warning m-1"
                                     onClick={handleSearch}>
                                     Search
-                            </button>
+                                </button>
                             </div>
                             <div>
-                                <span style={{ fontSize: 25, fontWeight: "normal" }}>
+                                <span style={{ fontSize: 25, fontWeight: "bold", color: "blue" }}>
                                     Share with: {sharedRecord.sharedName}
                                 </span>
                             </div>
@@ -162,5 +159,4 @@ const ShareHealthRecord: React.FunctionComponent<ShareHealthRecordProps> = ({ pa
 }
 
 export default ShareHealthRecord;
-	
-	
+

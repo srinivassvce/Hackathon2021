@@ -35,7 +35,6 @@ export default function Register() {
 		dateOfBirth: "",
 		city: "",
 	});
-	console.log("Fields", fields);
 	const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
 		event,
 	) => {

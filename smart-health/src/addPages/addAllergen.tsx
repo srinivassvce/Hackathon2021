@@ -1,8 +1,8 @@
 import * as React from "react";
-import {Allergy} from "../_gen/entity";
+import { Allergy } from "../_gen/entity";
 import ReactModal from "react-modal";
-import Select, {OptionTypeBase} from "react-select";
-import {getAllAllergens, saveAllergenDetails} from "../api";
+import Select, { OptionTypeBase } from "react-select";
+import { getAllAllergens, saveAllergenDetails } from "../api";
 
 export interface AddAllergenProps {
 	patientId: string;
@@ -10,7 +10,7 @@ export interface AddAllergenProps {
 	setModal: (showModal: boolean) => void;
 }
 
-const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, showModal, setModal}) => {
+const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({ patientId, showModal, setModal }) => {
 	const [allergens, setAllergens] = React.useState<Allergy[]>([]);
 	React.useEffect(() => {
 		getAndSetAllergens();
@@ -45,7 +45,6 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 	const handleTypeChange = (option: any, action: any) => {
 		// check if allergens exist for this type.
 		const allergens = getAllergens(option.label);
-		console.log(allergens);
 		const allergenId = allergens.length === 1 && allergens[0].label === "" ? allergens[0].value : -1;
 		setAllergy(
 			{
@@ -58,7 +57,6 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 	};
 
 	const handleAllergenChange = (option: any, action: any) => {
-		console.log(option);
 		setAllergy(
 			{
 				...allergy,
@@ -69,7 +67,7 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 	};
 
 	const handleSymptomsChange = (e: { target: { name: string; value: string; }; }) => {
-		const {name, value} = e.target;
+		const { name, value } = e.target;
 		const newAllergy = {
 			...allergy,
 			[name]: value
@@ -82,11 +80,11 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 		await saveAllergen();
 		// closes the modal after save
 		setAllergy({
-			           allergens: "",
-			           allergyId: -1,
-			           allergyType: "",
-			           symptoms: ""
-		           });
+			allergens: "",
+			allergyId: -1,
+			allergyType: "",
+			symptoms: ""
+		});
 		setModal(false);
 	};
 
@@ -99,9 +97,9 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 		const values: OptionTypeBase[] = [];
 		allergyTypesSet.forEach(
 			type => values.push({
-				                    label: type,
-				                    value: type
-			                    })
+				label: type,
+				value: type
+			})
 		);
 		return values;
 	};
@@ -170,7 +168,7 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 							</div>
 						</div>
 					</div>
-					<hr/>
+					<hr />
 					<div className="container">
 						<div
 							className="row justify-content-center align-items-center">
@@ -203,7 +201,7 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 												id="symptoms"
 												className="form-control"
 												value={allergy.symptoms}
-												onChange={handleSymptomsChange}/>
+												onChange={handleSymptomsChange} />
 										</div>
 										<div className="form-group d-grid">
 											<input
@@ -212,7 +210,7 @@ const AddAllergen: React.FunctionComponent<AddAllergenProps> = ({patientId, show
 												placeholder={"Select Symptoms"}
 												disabled={disabled}
 												className="btn btn-info btn-md"
-												value="Add Allergy"/>
+												value="Add Allergy" />
 										</div>
 									</form>
 								</div>
