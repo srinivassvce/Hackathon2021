@@ -13,7 +13,7 @@ const MenuBar: React.FunctionComponent<MenubarProps> = (props) => {
 			<Container className="border-right border-info" style={{height:"140%"}} >
 			<Nav defaultActiveKey="/home" className="flex-column">
 
-				<div style={{paddingLeft:"10px"}}>
+				<div style={{paddingLeft:"10px" ,marginTop:"20px"}}>
 					<br/>
 					{/*<Link className="menuItem" to="/dashboard">Home</Link>*/}
 					{/*<hr></hr>*/}

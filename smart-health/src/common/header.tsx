@@ -68,22 +68,19 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 		<React.Fragment>
 			<div className="bg-info container-fluid text-white">
 				<div className="row">
-					<div className="col-1 text-center mt-4">
-						<Link className="menuItem" to="/dashboard"><FaHome size={28} className="ml-3"></FaHome></Link>
+					<div className="col-2 text-center mt-4">
+						<Link className="menuItem"  to="/dashboard"><FaHome size={28} className="ml-3"></FaHome></Link>
 						<a onClick={toggleMenu}> <FaBars size={28} className="m-2"></FaBars></a>
+						<FaHospitalAlt className="ml-4" size={70}></FaHospitalAlt>
 
 					</div>
-					<div className="col-1">
-						{/*<img src={logo} alt="logo for healthcare" style={{ height: "100%", width: "100%" }} />*/}
-						<FaHospitalAlt size={70}></FaHospitalAlt>
-					</div>
-					<div className="col-3" style={{ paddingTop: "10px", marginTop: "2px" }}>
-						{renderNotifyMe()}
-					</div>
-					<div className="col-5 display-4">
+					<div className="col-6 display-4 ml-5" style={{marginTop:"3px" ,textAlign:"center"}}>
 						{currentPageTitle}
 					</div>
-					<div className="col-2 text-right mt-3">
+					<div className="col-2" style={{paddingTop: "10px",paddingLeft:"10px" , marginTop: "2px"}}>
+						{renderNotifyMe()}
+					</div>
+					<div className="col-1 text-right mt-3">
 
 						{id === "" ? <a href="\">{"Please Login"}</a> :
 
@@ -92,13 +89,14 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 									{!props.isDoctor ? (<FaUser className="m-2" />) : (<FaPen className={"m-2"} />)} {name}
 								</Dropdown.Toggle>
 
-								<Dropdown.Menu>
-									<Dropdown.Item>
-										<Link className="menuItem" to="/profile">Profile</Link>
-									</Dropdown.Item>
-									<Dropdown.Item href="/">Logout</Dropdown.Item>
-								</Dropdown.Menu>
-							</Dropdown>
+							 <Dropdown.Menu>
+								 <Dropdown.Item>
+									 {/*className="menuItem"*/}
+									 <Link  to="/profile">Profile</Link>
+								 </Dropdown.Item>
+								 <Dropdown.Item href="/">Logout</Dropdown.Item>
+							 </Dropdown.Menu>
+						 </Dropdown>
 						}
 					</div>
 				</div>
